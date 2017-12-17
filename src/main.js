@@ -33,7 +33,7 @@ const DEFAULT_SWAGGER_OPTS: Object = {
  * [app description]
  * @type {[type]}
  */
-export default class Server {
+export class Server {
   app: Function;
   config: Object;
   logger: Object;

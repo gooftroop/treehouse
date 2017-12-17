@@ -1,2 +1,4 @@
-export { Server } from 'jarvis/main';
-export { getLogger } from 'jarvis/utils/logger';
+import { Server } from 'jarvis/main';
+import { getLogger } from 'jarvis/utils/logger';
+
+export { Server, getLogger };
