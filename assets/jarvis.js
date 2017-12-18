@@ -73,10 +73,13 @@ module.exports =
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jarvis_main__ = __webpack_require__("./src/main.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jarvis_main___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jarvis_main__);
-/* harmony reexport (binding) */ if(__webpack_require__.o(__WEBPACK_IMPORTED_MODULE_0_jarvis_main__, "Server")) __webpack_require__.d(__webpack_exports__, "Server", function() { return __WEBPACK_IMPORTED_MODULE_0_jarvis_main__["Server"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_jarvis_utils_logger__ = __webpack_require__("./src/utils/logger.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_jarvis_utils_logger___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_jarvis_utils_logger__);
+/* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "Server", function() { return __WEBPACK_IMPORTED_MODULE_0_jarvis_main___default.a; });
 /* harmony reexport (binding) */ if(__webpack_require__.o(__WEBPACK_IMPORTED_MODULE_1_jarvis_utils_logger__, "getLogger")) __webpack_require__.d(__webpack_exports__, "getLogger", function() { return __WEBPACK_IMPORTED_MODULE_1_jarvis_utils_logger__["getLogger"]; });
+
+
+
 
 
 
@@ -132,7 +135,7 @@ function describe(doc) {
 
 
 exports.__esModule = true;
-exports.default = undefined;
+exports.Server = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -212,7 +215,7 @@ var DEFAULT_SWAGGER_OPTS = {
  * @type {[type]}
  */
 
-var Server = function () {
+var Server = exports.Server = function () {
 
   /**
    * [constructor description]
@@ -631,8 +634,6 @@ var Server = function () {
 
   return Server;
 }();
-
-exports.default = Server;
 
 /***/ }),
 
