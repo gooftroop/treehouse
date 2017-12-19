@@ -135,7 +135,7 @@ function describe(doc) {
 
 
 exports.__esModule = true;
-exports.Server = undefined;
+exports.default = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -215,7 +215,7 @@ var DEFAULT_SWAGGER_OPTS = {
  * @type {[type]}
  */
 
-var Server = exports.Server = function () {
+var Server = function () {
 
   /**
    * [constructor description]
@@ -634,6 +634,8 @@ var Server = exports.Server = function () {
 
   return Server;
 }();
+
+exports.default = Server;
 
 /***/ }),
 
