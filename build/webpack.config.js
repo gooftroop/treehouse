@@ -45,6 +45,7 @@ module.exports = {
   output: {
     chunkFilename: '[name].[id].js',
     filename: '[name].js',
+    library: 'Jarvis',
     libraryTarget: 'commonjs2',
     path: ASSET_PATH,
   },
