@@ -45,7 +45,7 @@ module.exports = {
   output: {
     chunkFilename: '[name].[id].js',
     filename: '[name].js',
-    libraryTarget: 'commonjs-module',
+    libraryTarget: 'commonjs2',
     path: ASSET_PATH,
   },
 };
