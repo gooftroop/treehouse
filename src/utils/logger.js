@@ -83,9 +83,11 @@ class Logger extends Bunyan {
 
     switch (typeof arg1) {
       case 'object':
-        payload = arg1;
-        payload.code || (payload.code = DEFAULT_CODE);
-        payload.status || (payload.status = DEFAULT_STATUS);
+        payload = {
+          code: DEFAULT_CODE,
+          status: DEFAULT_STATUS,
+          ...arg1,
+        };
         break;
       default:
 
@@ -153,29 +155,29 @@ export function createLoggers(config: Object): Object {
   // breadth-first search of opts
   // if name is under another logger, then is child. get parent logger and create child on it
 
-  pending = [];
-  seen = [];
+  const pending = [];
+  const seen = [];
 
   for (const [ currName, currConfig] of config.entries()) {
-    pending.push([ currName, currConfig ]);
+    pending.push([currName, currConfig]);
     seen.push(currName);
   }
 
   while (!pending.length) {
-    const [ currName, currConfig, parentName ] = pending.pop();
+    const [currName, currConfig, parentName] = pending.pop();
 
     if (parentName != null) {
       loggers[currName] = loggers[parentName].child({
         component: currName,
-        ...currConfig
+        ...currConfig,
       });
     } else {
       loggers[currName] = new Logger(currConfig);
     }
 
-    for (const [ childName, childConfig ] of currConfig.entries()) {
+    for (const [childName, childConfig] of currConfig.entries()) {
       if (!seen.includes(childName)) {
-        pending.push([ childName, childConfig, currName ]);
+        pending.push([childName, childConfig, currName]);
         seen.push(childName);
       }
     }

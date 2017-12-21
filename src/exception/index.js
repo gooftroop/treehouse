@@ -58,7 +58,7 @@ export default class Exception extends Error {
    * @return {[type]}         [description]
    */
   constructor(payload: string | Object = DEFAULT_MESSAGE, status) {
-    super(resolveMessage(payload);
+    super(resolveMessage(payload));
     this.code = resolveCode(payload);
     this.status = resolveStatus(payload, status);
 
