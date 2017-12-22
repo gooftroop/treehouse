@@ -46,7 +46,7 @@ function resolveStatus(payload: number | Object, status: ?number): number {
  * [code description]
  * @type {[type]}
  */
-export default class Exception extends Error {
+export class Exception extends Error {
   code: number;
   status: number;
 
