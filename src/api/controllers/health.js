@@ -1,10 +1,9 @@
 
 /**
  * [ping description]
- * @param  {[type]} request  [description]
- * @param  {[type]} response [description]
- * @return {[type]}          [description]
+ * @param  {[type]} ctx  [description]
+ * @return {[type]}      [description]
  */
-export function ping(request: Object, response: Object): void {
-  return response.status(200).send('pong');
+export async function health(ctx: Object): void {
+  ctx.body = 'ok';
 }

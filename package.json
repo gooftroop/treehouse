@@ -1,22 +1,26 @@
 {
-  "name": "jarvis",
+  "name": "axon",
   "version": "1.0.0",
   "description": "Core express server library for all Harmonizly nodejs-based microservices",
-  "main": "assets/jarvis.js",
+  "main": "index.js",
   "repository": "https://github.com/Harmonizly/jarvis.git",
   "author": "Brandon Webb (webb.c.brandon@gmail.com)",
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "body-parser": "^1.18.2",
     "bunyan": "^1.8.12",
-    "compression": "^1.7.1",
-    "connect-flash-plus": "^0.2.1",
-    "cors": "^2.8.4",
-    "express": "^4.16.2",
+    "config": "^1.29.2",
     "fs": "^0.0.1-security",
-    "helmet": "^3.9.0",
-    "swagger-tools": "^0.10.3",
+    "koa": "^2.4.1",
+    "koa-body": "^2.5.0",
+    "koa-compress": "^2.0.0",
+    "koa-cors": "^0.0.16",
+    "koa-helmet": "^3.3.0",
+    "koa-morgan": "^1.0.1",
+    "koa-mount": "^3.0.0",
+    "koa-router": "^7.3.0",
+    "koa-static": "^4.0.2",
+    "save": "^2.3.2",
     "uuidv4": "^0.5.0"
   },
   "devDependencies": {
@@ -32,13 +36,16 @@
     "babel-preset-stage-0": "^6.24.1",
     "eslint": "^4.13.1",
     "eslint-config-airbnb": "^16.1.0",
-    "eslint-import-resolver-webpack": "^0.8.3",
     "eslint-plugin-flowtype": "^2.40.1",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
+    "module-alias": "^2.0.3",
     "nyc": "^11.3.0",
     "webpack": "^3.10.0",
     "webpack-node-externals": "^1.6.0"
+  },
+  "_moduleAliases": {
+    "@axon": "./src"
   }
 }

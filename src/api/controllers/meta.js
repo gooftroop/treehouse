@@ -1,10 +1,12 @@
 /**
  * [describe description]
- * @param  {[type]} doc [description]
+ * @param  {[type]} meta [description]
  * @return {[type]}
  */
-export function describe(doc: Object): Function {
-  return (request: Object, response: Object): void => {
-    return response.send(doc);
-  }
+export async function describe(): Function {
+  const meta: string = '';
+
+  return (ctx: Object): void => {
+    ctx.body = meta;
+  };
 }

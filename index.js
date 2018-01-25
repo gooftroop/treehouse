@@ -1,15 +1,5 @@
-import Server from 'jarvis/main';
-import * as codes from 'jarvis/exception/codes';
-import { Exception } from 'jarvis/exception';
-import { getLogger } from 'jarvis/utils/logger';
+import 'module-alias/register';
 
-export default {
-  Server,
-  error: {
-    codes,
-    Exception
-  },
-  logger: {
-    getLogger,
-  }
-};
+export { Server } from 'axon/main';
+export { Logger } from 'axon/utils/logger';
+export * as error from 'axon/exception';

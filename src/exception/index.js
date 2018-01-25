@@ -76,3 +76,5 @@ export class Exception extends Error {
     return `${this.code} - ${this.status} ${this.message}`;
   }
 }
+
+export * as codes from 'axon/exception/codes';
