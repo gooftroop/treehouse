@@ -1,3 +1,5 @@
+import * as codes from 'axon/exception/codes';
+
 const DEFAULT_CODE: number = 0;
 const DEFAULT_MESSAGE: string = 'An Unknown error occurred';
 const DEFAULT_STATUS: number = 500;
@@ -46,7 +48,7 @@ function resolveStatus(payload: number | Object, status: ?number): number {
  * [code description]
  * @type {[type]}
  */
-export class Exception extends Error {
+export default class Exception extends Error {
   code: number;
   status: number;
 
@@ -77,4 +79,4 @@ export class Exception extends Error {
   }
 }
 
-export * as codes from 'axon/exception/codes';
+export { codes };

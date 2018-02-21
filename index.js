@@ -1,3 +1,10 @@
+import Exception, { codes } from './src/exception';
+
 export { Server } from './src/main';
 export { Logger } from './src/utils/logger';
-export * as error from './src/exception';
+export {
+  error: {
+    Exception,
+    codes,
+  }
+}
