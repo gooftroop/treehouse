@@ -8,6 +8,7 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
+    "@std/esm": "^0.22.0",
     "bunyan": "^1.8.12",
     "config": "^1.29.2",
     "fs": "^0.0.1-security",
