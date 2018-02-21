@@ -46,7 +46,7 @@ function resolveStatus(payload: number | Object, status: ?number): number {
  * [code description]
  * @type {[type]}
  */
-export default class Exception extends Error {
+export class Exception extends Error {
   code: number;
   status: number;
 
@@ -58,7 +58,7 @@ export default class Exception extends Error {
    * @return {[type]}         [description]
    */
   constructor(payload: string | Object = DEFAULT_MESSAGE, status) {
-    super(resolveMessage(payload);
+    super(resolveMessage(payload));
     this.code = resolveCode(payload);
     this.status = resolveStatus(payload, status);
 
@@ -76,3 +76,5 @@ export default class Exception extends Error {
     return `${this.code} - ${this.status} ${this.message}`;
   }
 }
+
+export * as codes from 'axon/exception/codes';

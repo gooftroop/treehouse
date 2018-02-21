@@ -5,13 +5,12 @@ export const FATAL_ERROR: Object = {
   message: 'An error occurred. If this error persists, please contact your System Administrator',
 };
 
-export const GENERAL_ERROR: Function = function (message: string, extra: string = ''): Object {
+export const GENERAL_ERROR: Function = function (message: string): Object {
   return {
     status: 400,
     code: 0,
     category: 'GeneralException',
     message,
-    extra,
   };
 };
 
@@ -71,12 +70,11 @@ export const MODEL_NOT_CREATED: Object = {
   message: 'Creation failed',
 };
 
-export const VALIDATION_ERROR: Function = function (message: string, extra: string = ''): Object {
+export const VALIDATION_ERROR: Function = function (message: string): Object {
   return {
     status: 400,
     code: 202,
     category: 'ValidationException',
     message,
-    extra,
   };
 };
