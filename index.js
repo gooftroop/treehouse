@@ -1,3 +1,9 @@
+// import moduleAlias from 'module-alias';
+//
+// moduleAlias.addAlias('axon', './src')
+import 'module-alias/register';
+
+
 import Exception, { codes } from './src/exception';
 const error = {
   Exception,
