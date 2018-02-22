@@ -1,16 +1,11 @@
-// import 'module-alias/register';
-import moduleAlias from 'module-alias';
-
-moduleAlias('axon', `${__dirname}/package.json`);
-
-// eslint-disable-next-line import/first
-import Exception, { codes } from 'axon/exception';
+import 'module-alias/register';
+import Exception, { codes } from 'axon/src/exception';
 
 const error = {
   Exception,
   codes,
 };
 
-export { Server } from 'axon/main';
-export { Logger } from 'axon/utils/logger';
+export { Server } from 'axon/src/main';
+export { Logger } from 'axon/src/utils/logger';
 export { error };
