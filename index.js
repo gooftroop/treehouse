@@ -1,6 +1,7 @@
 // import 'module-alias/register';
 import moduleAlias from 'module-alias';
 
+console.log(__dirname);
 moduleAlias.addAlias('@axon', `${__dirname}/src`);
 
 import Exception, { codes } from '@axon/exception';
