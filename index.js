@@ -1,7 +1,8 @@
-// import moduleAlias from 'module-alias';
-//
-// moduleAlias.addAlias('axon', './src')
-import 'module-alias/register';
+import moduleAlias from 'module-alias';
+
+moduleAlias.addAlias('axon', './src');
+
+// import 'module-alias/register';
 
 
 import Exception, { codes } from './src/exception';
