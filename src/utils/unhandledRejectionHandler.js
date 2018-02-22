@@ -1,4 +1,4 @@
-import { getLogger } from 'axon/utils/logger';
+import { getLogger } from 'axonSrc/utils/logger';
 
 const LOGGER: Object = getLogger('error');
 
