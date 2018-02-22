@@ -1,4 +1,4 @@
-import * as codes from 'axon/exception/codes';
+import * as codes from '@axon/exception/codes';
 
 const DEFAULT_CODE: number = 0;
 const DEFAULT_MESSAGE: string = 'An Unknown error occurred';

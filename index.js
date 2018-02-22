@@ -1,16 +1,11 @@
-import moduleAlias from 'module-alias';
+import 'module-alias/register';
 
-moduleAlias.addAlias('axon', './src');
-
-// import 'module-alias/register';
-
-
-import Exception, { codes } from './src/exception';
+import Exception, { codes } from '@axon/exception';
 const error = {
   Exception,
   codes,
 }
 
-export { Server } from './src/main';
-export { Logger } from './src/utils/logger';
+export { Server } from '@axon/main';
+export { Logger } from '@axon/utils/logger';
 export { error }
