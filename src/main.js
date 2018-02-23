@@ -1,3 +1,5 @@
+import 'module-alias/register';
+
 import body from 'koa-body';
 import compress from 'koa-compress';
 import cors from 'koa-cors';

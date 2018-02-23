@@ -10,6 +10,7 @@ pids
 .tmp
 .idea
 config/local.json
+dist
 
 # Coverage directory used by tools like istanbul
 coverage

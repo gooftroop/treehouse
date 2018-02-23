@@ -5,10 +5,10 @@ NODE_ENV?=development
 
 all:
 	$(MAKE) clean
-	$(MAKE) server
+	$(MAKE) install
 
 clean:
 	rm -rf assets
 
-server:
+install:
 	$(CC) run webpack --config ./build/webpack.config.js
