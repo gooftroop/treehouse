@@ -1,5 +1,9 @@
-import 'module-alias/register';
+// import 'module-alias/register';
+import moduleAlias from 'module-alias';
 
+moduleAlias(`${__dirname}/package.json`);
+
+/* eslint-disable import/first */
 import body from 'koa-body';
 import compress from 'koa-compress';
 import cors from 'koa-cors';
@@ -19,6 +23,7 @@ import { sigInitHandler } from 'axon/utils/sigInitHandler';
 import { transactionMiddleware } from 'axon/middleware/transaction';
 import { uncaughtExceptionHandler } from 'axon/utils/uncaughtExceptionHandler';
 import { unhandledRejectionHandler } from 'axon/utils/unhandledRejectionHandler';
+/* eslint-enable import/first */
 
 // Catches ctrl+c event
 process.on('SIGINT', sigInitHandler);
