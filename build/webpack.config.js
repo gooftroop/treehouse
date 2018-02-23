@@ -21,7 +21,6 @@ module.exports = {
   devtool: 'source-map',
   entry: {
     server: [
-      'babel-polyfill',
       path.join(cwd, 'src/main.js'),
     ],
   },
