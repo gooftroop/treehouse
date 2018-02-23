@@ -34,6 +34,7 @@ module.exports = {
         test: /\.js$/i,
         use: 'babel-loader',
         include: [path.join(cwd, 'src')],
+        exclude: /node_modules/,
       },
     ],
     noParse: /\.min\.js/,
