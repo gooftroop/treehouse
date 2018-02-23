@@ -7,7 +7,7 @@
   "author": "Brandon Webb (webb.c.brandon@gmail.com)",
   "license": "MIT",
   "scripts": {
-    "postinstall": "make"
+    "build": "make"
   },
   "dependencies": {
     "babel-core": "^6.26.0",
