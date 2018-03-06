@@ -21,11 +21,9 @@ const DEFAULT_LOGGER_NAME: string = 'root';
  *
  */
 class Logger extends Bunyan {
-  // config used to setup loggers as needed
-  config: Object = config().get('loggers');
 
   // loggers cache
-  loggers: Object = {};
+  static loggers: Object = {};
 
   /**
    * [debug description]
@@ -71,15 +69,13 @@ class Logger extends Bunyan {
    * @return {[type]}      [description]
    */
   static getLogger(name: string): Object {
+    const handlersConfig: Object = config().get('loggers').get('handlers');
     const loggerName: string = (name == null) ? DEFAULT_LOGGER_NAME : name.toLowerCase();
 
     if (loggerName === DEFAULT_LOGGER_NAME && !(loggerName in Logger.loggers)) {
-      const handlersConfig: Object = Logger.config.get('handlers');
-
       Logger.loggers[loggerName] = new Logger(handlersConfig.get(DEFAULT_LOGGER_NAME));
     } else if (!(loggerName in Logger.loggers)) {
       const parent: Object = Logger.loggers[DEFAULT_LOGGER_NAME];
-      const handlersConfig: Object = Logger.config.get('handlers');
       const loggerConfig: Object = handlersConfig.get(loggerName) || {};
 
       Logger.loggers[loggerName] = parent.child(loggerConfig, loggerConfig.simple);
