@@ -766,6 +766,8 @@ var Logger = (_temp = _class = function (_Bunyan) {
 
   Logger.getLogger = function getLogger(name) {
     var handlersConfig = _config2.default.get('loggers').get('handlers');
+
+    console.log(handlersConfig);
     var loggerName = name == null ? DEFAULT_LOGGER_NAME : name.toLowerCase();
 
     if (loggerName === DEFAULT_LOGGER_NAME && !(loggerName in Logger.loggers)) {
