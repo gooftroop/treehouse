@@ -768,13 +768,8 @@ var Logger = (_temp = _class = function (_Bunyan) {
     var handlersConfig = _config2.default.get('loggers').get('handlers');
     var loggerName = name == null ? DEFAULT_LOGGER_NAME : name.toLowerCase();
 
-    if (loggerName === DEFAULT_LOGGER_NAME && !(loggerName in Logger.loggers)) {
-      Logger.loggers[loggerName] = new Logger(handlersConfig.get(DEFAULT_LOGGER_NAME));
-    } else if (!(loggerName in Logger.loggers)) {
-      var parent = Logger.getLogger(DEFAULT_LOGGER_NAME);
-      var loggerConfig = handlersConfig.get(loggerName) || {};
-
-      Logger.loggers[loggerName] = parent.child(loggerConfig, loggerConfig.simple);
+    if (!(loggerName in Logger.loggers)) {
+      Logger.loggers[loggerName] = new Logger(handlersConfig.get(loggerName));
     }
 
     return Logger.loggers[loggerName];

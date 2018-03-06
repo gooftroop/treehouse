@@ -70,13 +70,8 @@ class Logger extends Bunyan {
     const handlersConfig: Object = config.get('loggers').get('handlers');
     const loggerName: string = (name == null) ? DEFAULT_LOGGER_NAME : name.toLowerCase();
 
-    if (loggerName === DEFAULT_LOGGER_NAME && !(loggerName in Logger.loggers)) {
-      Logger.loggers[loggerName] = new Logger(handlersConfig.get(DEFAULT_LOGGER_NAME));
-    } else if (!(loggerName in Logger.loggers)) {
-      const parent: Object = Logger.getLogger(DEFAULT_LOGGER_NAME);
-      const loggerConfig: Object = handlersConfig.get(loggerName) || {};
-
-      Logger.loggers[loggerName] = parent.child(loggerConfig, loggerConfig.simple);
+    if (!(loggerName in Logger.loggers)) {
+      Logger.loggers[loggerName] = new Logger(handlersConfig.get(loggerName));
     }
 
     return Logger.loggers[loggerName];
