@@ -793,6 +793,8 @@ var Logger = (_temp = _class = function (_Bunyan) {
 
 
   Logger.getLogger = function getLogger(name) {
+    console.log((0, _config.config)());
+    console.log((0, _config.config)().get('loggers'));
     var handlersConfig = (0, _config.config)().get('loggers').get('handlers');
     var loggerName = name == null ? DEFAULT_LOGGER_NAME : name.toLowerCase();
 
