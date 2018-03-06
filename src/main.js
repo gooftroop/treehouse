@@ -1,3 +1,5 @@
+console.log(process.env.NODE_CONFIG_DIR);
+
 import moduleAlias from 'module-alias';
 
 moduleAlias(`${__dirname}/package.json`);
@@ -11,10 +13,8 @@ import helmet from 'koa-helmet';
 import https from 'https';
 import Koa from 'koa';
 import mount from 'koa-mount';
-import process from 'process';
 import serve from 'koa-static';
 
-import { config } from 'axon/utils/config';
 import { accessLogger } from 'axon/middleware/accessLogger';
 import { errorMiddleware } from 'axon/middleware/error';
 import { Logger } from 'axon/utils/logger';
@@ -46,8 +46,8 @@ export default class Server {
    * @param  {[type]} void [description]
    * @return {[type]}      [description]
    */
-  constructor(configuration: Object): void {
-    this.config = config(configuration);
+  constructor(config: Object): void {
+    this.config = config;
 
     // Initialize the express server
     this.app = new Koa();

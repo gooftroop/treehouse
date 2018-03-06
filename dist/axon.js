@@ -216,15 +216,9 @@ var _koaMount = __webpack_require__("koa-mount");
 
 var _koaMount2 = _interopRequireDefault(_koaMount);
 
-var _process = __webpack_require__("process");
-
-var _process2 = _interopRequireDefault(_process);
-
 var _koaStatic = __webpack_require__("koa-static");
 
 var _koaStatic2 = _interopRequireDefault(_koaStatic);
-
-var _config = __webpack_require__("./src/utils/config.js");
 
 var _accessLogger = __webpack_require__("./src/middleware/accessLogger.js");
 
@@ -248,6 +242,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+console.log(process.env.NODE_CONFIG_DIR);
+
 (0, _moduleAlias2.default)(__dirname + '/package.json');
 
 /* eslint-disable import/first */
@@ -255,11 +251,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 /* eslint-enable import/first */
 
 // Catches ctrl+c event
-_process2.default.on('SIGINT', _sigInitHandler.sigInitHandler);
+process.on('SIGINT', _sigInitHandler.sigInitHandler);
 
 // Catches uncaught exceptions and rejections
-_process2.default.on('uncaughtException', _uncaughtExceptionHandler.uncaughtExceptionHandler);
-_process2.default.on('unhandledRejection', _unhandledRejectionHandler.unhandledRejectionHandler);
+process.on('uncaughtException', _uncaughtExceptionHandler.uncaughtExceptionHandler);
+process.on('unhandledRejection', _unhandledRejectionHandler.unhandledRejectionHandler);
 
 /**
  * [app description]
@@ -273,10 +269,10 @@ var Server = function () {
    * @param  {[type]} void [description]
    * @return {[type]}      [description]
    */
-  function Server(configuration) {
+  function Server(config) {
     _classCallCheck(this, Server);
 
-    this.config = (0, _config.config)(configuration);
+    this.config = config;
 
     // Initialize the express server
     this.app = new _koa2.default();
@@ -288,7 +284,7 @@ var Server = function () {
     this.initialize(this.app);
 
     // atexit handler
-    _process2.default.on('exit', this.destroy);
+    process.on('exit', this.destroy);
   }
 
   /**
@@ -341,7 +337,7 @@ var Server = function () {
         callback();
       }
       // TODO does this break?
-      _process2.default.send('ready');
+      process.send('ready');
       _this.logger.info('Server listening at ' + _this.config.get('hostname') + ':' + _this.config.get('port') + '...');
     };
   };
@@ -391,7 +387,7 @@ var Server = function () {
 
   Server.prototype.destroy = function destroy() {
     // TODO logger destroy?
-    _process2.default.emit('destroy');
+    process.emit('destroy');
   };
 
   /**
@@ -664,29 +660,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 /***/ }),
 
-/***/ "./src/utils/config.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-var instance = null;
-
-function config() {
-  var configuration = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-
-  if (instance == null) {
-    instance = configuration;
-  }
-
-  return instance;
-}
-
-exports.config = config;
-
-/***/ }),
-
 /***/ "./src/utils/logger.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -701,11 +674,13 @@ var _bunyan = __webpack_require__("bunyan");
 
 var _bunyan2 = _interopRequireDefault(_bunyan);
 
+var _config = __webpack_require__("config");
+
+var _config2 = _interopRequireDefault(_config);
+
 var _process = __webpack_require__("process");
 
 var _process2 = _interopRequireDefault(_process);
-
-var _config = __webpack_require__("./src/utils/config.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -759,7 +734,6 @@ var Logger = (_temp = _class = function (_Bunyan) {
    * @return {[type]}        [description]
    */
 
-
   // loggers cache
 
 
@@ -793,9 +767,7 @@ var Logger = (_temp = _class = function (_Bunyan) {
 
 
   Logger.getLogger = function getLogger(name) {
-    console.log((0, _config.config)());
-    console.log((0, _config.config)().get('loggers'));
-    var handlersConfig = (0, _config.config)().get('loggers').get('handlers');
+    var handlersConfig = _config2.default.get('loggers').get('handlers');
     var loggerName = name == null ? DEFAULT_LOGGER_NAME : name.toLowerCase();
 
     if (loggerName === DEFAULT_LOGGER_NAME && !(loggerName in Logger.loggers)) {
@@ -915,6 +887,13 @@ module.exports = __webpack_require__("./src/main.js");
 /***/ (function(module, exports) {
 
 module.exports = require("bunyan");
+
+/***/ }),
+
+/***/ "config":
+/***/ (function(module, exports) {
+
+module.exports = require("config");
 
 /***/ }),
 
