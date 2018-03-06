@@ -175,14 +175,10 @@ exports.default = router;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(__dirname) {
+
 
 exports.__esModule = true;
 exports.default = undefined;
-
-var _moduleAlias = __webpack_require__("module-alias");
-
-var _moduleAlias2 = _interopRequireDefault(_moduleAlias);
 
 var _koaBody = __webpack_require__("koa-body");
 
@@ -241,12 +237,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-(0, _moduleAlias2.default)(__dirname + '/package.json');
-
-/* eslint-disable import/first */
-
-/* eslint-enable import/first */
 
 // Catches ctrl+c event
 process.on('SIGINT', _sigInitHandler.sigInitHandler);
@@ -492,7 +482,6 @@ var Server = function () {
 }();
 
 exports.default = Server;
-/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ }),
 
@@ -987,13 +976,6 @@ module.exports = require("koa-router");
 /***/ (function(module, exports) {
 
 module.exports = require("koa-static");
-
-/***/ }),
-
-/***/ "module-alias":
-/***/ (function(module, exports) {
-
-module.exports = require("module-alias");
 
 /***/ }),
 
