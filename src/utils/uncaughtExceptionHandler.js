@@ -1,6 +1,6 @@
-import { getLogger } from 'axon/utils/logger';
+import Logger from 'axon/utils/logger';
 
-const LOGGER: Object = getLogger('error');
+const LOGGER: Object = Logger.getLogger('error');
 
 /**
  * [uncaughtExceptionHandler description]

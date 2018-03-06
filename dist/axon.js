@@ -578,7 +578,11 @@ exports.errorMiddleware = errorMiddleware;
 
 var _logger = __webpack_require__("./src/utils/logger.js");
 
-var LOGGER = _logger.Logger.getLogger('root');
+var _logger2 = _interopRequireDefault(_logger);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var LOGGER = _logger2.default.getLogger('root');
 
 /**
  * [errorParser description]
@@ -792,7 +796,11 @@ exports.sigIntHandler = sigIntHandler;
 
 var _logger = __webpack_require__("./src/utils/logger.js");
 
-var LOGGER = _logger.Logger.getLogger();
+var _logger2 = _interopRequireDefault(_logger);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var LOGGER = _logger2.default.getLogger();
 
 /**
  * [sigIntHandler description]
@@ -820,7 +828,11 @@ exports.uncaughtExceptionHandler = undefined;
 
 var _logger = __webpack_require__("./src/utils/logger.js");
 
-var LOGGER = (0, _logger.getLogger)('error');
+var _logger2 = _interopRequireDefault(_logger);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var LOGGER = _logger2.default.getLogger('error');
 
 /**
  * [uncaughtExceptionHandler description]
@@ -851,7 +863,11 @@ exports.unhandledRejectionHandler = undefined;
 
 var _logger = __webpack_require__("./src/utils/logger.js");
 
-var LOGGER = (0, _logger.getLogger)('error');
+var _logger2 = _interopRequireDefault(_logger);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var LOGGER = _logger2.default.getLogger('error');
 
 /**
  * [unhandledRejectionHandler description]
