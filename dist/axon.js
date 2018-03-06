@@ -242,8 +242,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-console.log(process.env.NODE_CONFIG_DIR);
-
 (0, _moduleAlias2.default)(__dirname + '/package.json');
 
 /* eslint-disable import/first */
