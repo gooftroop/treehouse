@@ -695,8 +695,6 @@ exports.config = config;
 
 exports.__esModule = true;
 
-var _class, _temp;
-
 var _bunyan = __webpack_require__("bunyan");
 
 var _bunyan2 = _interopRequireDefault(_bunyan);
@@ -732,22 +730,32 @@ var DEFAULT_LOGGER_NAME = 'root';
 /**
  *
  */
-var Logger = (_temp = _class = function (_Bunyan) {
+
+var Logger = function (_Bunyan) {
   _inherits(Logger, _Bunyan);
 
   function Logger() {
+    var _temp, _this, _ret;
+
     _classCallCheck(this, Logger);
 
-    return _possibleConstructorReturn(this, _Bunyan.apply(this, arguments));
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, _Bunyan.call.apply(_Bunyan, [this].concat(args))), _this), _this.config = (0, _config.config)().get('loggers'), _this.loggers = {}, _temp), _possibleConstructorReturn(_this, _ret);
   }
+  // config used to setup loggers as needed
+
+
+  // loggers cache
+
 
   /**
    * [debug description]
    * @param  {[type]} args [description]
    * @return {[type]}      [description]
    */
-
-  // config used to setup loggers as needed
   Logger.prototype._emit = function _emit(rec, noemit) {
     var r = this.serializeTransaction(rec);
 
@@ -760,9 +768,6 @@ var Logger = (_temp = _class = function (_Bunyan) {
    * @param  {[type]} Object [description]
    * @return {[type]}        [description]
    */
-
-
-  // loggers cache
 
 
   Logger.prototype.serializeTransaction = function serializeTransaction(rec) {
@@ -813,7 +818,8 @@ var Logger = (_temp = _class = function (_Bunyan) {
   };
 
   return Logger;
-}(_bunyan2.default), _class.config = (0, _config.config)().get('loggers'), _class.loggers = {}, _temp);
+}(_bunyan2.default);
+
 exports.default = Logger;
 
 /***/ }),

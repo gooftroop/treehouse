@@ -22,10 +22,10 @@ const DEFAULT_LOGGER_NAME: string = 'root';
  */
 class Logger extends Bunyan {
   // config used to setup loggers as needed
-  static config: Object = config().get('loggers');
+  config: Object = config().get('loggers');
 
   // loggers cache
-  static loggers: Object = {};
+  loggers: Object = {};
 
   /**
    * [debug description]
