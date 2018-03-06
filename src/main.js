@@ -1,5 +1,3 @@
-console.log(process.env.NODE_CONFIG_DIR);
-
 import moduleAlias from 'module-alias';
 
 moduleAlias(`${__dirname}/package.json`);
