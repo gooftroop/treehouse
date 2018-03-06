@@ -180,8 +180,6 @@ exports.default = router;
 exports.__esModule = true;
 exports.default = undefined;
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _moduleAlias = __webpack_require__("module-alias");
 
 var _moduleAlias2 = _interopRequireDefault(_moduleAlias);
@@ -226,6 +224,8 @@ var _koaStatic = __webpack_require__("koa-static");
 
 var _koaStatic2 = _interopRequireDefault(_koaStatic);
 
+var _config = __webpack_require__("./src/utils/config.js");
+
 var _accessLogger = __webpack_require__("./src/middleware/accessLogger.js");
 
 var _error = __webpack_require__("./src/middleware/error.js");
@@ -246,8 +246,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } } // import 'module-alias/register';
-
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 (0, _moduleAlias2.default)(__dirname + '/package.json');
 
@@ -274,10 +273,10 @@ var Server = function () {
    * @param  {[type]} void [description]
    * @return {[type]}      [description]
    */
-  function Server(config) {
+  function Server(configuration) {
     _classCallCheck(this, Server);
 
-    this.config = _extends({}, config);
+    this.config = (0, _config.config)(configuration);
 
     // Initialize the express server
     this.app = new _koa2.default();
@@ -665,6 +664,29 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 /***/ }),
 
+/***/ "./src/utils/config.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+var instance = null;
+
+function config() {
+  var configuration = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+  if (instance == null) {
+    instance = configuration;
+  }
+
+  return instance;
+}
+
+exports.config = config;
+
+/***/ }),
+
 /***/ "./src/utils/logger.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -679,13 +701,11 @@ var _bunyan = __webpack_require__("bunyan");
 
 var _bunyan2 = _interopRequireDefault(_bunyan);
 
-var _config = __webpack_require__("config");
-
-var _config2 = _interopRequireDefault(_config);
-
 var _process = __webpack_require__("process");
 
 var _process2 = _interopRequireDefault(_process);
+
+var _config = __webpack_require__("./src/utils/config.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -793,7 +813,7 @@ var Logger = (_temp = _class = function (_Bunyan) {
   };
 
   return Logger;
-}(_bunyan2.default), _class.config = _config2.default.get('loggers'), _class.loggers = {}, _temp);
+}(_bunyan2.default), _class.config = (0, _config.config)().get('loggers'), _class.loggers = {}, _temp);
 exports.default = Logger;
 
 /***/ }),
@@ -897,13 +917,6 @@ module.exports = __webpack_require__("./src/main.js");
 /***/ (function(module, exports) {
 
 module.exports = require("bunyan");
-
-/***/ }),
-
-/***/ "config":
-/***/ (function(module, exports) {
-
-module.exports = require("config");
 
 /***/ }),
 
