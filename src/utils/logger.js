@@ -1,6 +1,7 @@
 import Bunyan from 'bunyan';
-import config from 'config';
 import process from 'process';
+
+import { config } from 'axon/utils/config';
 
 const DEFAULT_LOGGER_NAME: string = 'root';
 
@@ -21,7 +22,7 @@ const DEFAULT_LOGGER_NAME: string = 'root';
  */
 class Logger extends Bunyan {
   // config used to setup loggers as needed
-  static config: Object = config.get('loggers');
+  static config: Object = config().get('loggers');
 
   // loggers cache
   static loggers: Object = {};
