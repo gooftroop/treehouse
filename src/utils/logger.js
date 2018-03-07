@@ -45,15 +45,17 @@ class Logger extends Bunyan {
     const transaction: Object = process.domain;
 
     if (transaction && transaction.data) {
-      const { request } = transaction.data;
+      const { ctx } = transaction.data;
 
-      r.sessionId = request.session && request.session.id;
       r.transactionId = transaction.data.id;
+      if (ctx.session) {
+        r.sessionId = ctx.session.id;
+      }
 
-      if (request.user) {
+      if (ctx.user) {
         r.user = {
-          id: request.user.id,
-          username: request.user.username,
+          id: ctx.user.id,
+          username: ctx.user.username,
         };
       }
     }

@@ -998,16 +998,18 @@ var Logger = (_temp = _class = function (_Bunyan) {
     var transaction = _process2.default.domain;
 
     if (transaction && transaction.data) {
-      var request = transaction.data.request;
+      var ctx = transaction.data.ctx;
 
 
-      r.sessionId = request.session && request.session.id;
       r.transactionId = transaction.data.id;
+      if (ctx.session) {
+        r.sessionId = ctx.session.id;
+      }
 
-      if (request.user) {
+      if (ctx.user) {
         r.user = {
-          id: request.user.id,
-          username: request.user.username
+          id: ctx.user.id,
+          username: ctx.user.username
         };
       }
     }
