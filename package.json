@@ -2,7 +2,7 @@
   "name": "axon",
   "version": "1.0.0",
   "description": "Core express server library for all Harmonizly nodejs-based microservices",
-  "main": "index.js",
+  "main": "dist/axon.js",
   "repository": "https://github.com/Harmonizly/jarvis.git",
   "author": "Brandon Webb (webb.c.brandon@gmail.com)",
   "license": "MIT",
