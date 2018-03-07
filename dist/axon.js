@@ -781,7 +781,7 @@ exports.default = Logger;
 
 
 exports.__esModule = true;
-exports.sigIntHandler = undefined;
+exports.sigInitHandler = undefined;
 
 var _logger = __webpack_require__("./src/utils/logger.js");
 
@@ -796,7 +796,7 @@ var LOGGER = _logger2.default.getLogger();
  * @param  {[type]} void [description]
  * @return {[type]}      [description]
  */
-function sigIntHandler() {
+function sigInitHandler() {
   if (LOGGER) {
     LOGGER.info('Captured ctrl-c');
   }
@@ -804,7 +804,7 @@ function sigIntHandler() {
   process.exit(0);
 }
 
-exports.sigIntHandler = sigIntHandler;
+exports.sigInitHandler = sigInitHandler;
 
 /***/ }),
 
