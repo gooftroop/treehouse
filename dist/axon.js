@@ -66,60 +66,6 @@ module.exports =
 /************************************************************************/
 /******/ ({
 
-/***/ "./config/default.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony default export */ __webpack_exports__["default"] = ({
-  assets: {
-    path: './assets',
-    url: '/assets',
-  },
-  backlog: 511,
-  body: {},
-  cors: {},
-  compress: {},
-  hostname: '0.0.0.0',
-  loggers: {
-    handlers: {
-      access: {
-        name: 'access',
-        level: 'info',
-      },
-      app: {
-        name: 'app',
-        level: 'debug',
-      },
-      error: {
-        name: 'error',
-        level: 'error',
-      },
-      root: {
-        name: 'root',
-        level: 'debug',
-      },
-    },
-    streams: {},
-  },
-  name: '',
-  port: 3000,
-  secure: false,
-  ssl: {},
-  services: {
-    auth: {
-      url: '//auth.harmonize.local/api/v1/',
-    },
-  },
-  static: {
-    path: './static',
-    url: '/static',
-  },
-});
-
-
-/***/ }),
-
 /***/ "./src/api/controllers/404.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -447,11 +393,7 @@ exports.codes = codes;
 
 
 exports.__esModule = true;
-exports.codes = exports.Logger = exports.Exception = exports.defaults = undefined;
-
-var _default = __webpack_require__("./config/default.js");
-
-var _default2 = _interopRequireDefault(_default);
+exports.codes = exports.Logger = exports.Exception = undefined;
 
 var _exception = __webpack_require__("./src/exception/index.js");
 
@@ -474,7 +416,6 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _server2.default;
-exports.defaults = _default2.default;
 exports.Exception = _exception2.default;
 exports.Logger = _logger2.default;
 exports.codes = codes;
@@ -849,10 +790,10 @@ var Server = function () {
     app.use(_accessLogger2.default);
 
     // Serve asset resources using the 'assets' url
-    app.use((0, _koaMount2.default)(this.conf.assets.get('url'), (0, _koaStatic2.default)(this.conf.assets.get('path'), this.conf.assets.get('options'))));
+    app.use((0, _koaMount2.default)(this.config.assets.get('url'), (0, _koaStatic2.default)(this.config.assets.get('path'), this.config.assets.get('options'))));
 
     // Serve static resources using the 'static' url
-    app.use((0, _koaMount2.default)(this.conf.static.get('url'), (0, _koaStatic2.default)(this.conf.static.get('path'), this.conf.static.get('options'))));
+    app.use((0, _koaMount2.default)(this.config.static.get('url'), (0, _koaStatic2.default)(this.config.static.get('path'), this.config.static.get('options'))));
 
     // Configure the request error handling
     // TODO more specific error handling - make this one a fallback handler?

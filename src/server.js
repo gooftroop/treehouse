@@ -126,14 +126,14 @@ export default class Server {
 
     // Serve asset resources using the 'assets' url
     app.use(mount(
-      this.conf.assets.get('url'),
-      serve(this.conf.assets.get('path'), this.conf.assets.get('options')),
+      this.config.assets.get('url'),
+      serve(this.config.assets.get('path'), this.config.assets.get('options')),
     ));
 
     // Serve static resources using the 'static' url
     app.use(mount(
-      this.conf.static.get('url'),
-      serve(this.conf.static.get('path'), this.conf.static.get('options')),
+      this.config.static.get('url'),
+      serve(this.config.static.get('path'), this.config.static.get('options')),
     ));
 
     // Configure the request error handling
