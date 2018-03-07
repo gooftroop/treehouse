@@ -21,7 +21,7 @@ module.exports = {
   devtool: 'source-map',
   entry: {
     server: [
-      path.join(cwd, 'index.js'),
+      path.join(cwd, 'src/main.js'),
     ],
   },
   resolve: {

@@ -66,41 +66,6 @@ module.exports =
 /************************************************************************/
 /******/ ({
 
-/***/ "./index.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* WEBPACK VAR INJECTION */(function(__dirname) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axon_exception__ = __webpack_require__("./src/exception/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axon_exception___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axon_exception__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axon_utils_logger__ = __webpack_require__("./src/utils/logger.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axon_utils_logger___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axon_utils_logger__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axon_main__ = __webpack_require__("./src/main.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axon_main___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axon_main__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axon_exception_codes__ = __webpack_require__("./src/exception/codes.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axon_exception_codes___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_axon_exception_codes__);
-/* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "Exception", function() { return __WEBPACK_IMPORTED_MODULE_0_axon_exception___default.a; });
-/* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "Logger", function() { return __WEBPACK_IMPORTED_MODULE_1_axon_utils_logger___default.a; });
-/* harmony reexport (module object) */ __webpack_require__.d(__webpack_exports__, "codes", function() { return __WEBPACK_IMPORTED_MODULE_3_axon_exception_codes__; });
-const moduleAlias = __webpack_require__("module-alias");
-
-moduleAlias(`${__dirname}/package.json`);
-
-/* eslint-disable import/first */
-
-
-
-
-
-/* eslint-enable import/first */
-
-/* harmony default export */ __webpack_exports__["default"] = (__WEBPACK_IMPORTED_MODULE_2_axon_main___default.a);
-
-
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, "/"))
-
-/***/ }),
-
 /***/ "./src/api/controllers/404.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -422,6 +387,212 @@ exports.codes = codes;
 /***/ }),
 
 /***/ "./src/main.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.codes = exports.Logger = exports.Exception = undefined;
+
+var _exception = __webpack_require__("./src/exception/index.js");
+
+var _exception2 = _interopRequireDefault(_exception);
+
+var _logger = __webpack_require__("./src/utils/logger.js");
+
+var _logger2 = _interopRequireDefault(_logger);
+
+var _server = __webpack_require__("./src/server.js");
+
+var _server2 = _interopRequireDefault(_server);
+
+var _codes = __webpack_require__("./src/exception/codes.js");
+
+var codes = _interopRequireWildcard(_codes);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/* eslint-enable import/first */
+
+/* eslint-disable import/first */
+exports.default = _server2.default;
+exports.Exception = _exception2.default;
+exports.Logger = _logger2.default;
+exports.codes = codes;
+
+/***/ }),
+
+/***/ "./src/middleware/accessLogger.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.formatter = undefined;
+
+var _koaMorgan = __webpack_require__("koa-morgan");
+
+var _koaMorgan2 = _interopRequireDefault(_koaMorgan);
+
+var _logger = __webpack_require__("./src/utils/logger.js");
+
+var _logger2 = _interopRequireDefault(_logger);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var LOGGER = _logger2.default.getLogger('access');
+
+/**
+ * Morgan log formatter.
+ * Returns an object containing the desired request and response attributes.
+ * The expected output should be a JSON string as <code>bunyan</code> will
+ * take the string and merge that JSON with the output (which is the desired
+ * result). The expected format is:
+ * {
+ *   remote-addr: <string>,
+ *   date: <clf>,
+ *   method: <string>,
+ *   url: <fqd string>,
+ *   HTTP: <version string>,
+ *   user-agent: <string>,
+ *   referrer: <string>,
+ *   status: <number>,
+ *   res[content-length]: <number>,
+ *   response-time: <number> ms,
+ * }
+ * @param  {Object} tokens The map of morgan tokens
+ * @param  {Object} req    The request context
+ * @param  {Object} res    The response context
+ * @return {Object}        The format meta object
+ */
+var formatter = exports.formatter = function formatter(tokens, req, res) {
+  var responseTime = tokens['response-time'](req, res);
+
+  return JSON.stringify({
+    'remote-addr': tokens['remote-addr'](req),
+    date: tokens.date(req, res, 'clf'),
+    method: tokens.method(req),
+    url: tokens.url(req),
+    HTTP: tokens['http-version'](req),
+    'user-agent': tokens['user-agent'](req),
+    referrer: tokens.referrer(req),
+    status: tokens.status(req, res),
+    'res[content-length]': tokens.res(req, res, 'content-length'),
+    'response-time': responseTime + ' ms'
+  });
+};
+
+exports.default = (0, _koaMorgan2.default)(formatter, {
+  stream: {
+    write: function write(message) {
+      LOGGER.info(JSON.parse(message));
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./src/middleware/error.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.default = errorMiddleware;
+
+var _logger = __webpack_require__("./src/utils/logger.js");
+
+var _logger2 = _interopRequireDefault(_logger);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var LOGGER = _logger2.default.getLogger('root');
+
+/**
+ * [errorParser description]
+ * @param  {[type]}   e     [description]
+ * @param  {[type]}   ctx   [description]
+ * @return {[type]}         [description]
+ */
+function errorMiddleware(e, ctx) {
+  return ctx ? LOGGER.error(e, ctx) : LOGGER.error(e);
+}
+
+/***/ }),
+
+/***/ "./src/middleware/transaction.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _domain = __webpack_require__("domain");
+
+var _domain2 = _interopRequireDefault(_domain);
+
+var _v = __webpack_require__("uuid/v4");
+
+var _v2 = _interopRequireDefault(_v);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+/**
+ * Add a transaction identifier to every request to track a request's control flow. We use a transactoin ID instead of
+ * the session ID or user since both are persistent(ish) identification.
+ *
+ * @param  {[type]}   ctx   [description]
+ * @param  {Function} next  [description]
+ * @return {[type]}         [description]
+ */
+exports.default = function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ctx, next) {
+    var transactionId, transaction;
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            transactionId = (0, _v2.default)();
+            transaction = _domain2.default.create();
+
+            // eslint-disable-next-line no-param-reassign
+
+            ctx.transactionId = transactionId;
+
+            transaction.add(ctx);
+            transaction.data = {
+              id: transactionId,
+              ctx: ctx
+            };
+
+            transaction.run(next);
+
+          case 6:
+          case 'end':
+            return _context.stop();
+        }
+      }
+    }, _callee, this);
+  }));
+
+  function transactionMiddleware(_x, _x2) {
+    return _ref.apply(this, arguments);
+  }
+
+  return transactionMiddleware;
+}();
+
+/***/ }),
+
+/***/ "./src/server.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -751,173 +922,6 @@ exports.default = Server;
 
 /***/ }),
 
-/***/ "./src/middleware/accessLogger.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.formatter = undefined;
-
-var _koaMorgan = __webpack_require__("koa-morgan");
-
-var _koaMorgan2 = _interopRequireDefault(_koaMorgan);
-
-var _logger = __webpack_require__("./src/utils/logger.js");
-
-var _logger2 = _interopRequireDefault(_logger);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var LOGGER = _logger2.default.getLogger('access');
-
-/**
- * Morgan log formatter.
- * Returns an object containing the desired request and response attributes.
- * The expected output should be a JSON string as <code>bunyan</code> will
- * take the string and merge that JSON with the output (which is the desired
- * result). The expected format is:
- * {
- *   remote-addr: <string>,
- *   date: <clf>,
- *   method: <string>,
- *   url: <fqd string>,
- *   HTTP: <version string>,
- *   user-agent: <string>,
- *   referrer: <string>,
- *   status: <number>,
- *   res[content-length]: <number>,
- *   response-time: <number> ms,
- * }
- * @param  {Object} tokens The map of morgan tokens
- * @param  {Object} req    The request context
- * @param  {Object} res    The response context
- * @return {Object}        The format meta object
- */
-var formatter = exports.formatter = function formatter(tokens, req, res) {
-  var responseTime = tokens['response-time'](req, res);
-
-  return JSON.stringify({
-    'remote-addr': tokens['remote-addr'](req),
-    date: tokens.date(req, res, 'clf'),
-    method: tokens.method(req),
-    url: tokens.url(req),
-    HTTP: tokens['http-version'](req),
-    'user-agent': tokens['user-agent'](req),
-    referrer: tokens.referrer(req),
-    status: tokens.status(req, res),
-    'res[content-length]': tokens.res(req, res, 'content-length'),
-    'response-time': responseTime + ' ms'
-  });
-};
-
-exports.default = (0, _koaMorgan2.default)(formatter, {
-  stream: {
-    write: function write(message) {
-      LOGGER.info(JSON.parse(message));
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./src/middleware/error.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.default = errorMiddleware;
-
-var _logger = __webpack_require__("./src/utils/logger.js");
-
-var _logger2 = _interopRequireDefault(_logger);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var LOGGER = _logger2.default.getLogger('root');
-
-/**
- * [errorParser description]
- * @param  {[type]}   e     [description]
- * @param  {[type]}   ctx   [description]
- * @return {[type]}         [description]
- */
-function errorMiddleware(e, ctx) {
-  return ctx ? LOGGER.error(e, ctx) : LOGGER.error(e);
-}
-
-/***/ }),
-
-/***/ "./src/middleware/transaction.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _domain = __webpack_require__("domain");
-
-var _domain2 = _interopRequireDefault(_domain);
-
-var _v = __webpack_require__("uuid/v4");
-
-var _v2 = _interopRequireDefault(_v);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-/**
- * Add a transaction identifier to every request to track a request's control flow. We use a transactoin ID instead of
- * the session ID or user since both are persistent(ish) identification.
- *
- * @param  {[type]}   ctx   [description]
- * @param  {Function} next  [description]
- * @return {[type]}         [description]
- */
-exports.default = function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ctx, next) {
-    var transactionId, transaction;
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            transactionId = (0, _v2.default)();
-            transaction = _domain2.default.create();
-
-            // eslint-disable-next-line no-param-reassign
-
-            ctx.transactionId = transactionId;
-
-            transaction.add(ctx);
-            transaction.data = {
-              id: transactionId,
-              ctx: ctx
-            };
-
-            transaction.run(next);
-
-          case 6:
-          case 'end':
-            return _context.stop();
-        }
-      }
-    }, _callee, this);
-  }));
-
-  function transactionMiddleware(_x, _x2) {
-    return _ref.apply(this, arguments);
-  }
-
-  return transactionMiddleware;
-}();
-
-/***/ }),
-
 /***/ "./src/utils/logger.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1139,7 +1143,7 @@ function unhandledRejectionHandler(e) {
 /***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__("./index.js");
+module.exports = __webpack_require__("./src/main.js");
 
 
 /***/ }),
@@ -1239,13 +1243,6 @@ module.exports = require("koa-router");
 /***/ (function(module, exports) {
 
 module.exports = require("koa-static");
-
-/***/ }),
-
-/***/ "module-alias":
-/***/ (function(module, exports) {
-
-module.exports = require("module-alias");
 
 /***/ }),
 
