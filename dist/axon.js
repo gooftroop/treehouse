@@ -74,12 +74,14 @@ module.exports =
 
 exports.__esModule = true;
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 /**
  * [notFound description]
  * @param  {[type]} ctx [description]
  * @return {[type]}     [description]
  */
-var notFound = exports.notFound = function () {
+exports.default = function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ctx) {
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
@@ -96,12 +98,12 @@ var notFound = exports.notFound = function () {
     }, _callee, this);
   }));
 
-  return function notFound(_x) {
+  function notFound(_x) {
     return _ref.apply(this, arguments);
-  };
-}();
+  }
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+  return notFound;
+}();
 
 /***/ }),
 
@@ -113,12 +115,14 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 exports.__esModule = true;
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 /**
  * [ping description]
  * @param  {[type]} ctx  [description]
  * @return {[type]}      [description]
  */
-var health = exports.health = function () {
+exports.default = function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ctx) {
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
@@ -135,12 +139,12 @@ var health = exports.health = function () {
     }, _callee, this);
   }));
 
-  return function health(_x) {
+  function health(_x) {
     return _ref.apply(this, arguments);
-  };
-}();
+  }
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+  return health;
+}();
 
 /***/ }),
 
@@ -158,14 +162,18 @@ var _koaRouter2 = _interopRequireDefault(_koaRouter);
 
 var _health = __webpack_require__("./src/api/controllers/health.js");
 
+var _health2 = _interopRequireDefault(_health);
+
 var _ = __webpack_require__("./src/api/controllers/404.js");
+
+var _2 = _interopRequireDefault(_);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var router = new _koaRouter2.default();
 
-router.get('/heath', _health.health);
-router.all('*', _.notFound);
+router.get('/heath', _health2.default);
+router.all('*', _2.default);
 
 exports.default = router;
 
@@ -218,19 +226,35 @@ var _koaStatic2 = _interopRequireDefault(_koaStatic);
 
 var _accessLogger = __webpack_require__("./src/middleware/accessLogger.js");
 
+var _accessLogger2 = _interopRequireDefault(_accessLogger);
+
 var _error = __webpack_require__("./src/middleware/error.js");
+
+var _error2 = _interopRequireDefault(_error);
 
 var _logger = __webpack_require__("./src/utils/logger.js");
 
+var _logger2 = _interopRequireDefault(_logger);
+
 var _router = __webpack_require__("./src/api/router.js");
+
+var _router2 = _interopRequireDefault(_router);
 
 var _sigInitHandler = __webpack_require__("./src/utils/sigInitHandler.js");
 
+var _sigInitHandler2 = _interopRequireDefault(_sigInitHandler);
+
 var _transaction = __webpack_require__("./src/middleware/transaction.js");
+
+var _transaction2 = _interopRequireDefault(_transaction);
 
 var _uncaughtExceptionHandler = __webpack_require__("./src/utils/uncaughtExceptionHandler.js");
 
+var _uncaughtExceptionHandler2 = _interopRequireDefault(_uncaughtExceptionHandler);
+
 var _unhandledRejectionHandler = __webpack_require__("./src/utils/unhandledRejectionHandler.js");
+
+var _unhandledRejectionHandler2 = _interopRequireDefault(_unhandledRejectionHandler);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -239,11 +263,11 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 // Catches ctrl+c event
-process.on('SIGINT', _sigInitHandler.sigInitHandler);
+process.on('SIGINT', _sigInitHandler2.default);
 
 // Catches uncaught exceptions and rejections
-process.on('uncaughtException', _uncaughtExceptionHandler.uncaughtExceptionHandler);
-process.on('unhandledRejection', _unhandledRejectionHandler.unhandledRejectionHandler);
+process.on('uncaughtException', _uncaughtExceptionHandler2.default);
+process.on('unhandledRejection', _unhandledRejectionHandler2.default);
 
 /**
  * [app description]
@@ -266,7 +290,7 @@ var Server = function () {
     this.app = new _koa2.default();
 
     // Create the logger
-    this.logger = _logger.Logger.getLogger('app');
+    this.logger = _logger2.default.getLogger('app');
 
     // Configure the app with common middleware
     this.initialize(this.app);
@@ -350,10 +374,10 @@ var Server = function () {
     app.use((0, _koaBody2.default)(this.config.get('body')));
 
     // Trace a single request process (including over async)
-    app.use(_transaction.transactionMiddleware);
+    app.use(_transaction2.default);
 
     // Configure Request logging
-    app.use(_accessLogger.accessLogger);
+    app.use(_accessLogger2.default);
 
     // Serve asset resources using the 'assets' url
     app.use((0, _koaMount2.default)(this.conf.assets.get('url'), (0, _koaStatic2.default)(this.conf.assets.get('path'), this.conf.assets.get('options'))));
@@ -363,7 +387,7 @@ var Server = function () {
 
     // Configure the request error handling
     // TODO more specific error handling - make this one a fallback handler?
-    app.use(_error.errorMiddleware);
+    app.use(_error2.default);
   };
 
   /**
@@ -433,7 +457,7 @@ var Server = function () {
             case 5:
 
               // Mount the default router
-              this.app.use(_router.router);
+              this.app.use(_router2.default);
 
               return _context2.abrupt('return', this.createServer().listen(this.config.get('port'), this.config.get('hostname'), this.config.get('backlog'), this.getListenCallback(callback)));
 
@@ -492,7 +516,7 @@ exports.default = Server;
 
 
 exports.__esModule = true;
-exports.accessLogger = exports.formatter = undefined;
+exports.formatter = undefined;
 
 var _koaMorgan = __webpack_require__("koa-morgan");
 
@@ -546,7 +570,7 @@ var formatter = exports.formatter = function formatter(tokens, req, res) {
   });
 };
 
-var accessLogger = exports.accessLogger = (0, _koaMorgan2.default)(formatter, {
+exports.default = (0, _koaMorgan2.default)(formatter, {
   stream: {
     write: function write(message) {
       LOGGER.info(JSON.parse(message));
@@ -563,7 +587,7 @@ var accessLogger = exports.accessLogger = (0, _koaMorgan2.default)(formatter, {
 
 
 exports.__esModule = true;
-exports.errorMiddleware = errorMiddleware;
+exports.default = errorMiddleware;
 
 var _logger = __webpack_require__("./src/utils/logger.js");
 
@@ -592,7 +616,18 @@ function errorMiddleware(e, ctx) {
 
 
 exports.__esModule = true;
-exports.transactionMiddleware = undefined;
+
+var _domain = __webpack_require__("domain");
+
+var _domain2 = _interopRequireDefault(_domain);
+
+var _v = __webpack_require__("uuid/v4");
+
+var _v2 = _interopRequireDefault(_v);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 /**
  * Add a transaction identifier to every request to track a request's control flow. We use a transactoin ID instead of
@@ -602,7 +637,7 @@ exports.transactionMiddleware = undefined;
  * @param  {Function} next  [description]
  * @return {[type]}         [description]
  */
-var transactionMiddleware = exports.transactionMiddleware = function () {
+exports.default = function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ctx, next) {
     var transactionId, transaction;
     return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -632,22 +667,12 @@ var transactionMiddleware = exports.transactionMiddleware = function () {
     }, _callee, this);
   }));
 
-  return function transactionMiddleware(_x, _x2) {
+  function transactionMiddleware(_x, _x2) {
     return _ref.apply(this, arguments);
-  };
+  }
+
+  return transactionMiddleware;
 }();
-
-var _domain = __webpack_require__("domain");
-
-var _domain2 = _interopRequireDefault(_domain);
-
-var _v = __webpack_require__("uuid/v4");
-
-var _v2 = _interopRequireDefault(_v);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 /***/ }),
 
@@ -781,7 +806,7 @@ exports.default = Logger;
 
 
 exports.__esModule = true;
-exports.sigInitHandler = undefined;
+exports.default = sigInitHandler;
 
 var _logger = __webpack_require__("./src/utils/logger.js");
 
@@ -804,8 +829,6 @@ function sigInitHandler() {
   process.exit(0);
 }
 
-exports.sigInitHandler = sigInitHandler;
-
 /***/ }),
 
 /***/ "./src/utils/uncaughtExceptionHandler.js":
@@ -815,7 +838,7 @@ exports.sigInitHandler = sigInitHandler;
 
 
 exports.__esModule = true;
-exports.uncaughtExceptionHandler = undefined;
+exports.default = uncaughtExceptionHandler;
 
 var _logger = __webpack_require__("./src/utils/logger.js");
 
@@ -839,8 +862,6 @@ function uncaughtExceptionHandler(e) {
   process.exit(1);
 }
 
-exports.uncaughtExceptionHandler = uncaughtExceptionHandler;
-
 /***/ }),
 
 /***/ "./src/utils/unhandledRejectionHandler.js":
@@ -850,7 +871,7 @@ exports.uncaughtExceptionHandler = uncaughtExceptionHandler;
 
 
 exports.__esModule = true;
-exports.unhandledRejectionHandler = undefined;
+exports.default = unhandledRejectionHandler;
 
 var _logger = __webpack_require__("./src/utils/logger.js");
 
@@ -870,8 +891,6 @@ function unhandledRejectionHandler(e) {
     LOGGER.error('An unhandled promise rejection occurred: ' + e);
   }
 }
-
-exports.unhandledRejectionHandler = unhandledRejectionHandler;
 
 /***/ }),
 

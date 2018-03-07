@@ -44,7 +44,7 @@ export const formatter = function (tokens, req, res) {
   });
 };
 
-export const accessLogger = morgan(formatter, {
+export default morgan(formatter, {
   stream: {
     write(message) {
       LOGGER.info(JSON.parse(message));

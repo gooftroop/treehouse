@@ -9,7 +9,7 @@ import uuidv4 from 'uuid/v4';
  * @param  {Function} next  [description]
  * @return {[type]}         [description]
  */
-export async function transactionMiddleware(ctx: Object, next: Function): void {
+export default async function transactionMiddleware(ctx: Object, next: Function): void {
   const transactionId: string = uuidv4();
   const transaction: Object = domain.create();
 

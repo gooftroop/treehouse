@@ -8,14 +8,14 @@ import Koa from 'koa';
 import mount from 'koa-mount';
 import serve from 'koa-static';
 
-import { accessLogger } from 'axon/middleware/accessLogger';
-import { errorMiddleware } from 'axon/middleware/error';
-import { Logger } from 'axon/utils/logger';
-import { router } from 'axon/api/router';
-import { sigInitHandler } from 'axon/utils/sigInitHandler';
-import { transactionMiddleware } from 'axon/middleware/transaction';
-import { uncaughtExceptionHandler } from 'axon/utils/uncaughtExceptionHandler';
-import { unhandledRejectionHandler } from 'axon/utils/unhandledRejectionHandler';
+import accessLogger from 'axon/middleware/accessLogger';
+import errorMiddleware from 'axon/middleware/error';
+import Logger from 'axon/utils/logger';
+import router from 'axon/api/router';
+import sigInitHandler from 'axon/utils/sigInitHandler';
+import transactionMiddleware from 'axon/middleware/transaction';
+import uncaughtExceptionHandler from 'axon/utils/uncaughtExceptionHandler';
+import unhandledRejectionHandler from 'axon/utils/unhandledRejectionHandler';
 
 // Catches ctrl+c event
 process.on('SIGINT', sigInitHandler);

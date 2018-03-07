@@ -8,6 +8,6 @@ const LOGGER: Object = Logger.getLogger('root');
  * @param  {[type]}   ctx   [description]
  * @return {[type]}         [description]
  */
-export function errorMiddleware(e: Error, ctx: Object): void {
+export default function errorMiddleware(e: Error, ctx: Object): void {
   return ctx ? LOGGER.error(e, ctx) : LOGGER.error(e);
 }

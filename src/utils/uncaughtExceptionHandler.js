@@ -7,7 +7,7 @@ const LOGGER: Object = Logger.getLogger('error');
  * @param  {[type]} e [description]
  * @return {[type]}   [description]
  */
-function uncaughtExceptionHandler(e: Error): void {
+export default function uncaughtExceptionHandler(e: Error): void {
   if (LOGGER) {
     LOGGER.error('An unhandled exception occurred. Server is exiting...');
     LOGGER.error(e);
@@ -15,5 +15,3 @@ function uncaughtExceptionHandler(e: Error): void {
 
   process.exit(1);
 }
-
-export { uncaughtExceptionHandler };

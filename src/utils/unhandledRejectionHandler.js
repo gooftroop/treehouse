@@ -7,10 +7,8 @@ const LOGGER: Object = Logger.getLogger('error');
  * @param  {[type]} e [description]
  * @return {[type]}   [description]
  */
-function unhandledRejectionHandler(e: Error): void {
+export default function unhandledRejectionHandler(e: Error): void {
   if (LOGGER) {
     LOGGER.error(`An unhandled promise rejection occurred: ${e}`);
   }
 }
-
-export { unhandledRejectionHandler };
