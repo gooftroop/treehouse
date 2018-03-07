@@ -11,7 +11,6 @@ import serve from 'koa-static';
 import accessLogger from 'axon/middleware/accessLogger';
 import errorMiddleware from 'axon/middleware/error';
 import Logger from 'axon/utils/logger';
-import router from 'axon/api/router';
 import sigInitHandler from 'axon/utils/sigInitHandler';
 import transactionMiddleware from 'axon/middleware/transaction';
 import uncaughtExceptionHandler from 'axon/utils/uncaughtExceptionHandler';
@@ -174,9 +173,6 @@ export default class Server {
     try {
       // Call the abstract initialize method to allow for custom setup
       await this.configure(this.app, this.config);
-
-      // Mount the default router
-      this.app.use(router);
 
       return this.createServer().listen(
         this.config.get('port'),

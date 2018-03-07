@@ -393,7 +393,7 @@ exports.codes = codes;
 
 
 exports.__esModule = true;
-exports.codes = exports.Logger = exports.Exception = undefined;
+exports.router = exports.Logger = exports.Exception = exports.codes = undefined;
 
 var _exception = __webpack_require__("./src/exception/index.js");
 
@@ -402,6 +402,10 @@ var _exception2 = _interopRequireDefault(_exception);
 var _logger = __webpack_require__("./src/utils/logger.js");
 
 var _logger2 = _interopRequireDefault(_logger);
+
+var _router = __webpack_require__("./src/api/router.js");
+
+var _router2 = _interopRequireDefault(_router);
 
 var _server = __webpack_require__("./src/server.js");
 
@@ -416,9 +420,10 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _server2.default;
+exports.codes = codes;
 exports.Exception = _exception2.default;
 exports.Logger = _logger2.default;
-exports.codes = codes;
+exports.router = _router2.default;
 
 /***/ }),
 
@@ -646,10 +651,6 @@ var _logger = __webpack_require__("./src/utils/logger.js");
 
 var _logger2 = _interopRequireDefault(_logger);
 
-var _router = __webpack_require__("./src/api/router.js");
-
-var _router2 = _interopRequireDefault(_router);
-
 var _sigInitHandler = __webpack_require__("./src/utils/sigInitHandler.js");
 
 var _sigInitHandler2 = _interopRequireDefault(_sigInitHandler);
@@ -865,26 +866,22 @@ var Server = function () {
               return this.configure(this.app, this.config);
 
             case 5:
-
-              // Mount the default router
-              this.app.use(_router2.default);
-
               return _context2.abrupt('return', this.createServer().listen(this.config.get('port'), this.config.get('hostname'), this.config.get('backlog'), this.getListenCallback(callback)));
 
-            case 9:
-              _context2.prev = 9;
+            case 8:
+              _context2.prev = 8;
               _context2.t0 = _context2['catch'](2);
 
               this.logger.error(_context2.t0);
               this.destroy();
               throw _context2.t0;
 
-            case 14:
+            case 13:
             case 'end':
               return _context2.stop();
           }
         }
-      }, _callee2, this, [[2, 9]]);
+      }, _callee2, this, [[2, 8]]);
     }));
 
     function start() {
