@@ -781,7 +781,7 @@ exports.default = Logger;
 
 
 exports.__esModule = true;
-exports.sigIntHandler = sigIntHandler;
+exports.sigIntHandler = undefined;
 
 var _logger = __webpack_require__("./src/utils/logger.js");
 
@@ -803,6 +803,8 @@ function sigIntHandler() {
 
   process.exit(0);
 }
+
+exports.sigIntHandler = sigIntHandler;
 
 /***/ }),
 

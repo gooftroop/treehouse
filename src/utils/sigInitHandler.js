@@ -7,10 +7,12 @@ const LOGGER: Object = Logger.getLogger();
  * @param  {[type]} void [description]
  * @return {[type]}      [description]
  */
-export function sigIntHandler(): void {
+function sigIntHandler(): void {
   if (LOGGER) {
     LOGGER.info('Captured ctrl-c');
   }
 
   process.exit(0);
 }
+
+export { sigIntHandler };
