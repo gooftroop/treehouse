@@ -49,6 +49,7 @@
     "nyc": "^11.3.0"
   },
   "_moduleAliases": {
-    "axon": "./src"
+    "axon": "./src",
+    "configuration": "./config"
   }
 }

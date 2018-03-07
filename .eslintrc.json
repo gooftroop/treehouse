@@ -37,7 +37,8 @@
   "settings": {
     "import/resolver": {
       "configurable": {
-        "axon": "./src"
+        "axon": "./src",
+        "configuration": "./config"
       }
     }
   }
