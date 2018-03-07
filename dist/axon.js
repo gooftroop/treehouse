@@ -66,6 +66,41 @@ module.exports =
 /************************************************************************/
 /******/ ({
 
+/***/ "./index.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* WEBPACK VAR INJECTION */(function(__dirname) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axon_exception__ = __webpack_require__("./src/exception/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axon_exception___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axon_exception__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axon_utils_logger__ = __webpack_require__("./src/utils/logger.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axon_utils_logger___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axon_utils_logger__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axon_main__ = __webpack_require__("./src/main.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axon_main___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axon_main__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axon_exception_codes__ = __webpack_require__("./src/exception/codes.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axon_exception_codes___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_axon_exception_codes__);
+/* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "Exception", function() { return __WEBPACK_IMPORTED_MODULE_0_axon_exception___default.a; });
+/* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "Logger", function() { return __WEBPACK_IMPORTED_MODULE_1_axon_utils_logger___default.a; });
+/* harmony reexport (module object) */ __webpack_require__.d(__webpack_exports__, "codes", function() { return __WEBPACK_IMPORTED_MODULE_3_axon_exception_codes__; });
+const moduleAlias = __webpack_require__("module-alias");
+
+moduleAlias(`${__dirname}/package.json`);
+
+/* eslint-disable import/first */
+
+
+
+
+
+/* eslint-enable import/first */
+
+/* harmony default export */ __webpack_exports__["default"] = (__WEBPACK_IMPORTED_MODULE_2_axon_main___default.a);
+
+
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, "/"))
+
+/***/ }),
+
 /***/ "./src/api/controllers/404.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -176,6 +211,213 @@ router.get('/heath', _health2.default);
 router.all('*', _2.default);
 
 exports.default = router;
+
+/***/ }),
+
+/***/ "./src/exception/codes.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+var FATAL_ERROR = exports.FATAL_ERROR = {
+  status: 500,
+  code: 0,
+  category: 'IllegalStateException',
+  message: 'An error occurred. If this error persists, please contact your System Administrator'
+};
+
+var GENERAL_ERROR = exports.GENERAL_ERROR = function GENERAL_ERROR(message) {
+  return {
+    status: 400,
+    code: 0,
+    category: 'GeneralException',
+    message: message
+  };
+};
+
+var NOT_YET_IMPLEMENTED = exports.NOT_YET_IMPLEMENTED = {
+  status: 501,
+  code: 1,
+  category: 'NotYetImplemented',
+  message: 'This method must be implmented'
+};
+
+var ILLEGAL_STATE_EXCEPTION = exports.ILLEGAL_STATE_EXCEPTION = {
+  status: 500,
+  code: 2,
+  category: 'IllegalStateException',
+  message: 'Application not configured correctly'
+};
+
+var NOT_AUTHORIZED = exports.NOT_AUTHORIZED = {
+  status: 401,
+  code: 3,
+  category: 'SecurityException',
+  message: 'You are not authorized to access this resource'
+};
+
+var NOT_ALLOWED = exports.NOT_ALLOWED = {
+  status: 403,
+  code: 4,
+  category: 'SecurityException',
+  message: 'You are not authorized to access this resource'
+};
+
+var MISSING_REQUIRED_PARAMETER = exports.MISSING_REQUIRED_PARAMETER = {
+  status: 400,
+  code: 5,
+  category: 'GeneralException',
+  message: 'A required parameter was missing'
+};
+
+var MODEL_NOT_FOUND = exports.MODEL_NOT_FOUND = {
+  status: 404,
+  code: 100,
+  category: 'NotFoundException',
+  message: 'Requested model could not be found'
+};
+
+var MODEL_NOT_UPDATED = exports.MODEL_NOT_UPDATED = {
+  status: 400,
+  code: 200,
+  category: 'TransactionException',
+  message: 'Update failed'
+};
+
+var MODEL_NOT_CREATED = exports.MODEL_NOT_CREATED = {
+  status: 400,
+  code: 201,
+  category: 'TransactionException',
+  message: 'Creation failed'
+};
+
+var VALIDATION_ERROR = exports.VALIDATION_ERROR = function VALIDATION_ERROR(message) {
+  return {
+    status: 400,
+    code: 202,
+    category: 'ValidationException',
+    message: message
+  };
+};
+
+/***/ }),
+
+/***/ "./src/exception/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.codes = exports.default = undefined;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _codes = __webpack_require__("./src/exception/codes.js");
+
+var codes = _interopRequireWildcard(_codes);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var DEFAULT_CODE = 0;
+var DEFAULT_MESSAGE = 'An Unknown error occurred';
+
+/**
+ * [resolveCode description]
+ * @param  {[type]} payload [description]
+ * @return {[type]}         [description]
+ */
+function resolveCode(payload) {
+  if (typeof payload === 'number') {
+    return 'code' in payload ? DEFAULT_CODE : payload.code;
+  }
+
+  return DEFAULT_CODE;
+}
+
+/**
+ * [resolveMessage description]
+ * @param  {[type]} payload [description]
+ * @return {[type]}         [description]
+ */
+function resolveMessage(payload) {
+  if ((typeof payload === 'undefined' ? 'undefined' : _typeof(payload)) === 'object') {
+    return 'message' in payload ? DEFAULT_MESSAGE : payload.message;
+  }
+
+  return payload;
+}
+
+/**
+ * [resolveStatus description]
+ * @param  {[type]} payload [description]
+ * @param  {[type]} status  [description]
+ * @return {[type]}         [description]
+ */
+function resolveStatus(payload, status) {
+  if ((typeof payload === 'undefined' ? 'undefined' : _typeof(payload)) === 'object' && 'status' in payload) {
+    return payload.status;
+  }
+
+  return status == null ? DEFAULT_CODE : status;
+}
+
+/**
+ * [code description]
+ * @type {[type]}
+ */
+
+var Exception = function (_Error) {
+  _inherits(Exception, _Error);
+
+  /**
+   * [constructor description]
+   * @param  {[type]} payload [description]
+   * @param  {[type]} code    [description]
+   * @param  {[type]} status  [description]
+   * @return {[type]}         [description]
+   */
+  function Exception() {
+    var payload = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_MESSAGE;
+    var status = arguments[1];
+
+    _classCallCheck(this, Exception);
+
+    var _this = _possibleConstructorReturn(this, _Error.call(this, resolveMessage(payload)));
+
+    _this.code = resolveCode(payload);
+    _this.status = resolveStatus(payload, status);
+
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(_this, _this.constructor);
+    } else {
+      _this.stack = new Error(message).stack;
+    }
+    return _this;
+  }
+
+  /**
+   *
+   */
+
+
+  Exception.prototype.toString = function toString() {
+    return this.code + ' - ' + this.status + ' ' + this.message;
+  };
+
+  return Exception;
+}(Error);
+
+exports.default = Exception;
+exports.codes = codes;
 
 /***/ }),
 
@@ -897,7 +1139,7 @@ function unhandledRejectionHandler(e) {
 /***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__("./src/main.js");
+module.exports = __webpack_require__("./index.js");
 
 
 /***/ }),
@@ -997,6 +1239,13 @@ module.exports = require("koa-router");
 /***/ (function(module, exports) {
 
 module.exports = require("koa-static");
+
+/***/ }),
+
+/***/ "module-alias":
+/***/ (function(module, exports) {
+
+module.exports = require("module-alias");
 
 /***/ }),
 
