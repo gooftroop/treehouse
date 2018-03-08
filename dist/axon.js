@@ -170,12 +170,13 @@ var _2 = _interopRequireDefault(_);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var router = new _koaRouter2.default();
+exports.default = function () {
+  var router = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _koaRouter2.default();
 
-router.get('/heath', _health2.default);
-router.all('*', _2.default);
-
-exports.default = router;
+  router.get('/heath', _health2.default);
+  router.all('*', _2.default);
+  return router;
+};
 
 /***/ }),
 
@@ -393,7 +394,7 @@ exports.codes = codes;
 
 
 exports.__esModule = true;
-exports.router = exports.Logger = exports.Exception = exports.codes = undefined;
+exports.Logger = exports.Exception = exports.codes = undefined;
 
 var _exception = __webpack_require__("./src/exception/index.js");
 
@@ -402,10 +403,6 @@ var _exception2 = _interopRequireDefault(_exception);
 var _logger = __webpack_require__("./src/utils/logger.js");
 
 var _logger2 = _interopRequireDefault(_logger);
-
-var _router = __webpack_require__("./src/api/router.js");
-
-var _router2 = _interopRequireDefault(_router);
 
 var _server = __webpack_require__("./src/server.js");
 
@@ -423,7 +420,6 @@ exports.default = _server2.default;
 exports.codes = codes;
 exports.Exception = _exception2.default;
 exports.Logger = _logger2.default;
-exports.router = _router2.default;
 
 /***/ }),
 
@@ -677,6 +673,10 @@ var _accessLogger = __webpack_require__("./src/middleware/accessLogger.js");
 
 var _accessLogger2 = _interopRequireDefault(_accessLogger);
 
+var _router = __webpack_require__("./src/api/router.js");
+
+var _router2 = _interopRequireDefault(_router);
+
 var _error = __webpack_require__("./src/middleware/error.js");
 
 var _error2 = _interopRequireDefault(_error);
@@ -805,6 +805,16 @@ var Server = function () {
    */
 
 
+  Server.prototype.getRouter = function getRouter() {
+    throw new Error('No router provided');
+  };
+
+  /**
+   * [app description]
+   * @type {[type]}
+   */
+
+
   Server.prototype.initialize = function initialize(app) {
     // Add common request security measures
     app.use((0, _koaHelmet2.default)());
@@ -883,6 +893,7 @@ var Server = function () {
   Server.prototype.start = function () {
     var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
       var callback = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      var router;
       return regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
@@ -900,22 +911,28 @@ var Server = function () {
               return this.configure(this.app, this.config);
 
             case 5:
+              router = (0, _router2.default)(this.getRouter());
+
+
+              this.app.use(router.routes());
+              this.app.use(router.allowedMethods());
+
               return _context2.abrupt('return', this.createServer().listen(this.config.get('port'), this.config.get('hostname'), this.config.get('backlog'), this.getListenCallback(callback)));
 
-            case 8:
-              _context2.prev = 8;
+            case 11:
+              _context2.prev = 11;
               _context2.t0 = _context2['catch'](2);
 
               this.logger.error(_context2.t0);
               this.destroy();
               throw _context2.t0;
 
-            case 13:
+            case 16:
             case 'end':
               return _context2.stop();
           }
         }
-      }, _callee2, this, [[2, 8]]);
+      }, _callee2, this, [[2, 11]]);
     }));
 
     function start() {

@@ -9,6 +9,7 @@ import mount from 'koa-mount';
 import serve from 'koa-static';
 
 import accessLogger from 'axon/middleware/accessLogger';
+import bootstrapRouter from 'axon/api/router';
 import errorMiddleware from 'axon/middleware/error';
 import Logger from 'axon/utils/logger';
 import sigInitHandler from 'axon/utils/sigInitHandler';
@@ -104,6 +105,14 @@ export default class Server {
    * [app description]
    * @type {[type]}
    */
+  getRouter(): Object {
+    throw new Error('No router provided');
+  }
+
+  /**
+   * [app description]
+   * @type {[type]}
+   */
   initialize(app: Object): void {
     // Add common request security measures
     app.use(helmet());
@@ -173,6 +182,11 @@ export default class Server {
     try {
       // Call the abstract initialize method to allow for custom setup
       await this.configure(this.app, this.config);
+
+      const router: Object = bootstrapRouter(this.getRouter());
+
+      this.app.use(router.routes());
+      this.app.use(router.allowedMethods());
 
       return this.createServer().listen(
         this.config.get('port'),

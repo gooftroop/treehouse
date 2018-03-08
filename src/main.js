@@ -1,9 +1,8 @@
 import Exception from 'axon/exception';
 import Logger from 'axon/utils/logger';
-import router from 'axon/api/router';
 import Server from 'axon/server';
 
 import * as codes from 'axon/exception/codes';
 
 export default Server;
-export { codes, Exception, Logger, router };
+export { codes, Exception, Logger };
