@@ -365,19 +365,10 @@ var Exception = function (_Error) {
     if (typeof Error.captureStackTrace === 'function') {
       Error.captureStackTrace(_this, _this.constructor);
     } else {
-      _this.stack = new Error(message).stack;
+      _this.stack = new Error(_this.message).stack;
     }
     return _this;
   }
-
-  /**
-   *
-   */
-
-
-  Exception.prototype.toString = function toString() {
-    return this.code + ' - ' + this.status + ' ' + this.message;
-  };
 
   return Exception;
 }(Error);
