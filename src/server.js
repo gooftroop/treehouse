@@ -95,8 +95,11 @@ export default class Server {
       if (callback != null) {
         callback();
       }
-      // TODO does this break?
-      process.send('ready');
+
+      if (process.send) {
+        process.send('ready');
+      }
+
       this.logger.info(`Server listening at ${this.config.get('hostname')}:${this.config.get('port')}...`);
     };
   }

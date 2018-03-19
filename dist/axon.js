@@ -784,8 +784,11 @@ var Server = function () {
       if (callback != null) {
         callback();
       }
-      // TODO does this break?
-      process.send('ready');
+
+      if (process.send) {
+        process.send('ready');
+      }
+
       _this.logger.info('Server listening at ' + _this.config.get('hostname') + ':' + _this.config.get('port') + '...');
     };
   };
