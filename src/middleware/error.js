@@ -12,6 +12,7 @@ export default async (ctx: Object, next: Function): void => {
   try {
     await next();
   } catch (e) {
+    debugger;
     LOGGER.error(e, ctx);
     ctx.status = e.status || 500;
     ctx.body = e.message;

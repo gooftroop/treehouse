@@ -532,19 +532,20 @@ exports.default = function () {
             return next();
 
           case 3:
-            _context.next = 11;
+            _context.next = 12;
             break;
 
           case 5:
             _context.prev = 5;
             _context.t0 = _context['catch'](0);
 
+            debugger;
             LOGGER.error(_context.t0, ctx);
             ctx.status = _context.t0.status || 500;
             ctx.body = _context.t0.message;
             ctx.app.emit('error', _context.t0, ctx);
 
-          case 11:
+          case 12:
           case 'end':
             return _context.stop();
         }
@@ -577,8 +578,6 @@ var _v2 = _interopRequireDefault(_v);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
 /**
  * Add a transaction identifier to every request to track a request's control flow. We use a transactoin ID instead of
  * the session ID or user since both are persistent(ish) identification.
@@ -587,42 +586,21 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
  * @param  {Function} next  [description]
  * @return {[type]}         [description]
  */
-exports.default = function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ctx, next) {
-    var transactionId, transaction;
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            transactionId = (0, _v2.default)();
-            transaction = _domain2.default.create();
+exports.default = function (ctx, next) {
+  var transactionId = (0, _v2.default)();
+  var transaction = _domain2.default.create();
 
-            // eslint-disable-next-line no-param-reassign
+  // eslint-disable-next-line no-param-reassign
+  ctx.transactionId = transactionId;
 
-            ctx.transactionId = transactionId;
+  transaction.add(ctx);
+  transaction.data = {
+    id: transactionId,
+    ctx: ctx
+  };
 
-            transaction.add(ctx);
-            transaction.data = {
-              id: transactionId,
-              ctx: ctx
-            };
-
-            transaction.run(next);
-
-          case 6:
-          case 'end':
-            return _context.stop();
-        }
-      }
-    }, _callee, this);
-  }));
-
-  function transactionMiddleware(_x, _x2) {
-    return _ref.apply(this, arguments);
-  }
-
-  return transactionMiddleware;
-}();
+  transaction.run(next);
+};
 
 /***/ }),
 
@@ -839,15 +817,14 @@ var Server = function () {
     // Configure Request logging
     app.use(_accessLogger2.default);
 
+    // Configure the request error handling
+    app.use(_error2.default);
+
     // Serve asset resources using the 'assets' url
     app.use((0, _koaMount2.default)(this.config.assets.get('url'), (0, _koaStatic2.default)(this.config.assets.get('path'), this.config.assets.get('options'))));
 
     // Serve static resources using the 'static' url
     app.use((0, _koaMount2.default)(this.config.static.get('url'), (0, _koaStatic2.default)(this.config.static.get('path'), this.config.static.get('options'))));
-
-    // Configure the request error handling
-    // TODO more specific error handling - make this one a fallback handler?
-    app.use(_error2.default);
   };
 
   /**

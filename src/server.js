@@ -135,6 +135,9 @@ export default class Server {
     // Configure Request logging
     app.use(accessLogger);
 
+    // Configure the request error handling
+    app.use(errorMiddleware);
+
     // Serve asset resources using the 'assets' url
     app.use(mount(
       this.config.assets.get('url'),
@@ -146,10 +149,6 @@ export default class Server {
       this.config.static.get('url'),
       serve(this.config.static.get('path'), this.config.static.get('options')),
     ));
-
-    // Configure the request error handling
-    // TODO more specific error handling - make this one a fallback handler?
-    app.use(errorMiddleware);
   }
 
   /**
