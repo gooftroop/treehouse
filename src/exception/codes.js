@@ -1,15 +1,27 @@
 export const FATAL_ERROR: Object = {
   status: 500,
-  code: 0,
+  code: -1,
   category: 'IllegalStateException',
   message: 'An error occurred. If this error persists, please contact your System Administrator',
 };
 
-export const GENERAL_ERROR: Function = function (message: string): Object {
+export const GENERAL_ERROR: Function = (message: String): Object => {
   return {
     status: 400,
-    code: 0,
+    code: '0a',
     category: 'GeneralException',
+    message,
+  };
+};
+
+export const NETWORK_ERROR: Function = (
+  message: String,
+  status: Number = 500,
+): Object => {
+  return {
+    status,
+    code: '0b',
+    category: 'NetworkException',
     message,
   };
 };
@@ -32,14 +44,14 @@ export const NOT_AUTHORIZED: Object = {
   status: 401,
   code: 3,
   category: 'SecurityException',
-  message: 'You are not authorized to access this resource',
+  message: 'Forbidden',
 };
 
 export const NOT_ALLOWED: Object = {
   status: 403,
   code: 4,
   category: 'SecurityException',
-  message: 'You are not authorized to access this resource',
+  message: 'Forbidden',
 };
 
 export const MISSING_REQUIRED_PARAMETER: Object = {

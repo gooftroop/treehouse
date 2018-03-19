@@ -189,7 +189,7 @@ exports.default = function () {
 exports.__esModule = true;
 var FATAL_ERROR = exports.FATAL_ERROR = {
   status: 500,
-  code: 0,
+  code: -1,
   category: 'IllegalStateException',
   message: 'An error occurred. If this error persists, please contact your System Administrator'
 };
@@ -197,8 +197,19 @@ var FATAL_ERROR = exports.FATAL_ERROR = {
 var GENERAL_ERROR = exports.GENERAL_ERROR = function GENERAL_ERROR(message) {
   return {
     status: 400,
-    code: 0,
+    code: '0a',
     category: 'GeneralException',
+    message: message
+  };
+};
+
+var NETWORK_ERROR = exports.NETWORK_ERROR = function NETWORK_ERROR(message) {
+  var status = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 500;
+
+  return {
+    status: status,
+    code: '0b',
+    category: 'NetworkException',
     message: message
   };
 };
@@ -221,14 +232,14 @@ var NOT_AUTHORIZED = exports.NOT_AUTHORIZED = {
   status: 401,
   code: 3,
   category: 'SecurityException',
-  message: 'You are not authorized to access this resource'
+  message: 'Forbidden'
 };
 
 var NOT_ALLOWED = exports.NOT_ALLOWED = {
   status: 403,
   code: 4,
   category: 'SecurityException',
-  message: 'You are not authorized to access this resource'
+  message: 'Forbidden'
 };
 
 var MISSING_REQUIRED_PARAMETER = exports.MISSING_REQUIRED_PARAMETER = {
