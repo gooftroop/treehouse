@@ -35,7 +35,7 @@
     "koa-static": "^4.0.2",
     "module-alias": "^2.0.3",
     "uuid": "^3.2.1",
-    "webpack": "^3.8.1",
+    "webpack": "^4.4.0",
     "webpack-node-externals": "^1.6.0"
   },
   "devDependencies": {
