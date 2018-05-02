@@ -185,7 +185,7 @@ export default class Server {
       // Call the abstract initialize method to allow for custom setup
       await this.configure(this.app, this.config);
 
-      const router: Object = bootstrapRouter(this.getRouter());
+      const router: Object = bootstrapRouter(this.createRouter());
 
       this.app.use(router.routes());
       this.app.use(router.allowedMethods());

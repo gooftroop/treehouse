@@ -36,10 +36,7 @@
   },
   "settings": {
     "import/resolver": {
-      "configurable": {
-        "axon": "./src",
-        "configuration": "./config"
-      }
+      "babel-module": {}
     }
   }
 }

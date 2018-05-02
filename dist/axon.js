@@ -955,7 +955,7 @@ var Server = function () {
               return this.configure(this.app, this.config);
 
             case 5:
-              router = (0, _router2.default)(this.getRouter());
+              router = (0, _router2.default)(this.createRouter());
 
 
               this.app.use(router.routes());
