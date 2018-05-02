@@ -787,6 +787,16 @@ var Server = function () {
   }
 
   /**
+   * [app description]
+   * @type {[type]}
+   */
+
+
+  Server.prototype.createRouter = function createRouter() {
+    throw new Error('No router provided');
+  };
+
+  /**
    * [createServer description]
    * @param  {[type]} void [description]
    * @return {[type]}      [description]
@@ -842,16 +852,6 @@ var Server = function () {
 
       _this.logger.info('Server listening at ' + _this.config.get('hostname') + ':' + _this.config.get('port') + '...');
     };
-  };
-
-  /**
-   * [app description]
-   * @type {[type]}
-   */
-
-
-  Server.prototype.getRouter = function getRouter() {
-    throw new Error('No router provided');
   };
 
   /**

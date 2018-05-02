@@ -55,6 +55,14 @@ export default class Server {
   }
 
   /**
+   * [app description]
+   * @type {[type]}
+   */
+  createRouter(): Object {
+    throw new Error('No router provided');
+  }
+
+  /**
    * [createServer description]
    * @param  {[type]} void [description]
    * @return {[type]}      [description]
@@ -102,14 +110,6 @@ export default class Server {
 
       this.logger.info(`Server listening at ${this.config.get('hostname')}:${this.config.get('port')}...`);
     };
-  }
-
-  /**
-   * [app description]
-   * @type {[type]}
-   */
-  getRouter(): Object {
-    throw new Error('No router provided');
   }
 
   /**
