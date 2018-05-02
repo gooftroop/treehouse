@@ -635,6 +635,8 @@ var _v2 = _interopRequireDefault(_v);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 /**
  * Add a transaction identifier to every request to track a request's control flow. We use a transactoin ID instead of
  * the session ID or user since both are persistent(ish) identification.
@@ -656,7 +658,32 @@ exports.default = function (ctx, next) {
     ctx: ctx
   };
 
-  transaction.run(next);
+  return new Promise(function (resolve, reject) {
+    transaction.run(_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return next();
+
+            case 3:
+              return _context.abrupt('return', resolve());
+
+            case 6:
+              _context.prev = 6;
+              _context.t0 = _context['catch'](0);
+              return _context.abrupt('return', reject(_context.t0));
+
+            case 9:
+            case 'end':
+              return _context.stop();
+          }
+        }
+      }, _callee, undefined, [[0, 6]]);
+    })));
+  });
 };
 
 /***/ }),
@@ -874,7 +901,7 @@ var Server = function () {
     app.use((0, _koaBody2.default)(this.config.get('body')));
 
     // Trace a single request process (including over async)
-    // app.use(transactionMiddleware);
+    app.use(_transaction2.default);
 
     // Configure Request logging
     app.use(_accessLogger2.default);

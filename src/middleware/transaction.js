@@ -22,5 +22,14 @@ export default (ctx: Object, next: Function): void => {
     ctx,
   };
 
-  transaction.run(next);
+  return new Promise((resolve, reject) => {
+    transaction.run(async () => {
+      try {
+        await next();
+        return resolve();
+      } catch (e) {
+        return reject(e);
+      }
+    });
+  });
 };

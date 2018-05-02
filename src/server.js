@@ -130,7 +130,7 @@ export default class Server {
     app.use(body(this.config.get('body')));
 
     // Trace a single request process (including over async)
-    // app.use(transactionMiddleware);
+    app.use(transactionMiddleware);
 
     // Configure Request logging
     app.use(accessLogger);
