@@ -130,13 +130,13 @@ export default class Server {
     app.use(body(this.config.get('body')));
 
     // Trace a single request process (including over async)
-    app.use(transactionMiddleware);
+    // app.use(transactionMiddleware);
 
     // Configure Request logging
     app.use(accessLogger);
 
     // Configure the request error handling
-    app.use(errorMiddleware);
+    // app.use(errorMiddleware);
 
     // Serve asset resources using the 'assets' url
     app.use(mount(
