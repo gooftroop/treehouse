@@ -3,6 +3,9 @@ module.exports =
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
+/******/ 	// object to store loaded and loading wasm modules
+/******/ 	var installedWasmModules = {};
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/
@@ -45,6 +48,11 @@ module.exports =
 /******/ 		}
 /******/ 	};
 /******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
 /******/ 	__webpack_require__.n = function(module) {
 /******/ 		var getter = module && module.__esModule ?
@@ -60,6 +68,10 @@ module.exports =
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 /******/
+/******/ 	// object with all compiled WebAssembly.Modules
+/******/ 	__webpack_require__.w = {};
+/******/
+/******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
@@ -67,6 +79,11 @@ module.exports =
 /******/ ({
 
 /***/ "./src/api/controllers/404.js":
+/*!************************************!*\
+  !*** ./src/api/controllers/404.js ***!
+  \************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -108,6 +125,11 @@ exports.default = function () {
 /***/ }),
 
 /***/ "./src/api/controllers/health.js":
+/*!***************************************!*\
+  !*** ./src/api/controllers/health.js ***!
+  \***************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -149,6 +171,11 @@ exports.default = function () {
 /***/ }),
 
 /***/ "./src/api/router.js":
+/*!***************************!*\
+  !*** ./src/api/router.js ***!
+  \***************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -156,15 +183,15 @@ exports.default = function () {
 
 exports.__esModule = true;
 
-var _koaRouter = __webpack_require__("koa-router");
+var _koaRouter = __webpack_require__(/*! koa-router */ "koa-router");
 
 var _koaRouter2 = _interopRequireDefault(_koaRouter);
 
-var _health = __webpack_require__("./src/api/controllers/health.js");
+var _health = __webpack_require__(/*! ./controllers/health */ "./src/api/controllers/health.js");
 
 var _health2 = _interopRequireDefault(_health);
 
-var _ = __webpack_require__("./src/api/controllers/404.js");
+var _ = __webpack_require__(/*! ./controllers/404 */ "./src/api/controllers/404.js");
 
 var _2 = _interopRequireDefault(_);
 
@@ -181,6 +208,11 @@ exports.default = function () {
 /***/ }),
 
 /***/ "./src/exception/codes.js":
+/*!********************************!*\
+  !*** ./src/exception/codes.js ***!
+  \********************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -282,6 +314,11 @@ var VALIDATION_ERROR = exports.VALIDATION_ERROR = function VALIDATION_ERROR(mess
 /***/ }),
 
 /***/ "./src/exception/index.js":
+/*!********************************!*\
+  !*** ./src/exception/index.js ***!
+  \********************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -292,7 +329,7 @@ exports.codes = exports.default = undefined;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _codes = __webpack_require__("./src/exception/codes.js");
+var _codes = __webpack_require__(/*! ./codes */ "./src/exception/codes.js");
 
 var codes = _interopRequireWildcard(_codes);
 
@@ -390,6 +427,11 @@ exports.codes = codes;
 /***/ }),
 
 /***/ "./src/main.js":
+/*!*********************!*\
+  !*** ./src/main.js ***!
+  \*********************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -398,19 +440,19 @@ exports.codes = codes;
 exports.__esModule = true;
 exports.Logger = exports.Exception = exports.codes = undefined;
 
-var _exception = __webpack_require__("./src/exception/index.js");
+var _exception = __webpack_require__(/*! ./exception */ "./src/exception/index.js");
 
 var _exception2 = _interopRequireDefault(_exception);
 
-var _logger = __webpack_require__("./src/utils/logger.js");
+var _logger = __webpack_require__(/*! ./utils/logger */ "./src/utils/logger.js");
 
 var _logger2 = _interopRequireDefault(_logger);
 
-var _server = __webpack_require__("./src/server.js");
+var _server = __webpack_require__(/*! ./server */ "./src/server.js");
 
 var _server2 = _interopRequireDefault(_server);
 
-var _codes = __webpack_require__("./src/exception/codes.js");
+var _codes = __webpack_require__(/*! ./exception/codes */ "./src/exception/codes.js");
 
 var codes = _interopRequireWildcard(_codes);
 
@@ -426,6 +468,11 @@ exports.Logger = _logger2.default;
 /***/ }),
 
 /***/ "./src/middleware/accessLogger.js":
+/*!****************************************!*\
+  !*** ./src/middleware/accessLogger.js ***!
+  \****************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -434,11 +481,11 @@ exports.Logger = _logger2.default;
 exports.__esModule = true;
 exports.formatter = undefined;
 
-var _koaMorgan = __webpack_require__("koa-morgan");
+var _koaMorgan = __webpack_require__(/*! koa-morgan */ "koa-morgan");
 
 var _koaMorgan2 = _interopRequireDefault(_koaMorgan);
 
-var _logger = __webpack_require__("./src/utils/logger.js");
+var _logger = __webpack_require__(/*! ../utils/logger */ "./src/utils/logger.js");
 
 var _logger2 = _interopRequireDefault(_logger);
 
@@ -497,6 +544,11 @@ exports.default = (0, _koaMorgan2.default)(formatter, {
 /***/ }),
 
 /***/ "./src/middleware/error.js":
+/*!*********************************!*\
+  !*** ./src/middleware/error.js ***!
+  \*********************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -504,7 +556,7 @@ exports.default = (0, _koaMorgan2.default)(formatter, {
 
 exports.__esModule = true;
 
-var _logger = __webpack_require__("./src/utils/logger.js");
+var _logger = __webpack_require__(/*! ../utils/logger */ "./src/utils/logger.js");
 
 var _logger2 = _interopRequireDefault(_logger);
 
@@ -561,6 +613,11 @@ exports.default = function () {
 /***/ }),
 
 /***/ "./src/middleware/transaction.js":
+/*!***************************************!*\
+  !*** ./src/middleware/transaction.js ***!
+  \***************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -568,11 +625,11 @@ exports.default = function () {
 
 exports.__esModule = true;
 
-var _domain = __webpack_require__("domain");
+var _domain = __webpack_require__(/*! domain */ "domain");
 
 var _domain2 = _interopRequireDefault(_domain);
 
-var _v = __webpack_require__("uuid/v4");
+var _v = __webpack_require__(/*! uuid/v4 */ "uuid/v4");
 
 var _v2 = _interopRequireDefault(_v);
 
@@ -605,6 +662,11 @@ exports.default = function (ctx, next) {
 /***/ }),
 
 /***/ "./src/server.js":
+/*!***********************!*\
+  !*** ./src/server.js ***!
+  \***********************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -613,71 +675,71 @@ exports.default = function (ctx, next) {
 exports.__esModule = true;
 exports.default = undefined;
 
-var _koaBody = __webpack_require__("koa-body");
+var _koaBody = __webpack_require__(/*! koa-body */ "koa-body");
 
 var _koaBody2 = _interopRequireDefault(_koaBody);
 
-var _koaCompress = __webpack_require__("koa-compress");
+var _koaCompress = __webpack_require__(/*! koa-compress */ "koa-compress");
 
 var _koaCompress2 = _interopRequireDefault(_koaCompress);
 
-var _koaCors = __webpack_require__("koa-cors");
+var _koaCors = __webpack_require__(/*! koa-cors */ "koa-cors");
 
 var _koaCors2 = _interopRequireDefault(_koaCors);
 
-var _fs = __webpack_require__("fs");
+var _fs = __webpack_require__(/*! fs */ "fs");
 
 var _fs2 = _interopRequireDefault(_fs);
 
-var _koaHelmet = __webpack_require__("koa-helmet");
+var _koaHelmet = __webpack_require__(/*! koa-helmet */ "koa-helmet");
 
 var _koaHelmet2 = _interopRequireDefault(_koaHelmet);
 
-var _https = __webpack_require__("https");
+var _https = __webpack_require__(/*! https */ "https");
 
 var _https2 = _interopRequireDefault(_https);
 
-var _koa = __webpack_require__("koa");
+var _koa = __webpack_require__(/*! koa */ "koa");
 
 var _koa2 = _interopRequireDefault(_koa);
 
-var _koaMount = __webpack_require__("koa-mount");
+var _koaMount = __webpack_require__(/*! koa-mount */ "koa-mount");
 
 var _koaMount2 = _interopRequireDefault(_koaMount);
 
-var _koaStatic = __webpack_require__("koa-static");
+var _koaStatic = __webpack_require__(/*! koa-static */ "koa-static");
 
 var _koaStatic2 = _interopRequireDefault(_koaStatic);
 
-var _accessLogger = __webpack_require__("./src/middleware/accessLogger.js");
+var _accessLogger = __webpack_require__(/*! ./middleware/accessLogger */ "./src/middleware/accessLogger.js");
 
 var _accessLogger2 = _interopRequireDefault(_accessLogger);
 
-var _router = __webpack_require__("./src/api/router.js");
+var _router = __webpack_require__(/*! ./api/router */ "./src/api/router.js");
 
 var _router2 = _interopRequireDefault(_router);
 
-var _error = __webpack_require__("./src/middleware/error.js");
+var _error = __webpack_require__(/*! ./middleware/error */ "./src/middleware/error.js");
 
 var _error2 = _interopRequireDefault(_error);
 
-var _logger = __webpack_require__("./src/utils/logger.js");
+var _logger = __webpack_require__(/*! ./utils/logger */ "./src/utils/logger.js");
 
 var _logger2 = _interopRequireDefault(_logger);
 
-var _sigInitHandler = __webpack_require__("./src/utils/sigInitHandler.js");
+var _sigInitHandler = __webpack_require__(/*! ./utils/sigInitHandler */ "./src/utils/sigInitHandler.js");
 
 var _sigInitHandler2 = _interopRequireDefault(_sigInitHandler);
 
-var _transaction = __webpack_require__("./src/middleware/transaction.js");
+var _transaction = __webpack_require__(/*! ./middleware/transaction */ "./src/middleware/transaction.js");
 
 var _transaction2 = _interopRequireDefault(_transaction);
 
-var _uncaughtExceptionHandler = __webpack_require__("./src/utils/uncaughtExceptionHandler.js");
+var _uncaughtExceptionHandler = __webpack_require__(/*! ./utils/uncaughtExceptionHandler */ "./src/utils/uncaughtExceptionHandler.js");
 
 var _uncaughtExceptionHandler2 = _interopRequireDefault(_uncaughtExceptionHandler);
 
-var _unhandledRejectionHandler = __webpack_require__("./src/utils/unhandledRejectionHandler.js");
+var _unhandledRejectionHandler = __webpack_require__(/*! ./utils/unhandledRejectionHandler */ "./src/utils/unhandledRejectionHandler.js");
 
 var _unhandledRejectionHandler2 = _interopRequireDefault(_unhandledRejectionHandler);
 
@@ -950,6 +1012,11 @@ exports.default = Server;
 /***/ }),
 
 /***/ "./src/utils/logger.js":
+/*!*****************************!*\
+  !*** ./src/utils/logger.js ***!
+  \*****************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -959,15 +1026,15 @@ exports.__esModule = true;
 
 var _class, _temp;
 
-var _bunyan = __webpack_require__("bunyan");
+var _bunyan = __webpack_require__(/*! bunyan */ "bunyan");
 
 var _bunyan2 = _interopRequireDefault(_bunyan);
 
-var _config = __webpack_require__("config");
+var _config = __webpack_require__(/*! config */ "config");
 
 var _config2 = _interopRequireDefault(_config);
 
-var _process = __webpack_require__("process");
+var _process = __webpack_require__(/*! process */ "process");
 
 var _process2 = _interopRequireDefault(_process);
 
@@ -1075,6 +1142,11 @@ exports.default = Logger;
 /***/ }),
 
 /***/ "./src/utils/sigInitHandler.js":
+/*!*************************************!*\
+  !*** ./src/utils/sigInitHandler.js ***!
+  \*************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1083,7 +1155,7 @@ exports.default = Logger;
 exports.__esModule = true;
 exports.default = sigInitHandler;
 
-var _logger = __webpack_require__("./src/utils/logger.js");
+var _logger = __webpack_require__(/*! ./logger */ "./src/utils/logger.js");
 
 var _logger2 = _interopRequireDefault(_logger);
 
@@ -1107,6 +1179,11 @@ function sigInitHandler() {
 /***/ }),
 
 /***/ "./src/utils/uncaughtExceptionHandler.js":
+/*!***********************************************!*\
+  !*** ./src/utils/uncaughtExceptionHandler.js ***!
+  \***********************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1115,7 +1192,7 @@ function sigInitHandler() {
 exports.__esModule = true;
 exports.default = uncaughtExceptionHandler;
 
-var _logger = __webpack_require__("./src/utils/logger.js");
+var _logger = __webpack_require__(/*! ./logger */ "./src/utils/logger.js");
 
 var _logger2 = _interopRequireDefault(_logger);
 
@@ -1140,6 +1217,11 @@ function uncaughtExceptionHandler(e) {
 /***/ }),
 
 /***/ "./src/utils/unhandledRejectionHandler.js":
+/*!************************************************!*\
+  !*** ./src/utils/unhandledRejectionHandler.js ***!
+  \************************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1148,7 +1230,7 @@ function uncaughtExceptionHandler(e) {
 exports.__esModule = true;
 exports.default = unhandledRejectionHandler;
 
-var _logger = __webpack_require__("./src/utils/logger.js");
+var _logger = __webpack_require__(/*! ./logger */ "./src/utils/logger.js");
 
 var _logger2 = _interopRequireDefault(_logger);
 
@@ -1170,14 +1252,24 @@ function unhandledRejectionHandler(e) {
 /***/ }),
 
 /***/ 0:
+/*!***************************!*\
+  !*** multi ./src/main.js ***!
+  \***************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__("./src/main.js");
+module.exports = __webpack_require__(/*! /Users/gooftroop/Development/Harmonizly/axon/src/main.js */"./src/main.js");
 
 
 /***/ }),
 
 /***/ "bunyan":
+/*!*************************!*\
+  !*** external "bunyan" ***!
+  \*************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 module.exports = require("bunyan");
@@ -1185,6 +1277,11 @@ module.exports = require("bunyan");
 /***/ }),
 
 /***/ "config":
+/*!*************************!*\
+  !*** external "config" ***!
+  \*************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 module.exports = require("config");
@@ -1192,6 +1289,11 @@ module.exports = require("config");
 /***/ }),
 
 /***/ "domain":
+/*!*************************!*\
+  !*** external "domain" ***!
+  \*************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 module.exports = require("domain");
@@ -1199,6 +1301,11 @@ module.exports = require("domain");
 /***/ }),
 
 /***/ "fs":
+/*!*********************!*\
+  !*** external "fs" ***!
+  \*********************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 module.exports = require("fs");
@@ -1206,6 +1313,11 @@ module.exports = require("fs");
 /***/ }),
 
 /***/ "https":
+/*!************************!*\
+  !*** external "https" ***!
+  \************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 module.exports = require("https");
@@ -1213,6 +1325,11 @@ module.exports = require("https");
 /***/ }),
 
 /***/ "koa":
+/*!**********************!*\
+  !*** external "koa" ***!
+  \**********************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 module.exports = require("koa");
@@ -1220,6 +1337,11 @@ module.exports = require("koa");
 /***/ }),
 
 /***/ "koa-body":
+/*!***************************!*\
+  !*** external "koa-body" ***!
+  \***************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 module.exports = require("koa-body");
@@ -1227,6 +1349,11 @@ module.exports = require("koa-body");
 /***/ }),
 
 /***/ "koa-compress":
+/*!*******************************!*\
+  !*** external "koa-compress" ***!
+  \*******************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 module.exports = require("koa-compress");
@@ -1234,6 +1361,11 @@ module.exports = require("koa-compress");
 /***/ }),
 
 /***/ "koa-cors":
+/*!***************************!*\
+  !*** external "koa-cors" ***!
+  \***************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 module.exports = require("koa-cors");
@@ -1241,6 +1373,11 @@ module.exports = require("koa-cors");
 /***/ }),
 
 /***/ "koa-helmet":
+/*!*****************************!*\
+  !*** external "koa-helmet" ***!
+  \*****************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 module.exports = require("koa-helmet");
@@ -1248,6 +1385,11 @@ module.exports = require("koa-helmet");
 /***/ }),
 
 /***/ "koa-morgan":
+/*!*****************************!*\
+  !*** external "koa-morgan" ***!
+  \*****************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 module.exports = require("koa-morgan");
@@ -1255,6 +1397,11 @@ module.exports = require("koa-morgan");
 /***/ }),
 
 /***/ "koa-mount":
+/*!****************************!*\
+  !*** external "koa-mount" ***!
+  \****************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 module.exports = require("koa-mount");
@@ -1262,6 +1409,11 @@ module.exports = require("koa-mount");
 /***/ }),
 
 /***/ "koa-router":
+/*!*****************************!*\
+  !*** external "koa-router" ***!
+  \*****************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 module.exports = require("koa-router");
@@ -1269,6 +1421,11 @@ module.exports = require("koa-router");
 /***/ }),
 
 /***/ "koa-static":
+/*!*****************************!*\
+  !*** external "koa-static" ***!
+  \*****************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 module.exports = require("koa-static");
@@ -1276,6 +1433,11 @@ module.exports = require("koa-static");
 /***/ }),
 
 /***/ "process":
+/*!**************************!*\
+  !*** external "process" ***!
+  \**************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 module.exports = require("process");
@@ -1283,6 +1445,11 @@ module.exports = require("process");
 /***/ }),
 
 /***/ "uuid/v4":
+/*!**************************!*\
+  !*** external "uuid/v4" ***!
+  \**************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 module.exports = require("uuid/v4");

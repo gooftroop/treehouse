@@ -1,6 +1,5 @@
 // TODO use webpack merge
 const nodeExternals = require('webpack-node-externals');
-const npm_package = require('../package.json')
 const path = require('path');
 const webpack = require('webpack');
 
@@ -9,14 +8,9 @@ const cwd = process.cwd();
 // For dynamic public paths: https://webpack.js.org/guides/public-path/
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
-function module_alias(aliases) {
-  return Object.assign(...Object.entries(
-    npm_package._moduleAliases).map(([k, v]) => ({ [k]: path.join(cwd, v) }))
-  ) || {}
-}
-
 module.exports = {
   target: 'node',
+  mode: NODE_ENV === 'PRODUCTION' ? 'production' : 'development',
   cache: false,
   devtool: 'source-map',
   entry: {
@@ -25,7 +19,6 @@ module.exports = {
     ],
   },
   resolve: {
-    alias: module_alias(npm_package._moduleAliases),
     extensions: ['.json', '.js', '.min.js'],
   },
   module: {
@@ -42,10 +35,11 @@ module.exports = {
   externals: [
     nodeExternals()
   ],
-  plugins: [
-    new webpack.optimize.ModuleConcatenationPlugin(),
-    new webpack.NamedModulesPlugin(),
-  ],
+  optimization: {
+    namedModules: true,
+    noEmitOnErrors: true,
+    concatenateModules: true,
+  },
   output: {
     chunkFilename: 'axon.[id].js',
     filename:      'axon.js',
