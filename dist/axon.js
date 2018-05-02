@@ -874,13 +874,13 @@ var Server = function () {
     app.use((0, _koaBody2.default)(this.config.get('body')));
 
     // Trace a single request process (including over async)
-    app.use(_transaction2.default);
+    // app.use(transactionMiddleware);
 
     // Configure Request logging
     app.use(_accessLogger2.default);
 
     // Configure the request error handling
-    app.use(_error2.default);
+    // app.use(errorMiddleware);
 
     // Serve asset resources using the 'assets' url
     app.use((0, _koaMount2.default)(this.config.assets.get('url'), (0, _koaStatic2.default)(this.config.assets.get('path'), this.config.assets.get('options'))));
