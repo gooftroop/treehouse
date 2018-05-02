@@ -880,7 +880,7 @@ var Server = function () {
     app.use(_accessLogger2.default);
 
     // Configure the request error handling
-    // app.use(errorMiddleware);
+    app.use(_error2.default);
 
     // Serve asset resources using the 'assets' url
     app.use((0, _koaMount2.default)(this.config.assets.get('url'), (0, _koaStatic2.default)(this.config.assets.get('path'), this.config.assets.get('options'))));

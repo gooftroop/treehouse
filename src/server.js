@@ -136,7 +136,7 @@ export default class Server {
     app.use(accessLogger);
 
     // Configure the request error handling
-    // app.use(errorMiddleware);
+    app.use(errorMiddleware);
 
     // Serve asset resources using the 'assets' url
     app.use(mount(
