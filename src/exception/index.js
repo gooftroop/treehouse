@@ -42,7 +42,7 @@ export default class Exception extends Error {
  * [error description]
  * @type {[type]}
  */
-export class AuthorizationError extends Exception {
+export class AuthorizationException extends Exception {
   /**
    * [constructor description]
    * @param {[type]} errors [description]
@@ -56,7 +56,7 @@ export class AuthorizationError extends Exception {
  * [errors description]
  * @type {[type]}
  */
-export class GraphQLError extends Exception {
+export class GraphQLException extends Exception {
   /**
    * [constructor description]
    * @param {[type]} errors [description]
@@ -94,7 +94,7 @@ export class InvalidRequestException extends Exception {
  * [error description]
  * @type {[type]}
  */
-export class NetworkError extends Exception {
+export class NetworkException extends Exception {
   /**
    * [constructor description]
    * @param {[type]} error [description]

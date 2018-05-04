@@ -365,7 +365,7 @@ var VALIDATION_ERROR = exports.VALIDATION_ERROR = function VALIDATION_ERROR() {
 
 
 exports.__esModule = true;
-exports.codes = exports.ServiceUnavailableException = exports.NetworkError = exports.InvalidRequestException = exports.InternalException = exports.GraphQLError = exports.AuthorizationError = exports.default = undefined;
+exports.codes = exports.ServiceUnavailableException = exports.NetworkException = exports.InvalidRequestException = exports.InternalException = exports.GraphQLException = exports.AuthorizationException = exports.default = undefined;
 
 var _utils = __webpack_require__(/*! ./utils */ "./src/exception/utils.js");
 
@@ -424,20 +424,20 @@ var Exception = function (_Error) {
 
 exports.default = Exception;
 
-var AuthorizationError = exports.AuthorizationError = function (_Exception) {
-  _inherits(AuthorizationError, _Exception);
+var AuthorizationException = exports.AuthorizationException = function (_Exception) {
+  _inherits(AuthorizationException, _Exception);
 
   /**
    * [constructor description]
    * @param {[type]} errors [description]
    */
-  function AuthorizationError(e) {
-    _classCallCheck(this, AuthorizationError);
+  function AuthorizationException(e) {
+    _classCallCheck(this, AuthorizationException);
 
     return _possibleConstructorReturn(this, _Exception.call(this, codes.NOT_ALLOWED, e));
   }
 
-  return AuthorizationError;
+  return AuthorizationException;
 }(Exception);
 
 /**
@@ -446,20 +446,20 @@ var AuthorizationError = exports.AuthorizationError = function (_Exception) {
  */
 
 
-var GraphQLError = exports.GraphQLError = function (_Exception2) {
-  _inherits(GraphQLError, _Exception2);
+var GraphQLException = exports.GraphQLException = function (_Exception2) {
+  _inherits(GraphQLException, _Exception2);
 
   /**
    * [constructor description]
    * @param {[type]} errors [description]
    */
-  function GraphQLError(e) {
-    _classCallCheck(this, GraphQLError);
+  function GraphQLException(e) {
+    _classCallCheck(this, GraphQLException);
 
     return _possibleConstructorReturn(this, _Exception2.call(this, codes.GENERAL_ERROR(e.message), e));
   }
 
-  return GraphQLError;
+  return GraphQLException;
 }(Exception);
 
 /**
@@ -508,20 +508,20 @@ var InvalidRequestException = exports.InvalidRequestException = function (_Excep
  */
 
 
-var NetworkError = exports.NetworkError = function (_Exception5) {
-  _inherits(NetworkError, _Exception5);
+var NetworkException = exports.NetworkException = function (_Exception5) {
+  _inherits(NetworkException, _Exception5);
 
   /**
    * [constructor description]
    * @param {[type]} error [description]
    */
-  function NetworkError(e) {
-    _classCallCheck(this, NetworkError);
+  function NetworkException(e) {
+    _classCallCheck(this, NetworkException);
 
     return _possibleConstructorReturn(this, _Exception5.call(this, codes.NETWORK_ERROR((0, _utils.convertSystemFetchErrorStatus)(e)), e));
   }
 
-  return NetworkError;
+  return NetworkException;
 }(Exception);
 
 /**
