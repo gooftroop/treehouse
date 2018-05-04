@@ -1301,6 +1301,7 @@ exports.__esModule = true;
 
 exports.default = function (uri) {
   return new _apolloClient.ApolloClient({
+    cache: new _apolloCacheInmemory.InMemoryCache(),
     connectToDevTools: "development" === 'development',
     link: defaultLink({ uri: uri })
   });
@@ -1317,6 +1318,8 @@ var _apolloClient = __webpack_require__(/*! apollo-client */ "apollo-client");
 var _apolloLink = __webpack_require__(/*! apollo-link */ "apollo-link");
 
 var _apolloLinkHttp = __webpack_require__(/*! apollo-link-http */ "apollo-link-http");
+
+var _apolloCacheInmemory = __webpack_require__(/*! apollo-cache-inmemory */ "apollo-cache-inmemory");
 
 var _apolloLinkError = __webpack_require__(/*! apollo-link-error */ "apollo-link-error");
 
@@ -1354,7 +1357,6 @@ function defaultLink(opts) {
 /**
  * [description]
  * @param  {[type]} uri  [description]
- * @param  {[type]} link [description]
  * @return {[type]}      [description]
  */
 
@@ -1610,6 +1612,18 @@ function unhandledRejectionHandler(e) {
 
 module.exports = __webpack_require__(/*! /Users/gooftroop/Development/Harmonizly/axon/src/main.js */"./src/main.js");
 
+
+/***/ }),
+
+/***/ "apollo-cache-inmemory":
+/*!****************************************!*\
+  !*** external "apollo-cache-inmemory" ***!
+  \****************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("apollo-cache-inmemory");
 
 /***/ }),
 

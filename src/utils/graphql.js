@@ -4,6 +4,7 @@ import fetch from 'node-fetch';
 import { ApolloClient } from 'apollo-client';
 import { ApolloLink } from 'apollo-link';
 import { HttpLink } from 'apollo-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 import { onError } from 'apollo-link-error';
 
 type APOLLO_LINK_ERROR = {
@@ -47,11 +48,11 @@ function defaultLink(opts: Object): Function<ApolloLink> {
 /**
  * [description]
  * @param  {[type]} uri  [description]
- * @param  {[type]} link [description]
  * @return {[type]}      [description]
  */
 export default function (uri: String): ApolloClient {
   return new ApolloClient({
+    cache: new InMemoryCache(),
     connectToDevTools: (process.env.NODE_ENV === 'development'),
     link: defaultLink({ uri }),
   });
