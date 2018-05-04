@@ -675,11 +675,15 @@ function resolveStatus(payload, status) {
 
 
 exports.__esModule = true;
-exports.ServiceUnavailableException = exports.NetworkException = exports.Logger = exports.InvalidRequestException = exports.InternalException = exports.GraphQLException = exports.Exception = exports.codes = exports.AuthorizationException = undefined;
+exports.ServiceUnavailableException = exports.NetworkException = exports.Logger = exports.InvalidRequestException = exports.InternalException = exports.GraphQLException = exports.GraphQLClient = exports.Exception = exports.codes = exports.AuthorizationException = undefined;
 
 var _exception = __webpack_require__(/*! ./exception */ "./src/exception/index.js");
 
 var _exception2 = _interopRequireDefault(_exception);
+
+var _graphql = __webpack_require__(/*! ./utils/graphql */ "./src/utils/graphql.js");
+
+var _graphql2 = _interopRequireDefault(_graphql);
 
 var _logger = __webpack_require__(/*! ./utils/logger */ "./src/utils/logger.js");
 
@@ -701,6 +705,7 @@ exports.default = _server2.default;
 exports.AuthorizationException = _exception.AuthorizationException;
 exports.codes = codes;
 exports.Exception = _exception2.default;
+exports.GraphQLClient = _graphql2.default;
 exports.GraphQLException = _exception.GraphQLException;
 exports.InternalException = _exception.InternalException;
 exports.InvalidRequestException = _exception.InvalidRequestException;
@@ -1281,6 +1286,80 @@ exports.default = Server;
 
 /***/ }),
 
+/***/ "./src/utils/graphql.js":
+/*!******************************!*\
+  !*** ./src/utils/graphql.js ***!
+  \******************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+exports.default = function (uri) {
+  return new _apolloClient.ApolloClient({
+    connectToDevTools: "development" === 'development',
+    link: defaultLink({ uri: uri })
+  });
+};
+
+var _exception = __webpack_require__(/*! ../exception */ "./src/exception/index.js");
+
+var _nodeFetch = __webpack_require__(/*! node-fetch */ "node-fetch");
+
+var _nodeFetch2 = _interopRequireDefault(_nodeFetch);
+
+var _apolloClient = __webpack_require__(/*! apollo-client */ "apollo-client");
+
+var _apolloLink = __webpack_require__(/*! apollo-link */ "apollo-link");
+
+var _apolloLinkHttp = __webpack_require__(/*! apollo-link-http */ "apollo-link-http");
+
+var _apolloLinkError = __webpack_require__(/*! apollo-link-error */ "apollo-link-error");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * [description]
+ * @return {[type]} [description]
+ */
+function defaultErrorHandler(error) {
+  if (error.graphQLErrors) {
+    // eslint-disable-next-line no-param-reassign
+    error.response.errors = error.graphQLError.map(function (err) {
+      return new _exception.GraphQLException(err);
+    });
+  }
+
+  if (error.networkError) {
+    // eslint-disable-next-line no-param-reassign
+    error.networkError = new _exception.NetworkException(error.networkError);
+  }
+}
+
+/**
+ * [DefaultLink description]
+ * @param       {[type]} opts [description]
+ * @constructor
+ */
+function defaultLink(opts) {
+  return _apolloLink.ApolloLink.from([
+  // eslint-disable-next-line new-cap
+  new _apolloLinkError.onError(defaultErrorHandler), new _apolloLinkHttp.HttpLink({ uri: opts.uri, fetch: _nodeFetch2.default })]);
+}
+
+/**
+ * [description]
+ * @param  {[type]} uri  [description]
+ * @param  {[type]} link [description]
+ * @return {[type]}      [description]
+ */
+
+/***/ }),
+
 /***/ "./src/utils/logger.js":
 /*!*****************************!*\
   !*** ./src/utils/logger.js ***!
@@ -1534,6 +1613,54 @@ module.exports = __webpack_require__(/*! /Users/gooftroop/Development/Harmonizly
 
 /***/ }),
 
+/***/ "apollo-client":
+/*!********************************!*\
+  !*** external "apollo-client" ***!
+  \********************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("apollo-client");
+
+/***/ }),
+
+/***/ "apollo-link":
+/*!******************************!*\
+  !*** external "apollo-link" ***!
+  \******************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("apollo-link");
+
+/***/ }),
+
+/***/ "apollo-link-error":
+/*!************************************!*\
+  !*** external "apollo-link-error" ***!
+  \************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("apollo-link-error");
+
+/***/ }),
+
+/***/ "apollo-link-http":
+/*!***********************************!*\
+  !*** external "apollo-link-http" ***!
+  \***********************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("apollo-link-http");
+
+/***/ }),
+
 /***/ "bunyan":
 /*!*************************!*\
   !*** external "bunyan" ***!
@@ -1699,6 +1826,18 @@ module.exports = require("koa-router");
 /***/ (function(module, exports) {
 
 module.exports = require("koa-static");
+
+/***/ }),
+
+/***/ "node-fetch":
+/*!*****************************!*\
+  !*** external "node-fetch" ***!
+  \*****************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("node-fetch");
 
 /***/ }),
 

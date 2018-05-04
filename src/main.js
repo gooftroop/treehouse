@@ -6,6 +6,7 @@ import Exception, {
   NetworkException,
   ServiceUnavailableException,
 } from 'axon/exception';
+import GraphQLClient from 'axon/utils/graphql';
 import Logger from 'axon/utils/logger';
 import Server from 'axon/server';
 
@@ -16,6 +17,7 @@ export {
   AuthorizationException,
   codes,
   Exception,
+  GraphQLClient,
   GraphQLException,
   InternalException,
   InvalidRequestException,
