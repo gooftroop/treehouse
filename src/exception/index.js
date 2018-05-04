@@ -1,47 +1,11 @@
+import {
+  convertSystemFetchErrorStatus,
+  resolveCode,
+  resolveError,
+  resolveMessage,
+  resolveStatus,
+} from 'axon/exception/utils';
 import * as codes from 'axon/exception/codes';
-
-const DEFAULT_CODE: number = 0;
-const DEFAULT_MESSAGE: string = 'An Unknown error occurred';
-
-/**
- * [resolveCode description]
- * @param  {[type]} payload [description]
- * @return {[type]}         [description]
- */
-function resolveCode(payload: number | Object): number {
-  if (typeof payload === 'number') {
-    return ('code' in payload) ? DEFAULT_CODE : payload.code;
-  }
-
-  return DEFAULT_CODE;
-}
-
-/**
- * [resolveMessage description]
- * @param  {[type]} payload [description]
- * @return {[type]}         [description]
- */
-function resolveMessage(payload: string | Object): string {
-  if (typeof payload === 'object') {
-    return ('message' in payload) ? DEFAULT_MESSAGE : payload.message;
-  }
-
-  return payload;
-}
-
-/**
- * [resolveStatus description]
- * @param  {[type]} payload [description]
- * @param  {[type]} status  [description]
- * @return {[type]}         [description]
- */
-function resolveStatus(payload: number | Object, status: ?number): number {
-  if (typeof payload === 'object' && 'status' in payload) {
-    return payload.status;
-  }
-
-  return (status == null) ? DEFAULT_CODE : status;
-}
 
 /**
  * [code description]
@@ -49,6 +13,7 @@ function resolveStatus(payload: number | Object, status: ?number): number {
  */
 export default class Exception extends Error {
   code: number;
+  error: Object;
   status: number;
 
   /**
@@ -56,18 +21,99 @@ export default class Exception extends Error {
    * @param  {[type]} payload [description]
    * @param  {[type]} code    [description]
    * @param  {[type]} status  [description]
+   * @param  {[type]} e       [description]
    * @return {[type]}         [description]
    */
-  constructor(payload: string | Object = DEFAULT_MESSAGE, status) {
+  constructor(payload: string | Object, status, e: Error) {
     super(resolveMessage(payload));
     this.code = resolveCode(payload);
     this.status = resolveStatus(payload, status);
+    this.error = resolveError(e || status);
 
     if (typeof Error.captureStackTrace === 'function') {
       Error.captureStackTrace(this, this.constructor);
     } else {
       this.stack = (new Error(this.message)).stack;
     }
+  }
+}
+
+/**
+ * [error description]
+ * @type {[type]}
+ */
+export class AuthorizationError extends Exception {
+  /**
+   * [constructor description]
+   * @param {[type]} errors [description]
+   */
+  constructor(e: ?Error) {
+    super(codes.NOT_ALLOWED, e);
+  }
+}
+
+/**
+ * [errors description]
+ * @type {[type]}
+ */
+export class GraphQLError extends Exception {
+  /**
+   * [constructor description]
+   * @param {[type]} errors [description]
+   */
+  constructor(e: ?Error) {
+    super(codes.GENERAL_ERROR(e.message), e);
+  }
+}
+
+/**
+ * [message description]
+ * @type {[type]}
+ */
+export class InternalException extends Exception {
+  constructor(message: String, e: ?Error) {
+    super(codes.FATAL_ERROR(message), e);
+  }
+}
+
+/**
+ * [message description]
+ * @type {[type]}
+ */
+export class InvalidRequestException extends Exception {
+  /**
+   * [constructor description]
+   * @param {[type]} errors [description]
+   */
+  constructor(message: String, e: ?Error) {
+    super(codes.INVALID_REQUEST(message), e);
+  }
+}
+
+/**
+ * [error description]
+ * @type {[type]}
+ */
+export class NetworkError extends Exception {
+  /**
+   * [constructor description]
+   * @param {[type]} error [description]
+   */
+  constructor(e: ?FetchError) {
+    super(codes.NETWORK_ERROR(convertSystemFetchErrorStatus(e)), e);
+  }
+}
+
+/**
+ *
+ */
+export class ServiceUnavailableException extends Exception {
+  /**
+   * [constructor description]
+   * @param {[type]} errors [description]
+   */
+  constructor(message: String, e: ?Error) {
+    super(codes.SERVICE_UNAVAILABLE(message), e);
   }
 }
 

@@ -219,14 +219,24 @@ exports.default = function () {
 
 
 exports.__esModule = true;
-var FATAL_ERROR = exports.FATAL_ERROR = {
-  status: 500,
-  code: -1,
-  category: 'IllegalStateException',
-  message: 'An error occurred. If this error persists, please contact your System Administrator'
+var DEFAULT_FATAL_ERROR = exports.DEFAULT_FATAL_ERROR = 'An error occurred. If this error persists, please contact your System Administrator';
+
+var FATAL_ERROR = exports.FATAL_ERROR = function FATAL_ERROR() {
+  var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_FATAL_ERROR;
+
+  return {
+    status: 500,
+    code: -1,
+    category: 'IllegalStateException',
+    message: message
+  };
 };
 
-var GENERAL_ERROR = exports.GENERAL_ERROR = function GENERAL_ERROR(message) {
+var DEFAULT_GENERAL_ERROR = exports.DEFAULT_GENERAL_ERROR = "Our hamsters don't know how to handle that request";
+
+var GENERAL_ERROR = exports.GENERAL_ERROR = function GENERAL_ERROR() {
+  var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_GENERAL_ERROR;
+
   return {
     status: 400,
     code: '0a',
@@ -235,7 +245,10 @@ var GENERAL_ERROR = exports.GENERAL_ERROR = function GENERAL_ERROR(message) {
   };
 };
 
-var NETWORK_ERROR = exports.NETWORK_ERROR = function NETWORK_ERROR(message) {
+var DEFAULT_NETWORK_ERROR = exports.DEFAULT_NETWORK_ERROR = 'The network request failed';
+
+var NETWORK_ERROR = exports.NETWORK_ERROR = function NETWORK_ERROR() {
+  var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_NETWORK_ERROR;
   var status = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 500;
 
   return {
@@ -246,66 +259,93 @@ var NETWORK_ERROR = exports.NETWORK_ERROR = function NETWORK_ERROR(message) {
   };
 };
 
-var NOT_YET_IMPLEMENTED = exports.NOT_YET_IMPLEMENTED = {
-  status: 501,
-  code: 1,
-  category: 'NotYetImplemented',
-  message: 'This method must be implmented'
+var NOT_YET_IMPLEMENTED = exports.NOT_YET_IMPLEMENTED = function NOT_YET_IMPLEMENTED() {
+  return {
+    status: 501,
+    code: 1,
+    category: 'NotYetImplemented',
+    message: 'This method must be implmented'
+  };
 };
 
-var ILLEGAL_STATE_EXCEPTION = exports.ILLEGAL_STATE_EXCEPTION = {
-  status: 500,
-  code: 2,
-  category: 'IllegalStateException',
-  message: 'Application not configured correctly'
+var ILLEGAL_STATE_EXCEPTION = exports.ILLEGAL_STATE_EXCEPTION = function ILLEGAL_STATE_EXCEPTION() {
+  return {
+    status: 500,
+    code: 2,
+    category: 'IllegalStateException',
+    message: 'Application not configured correctly'
+  };
 };
 
-var NOT_AUTHORIZED = exports.NOT_AUTHORIZED = {
-  status: 401,
-  code: 3,
-  category: 'SecurityException',
-  message: 'Forbidden'
-};
+var DEFAULT_INVALID_REQUEST = exports.DEFAULT_INVALID_REQUEST = "Our hamsters don't know how to handle that request";
 
-var NOT_ALLOWED = exports.NOT_ALLOWED = {
-  status: 403,
-  code: 4,
-  category: 'SecurityException',
-  message: 'Forbidden'
-};
+var INVALID_REQUEST = exports.INVALID_REQUEST = function INVALID_REQUEST() {
+  var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_INVALID_REQUEST;
 
-var MISSING_REQUIRED_PARAMETER = exports.MISSING_REQUIRED_PARAMETER = {
-  status: 400,
-  code: 5,
-  category: 'GeneralException',
-  message: 'A required parameter was missing'
-};
-
-var MODEL_NOT_FOUND = exports.MODEL_NOT_FOUND = {
-  status: 404,
-  code: 100,
-  category: 'NotFoundException',
-  message: 'Requested model could not be found'
-};
-
-var MODEL_NOT_UPDATED = exports.MODEL_NOT_UPDATED = {
-  status: 400,
-  code: 200,
-  category: 'TransactionException',
-  message: 'Update failed'
-};
-
-var MODEL_NOT_CREATED = exports.MODEL_NOT_CREATED = {
-  status: 400,
-  code: 201,
-  category: 'TransactionException',
-  message: 'Creation failed'
-};
-
-var VALIDATION_ERROR = exports.VALIDATION_ERROR = function VALIDATION_ERROR(message) {
   return {
     status: 400,
-    code: 202,
+    code: 100,
+    category: 'UserError',
+    message: message
+  };
+};
+
+var DEFAULT_UNAUTHORIZED = 'Your session is no longer valid. Please login and rety';
+
+var UNAUTHORIZED = exports.UNAUTHORIZED = function UNAUTHORIZED() {
+  var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_UNAUTHORIZED;
+
+  return {
+    status: 401,
+    code: 4,
+    category: 'SecurityException',
+    message: message
+  };
+};
+
+var DEFAULT_FORBIDDEN = exports.DEFAULT_FORBIDDEN = 'You are not allowed to access that resource';
+
+var FORBIDDEN = exports.FORBIDDEN = function FORBIDDEN() {
+  var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_FORBIDDEN;
+
+  return {
+    status: 403,
+    code: 5,
+    category: 'SecurityException',
+    message: message
+  };
+};
+
+var MISSING_REQUIRED_PARAMETER = exports.MISSING_REQUIRED_PARAMETER = function MISSING_REQUIRED_PARAMETER() {
+  return {
+    status: 400,
+    code: 6,
+    category: 'GeneralException',
+    message: 'A required parameter was missing'
+  };
+};
+
+var DEFAULT_SERVICE_UNAVAILABLE = exports.DEFAULT_SERVICE_UNAVAILABLE = 'Our hamsters appear to be taking a siesta';
+
+var SERVICE_UNAVAILABLE = exports.SERVICE_UNAVAILABLE = function SERVICE_UNAVAILABLE() {
+  var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_SERVICE_UNAVAILABLE;
+
+  return {
+    status: 503,
+    code: 7,
+    category: 'NetworkException',
+    message: message
+  };
+};
+
+var DEFAULT_VALIDATION_ERROR = exports.DEFAULT_VALIDATION_ERROR = 'Hmmm...the hamsters found a problem with that data';
+
+var VALIDATION_ERROR = exports.VALIDATION_ERROR = function VALIDATION_ERROR() {
+  var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_VALIDATION_ERROR;
+
+  return {
+    status: 400,
+    code: 200,
     category: 'ValidationException',
     message: message
   };
@@ -325,9 +365,9 @@ var VALIDATION_ERROR = exports.VALIDATION_ERROR = function VALIDATION_ERROR(mess
 
 
 exports.__esModule = true;
-exports.codes = exports.default = undefined;
+exports.codes = exports.ServiceUnavailableException = exports.NetworkError = exports.InvalidRequestException = exports.InternalException = exports.GraphQLError = exports.AuthorizationError = exports.default = undefined;
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _utils = __webpack_require__(/*! ./utils */ "./src/exception/utils.js");
 
 var _codes = __webpack_require__(/*! ./codes */ "./src/exception/codes.js");
 
@@ -341,8 +381,234 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+/**
+ * [code description]
+ * @type {[type]}
+ */
+var Exception = function (_Error) {
+  _inherits(Exception, _Error);
+
+  /**
+   * [constructor description]
+   * @param  {[type]} payload [description]
+   * @param  {[type]} code    [description]
+   * @param  {[type]} status  [description]
+   * @param  {[type]} e       [description]
+   * @return {[type]}         [description]
+   */
+  function Exception(payload, status, e) {
+    _classCallCheck(this, Exception);
+
+    var _this = _possibleConstructorReturn(this, _Error.call(this, (0, _utils.resolveMessage)(payload)));
+
+    _this.code = (0, _utils.resolveCode)(payload);
+    _this.status = (0, _utils.resolveStatus)(payload, status);
+    _this.error = (0, _utils.resolveError)(e || status);
+
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(_this, _this.constructor);
+    } else {
+      _this.stack = new Error(_this.message).stack;
+    }
+    return _this;
+  }
+
+  return Exception;
+}(Error);
+
+/**
+ * [error description]
+ * @type {[type]}
+ */
+
+
+exports.default = Exception;
+
+var AuthorizationError = exports.AuthorizationError = function (_Exception) {
+  _inherits(AuthorizationError, _Exception);
+
+  /**
+   * [constructor description]
+   * @param {[type]} errors [description]
+   */
+  function AuthorizationError(e) {
+    _classCallCheck(this, AuthorizationError);
+
+    return _possibleConstructorReturn(this, _Exception.call(this, codes.NOT_ALLOWED, e));
+  }
+
+  return AuthorizationError;
+}(Exception);
+
+/**
+ * [errors description]
+ * @type {[type]}
+ */
+
+
+var GraphQLError = exports.GraphQLError = function (_Exception2) {
+  _inherits(GraphQLError, _Exception2);
+
+  /**
+   * [constructor description]
+   * @param {[type]} errors [description]
+   */
+  function GraphQLError(e) {
+    _classCallCheck(this, GraphQLError);
+
+    return _possibleConstructorReturn(this, _Exception2.call(this, codes.GENERAL_ERROR(e.message), e));
+  }
+
+  return GraphQLError;
+}(Exception);
+
+/**
+ * [message description]
+ * @type {[type]}
+ */
+
+
+var InternalException = exports.InternalException = function (_Exception3) {
+  _inherits(InternalException, _Exception3);
+
+  function InternalException(message, e) {
+    _classCallCheck(this, InternalException);
+
+    return _possibleConstructorReturn(this, _Exception3.call(this, codes.FATAL_ERROR(message), e));
+  }
+
+  return InternalException;
+}(Exception);
+
+/**
+ * [message description]
+ * @type {[type]}
+ */
+
+
+var InvalidRequestException = exports.InvalidRequestException = function (_Exception4) {
+  _inherits(InvalidRequestException, _Exception4);
+
+  /**
+   * [constructor description]
+   * @param {[type]} errors [description]
+   */
+  function InvalidRequestException(message, e) {
+    _classCallCheck(this, InvalidRequestException);
+
+    return _possibleConstructorReturn(this, _Exception4.call(this, codes.INVALID_REQUEST(message), e));
+  }
+
+  return InvalidRequestException;
+}(Exception);
+
+/**
+ * [error description]
+ * @type {[type]}
+ */
+
+
+var NetworkError = exports.NetworkError = function (_Exception5) {
+  _inherits(NetworkError, _Exception5);
+
+  /**
+   * [constructor description]
+   * @param {[type]} error [description]
+   */
+  function NetworkError(e) {
+    _classCallCheck(this, NetworkError);
+
+    return _possibleConstructorReturn(this, _Exception5.call(this, codes.NETWORK_ERROR((0, _utils.convertSystemFetchErrorStatus)(e)), e));
+  }
+
+  return NetworkError;
+}(Exception);
+
+/**
+ *
+ */
+
+
+var ServiceUnavailableException = exports.ServiceUnavailableException = function (_Exception6) {
+  _inherits(ServiceUnavailableException, _Exception6);
+
+  /**
+   * [constructor description]
+   * @param {[type]} errors [description]
+   */
+  function ServiceUnavailableException(message, e) {
+    _classCallCheck(this, ServiceUnavailableException);
+
+    return _possibleConstructorReturn(this, _Exception6.call(this, codes.SERVICE_UNAVAILABLE(message), e));
+  }
+
+  return ServiceUnavailableException;
+}(Exception);
+
+exports.codes = codes;
+
+/***/ }),
+
+/***/ "./src/exception/utils.js":
+/*!********************************!*\
+  !*** ./src/exception/utils.js ***!
+  \********************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+exports.convertSystemFetchErrorStatus = convertSystemFetchErrorStatus;
+exports.resolveCode = resolveCode;
+exports.resolveError = resolveError;
+exports.resolveMessage = resolveMessage;
+exports.resolveStatus = resolveStatus;
 var DEFAULT_CODE = 0;
 var DEFAULT_MESSAGE = 'An Unknown error occurred';
+
+/**
+ * [error description]
+ * @type {[type]}
+ */
+function convertSystemFetchErrorStatus(error) {
+  if (error.type === 'system') {
+    switch (error.errno) {
+      case 'ENOTFOUND':
+        return 503;
+      case 'ECONNRESET':
+        return 503;
+      case 'ECONNREFUSED':
+        return 503;
+      default:
+        return 500;
+    }
+  }
+
+  switch (error.type) {
+    case 'body-timeout':
+      return 503;
+    case 'invalid-json':
+      return 400;
+    case 'max-redirect':
+      return 503;
+    case 'max-size':
+      return 400;
+    case 'no-redirect':
+      return 503;
+    case 'request-timeout':
+      return 503;
+    default:
+      return 500;
+  }
+}
 
 /**
  * [resolveCode description]
@@ -355,6 +621,15 @@ function resolveCode(payload) {
   }
 
   return DEFAULT_CODE;
+}
+
+/**
+ * [resolveError description]
+ * @param  {[type]} e [description]
+ * @return {[type]}   [description]
+ */
+function resolveError(e) {
+  return _extends({}, e);
 }
 
 /**
@@ -381,48 +656,10 @@ function resolveStatus(payload, status) {
     return payload.status;
   }
 
-  return status == null ? DEFAULT_CODE : status;
+  var typeStatus = typeof status === 'undefined' ? 'undefined' : _typeof(status);
+
+  return typeStatus !== 'number' || typeStatus !== 'string' ? DEFAULT_CODE : status;
 }
-
-/**
- * [code description]
- * @type {[type]}
- */
-
-var Exception = function (_Error) {
-  _inherits(Exception, _Error);
-
-  /**
-   * [constructor description]
-   * @param  {[type]} payload [description]
-   * @param  {[type]} code    [description]
-   * @param  {[type]} status  [description]
-   * @return {[type]}         [description]
-   */
-  function Exception() {
-    var payload = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_MESSAGE;
-    var status = arguments[1];
-
-    _classCallCheck(this, Exception);
-
-    var _this = _possibleConstructorReturn(this, _Error.call(this, resolveMessage(payload)));
-
-    _this.code = resolveCode(payload);
-    _this.status = resolveStatus(payload, status);
-
-    if (typeof Error.captureStackTrace === 'function') {
-      Error.captureStackTrace(_this, _this.constructor);
-    } else {
-      _this.stack = new Error(_this.message).stack;
-    }
-    return _this;
-  }
-
-  return Exception;
-}(Error);
-
-exports.default = Exception;
-exports.codes = codes;
 
 /***/ }),
 
@@ -438,7 +675,7 @@ exports.codes = codes;
 
 
 exports.__esModule = true;
-exports.Logger = exports.Exception = exports.codes = undefined;
+exports.ServiceUnavailableException = exports.NetworkException = exports.Logger = exports.InvalidRequestException = exports.InternalException = exports.GraphQLException = exports.Exception = exports.codes = exports.AuthorizationException = undefined;
 
 var _exception = __webpack_require__(/*! ./exception */ "./src/exception/index.js");
 
@@ -461,9 +698,15 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _server2.default;
+exports.AuthorizationException = _exception.AuthorizationException;
 exports.codes = codes;
 exports.Exception = _exception2.default;
+exports.GraphQLException = _exception.GraphQLException;
+exports.InternalException = _exception.InternalException;
+exports.InvalidRequestException = _exception.InvalidRequestException;
 exports.Logger = _logger2.default;
+exports.NetworkException = _exception.NetworkException;
+exports.ServiceUnavailableException = _exception.ServiceUnavailableException;
 
 /***/ }),
 
