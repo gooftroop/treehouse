@@ -9,9 +9,9 @@ import mount from 'koa-mount';
 import serve from 'koa-static';
 
 import accessLogger from 'axon/middleware/accessLogger';
-import bootstrapRouter from 'axon/api/router';
 import errorMiddleware from 'axon/middleware/error';
 import Logger from 'axon/utils/logger';
+import router from 'axon/router';
 import sigInitHandler from 'axon/utils/sigInitHandler';
 import transactionMiddleware from 'axon/middleware/transaction';
 import uncaughtExceptionHandler from 'axon/utils/uncaughtExceptionHandler';
@@ -38,7 +38,10 @@ export default class Server {
    * @param  {[type]} void [description]
    * @return {[type]}      [description]
    */
-  constructor(config: Object): void {
+  constructor(config: Object, appRouter: Router): void {
+    // atexit handler
+    process.on('exit', this.destroy);
+
     this.config = config;
 
     // Initialize the express server
@@ -50,16 +53,13 @@ export default class Server {
     // Configure the app with common middleware
     this.initialize(this.app);
 
-    // atexit handler
-    process.on('exit', this.destroy);
-  }
+    // Call the abstract initialize method to allow for custom setup
+    this.configure(this.app, this.config);
 
-  /**
-   * [app description]
-   * @type {[type]}
-   */
-  createRouter(): Object {
-    throw new Error('No router provided');
+    const builtRouter: Object = router(appRouter);
+
+    this.app.use(builtRouter.routes());
+    this.app.use(builtRouter.allowedMethods());
   }
 
   /**
@@ -168,7 +168,7 @@ export default class Server {
    * @return {Promise}      [description]
    */
   // eslint-disable-next-line no-unused-vars
-  async configure(app: Object, conf: Object): void {
+  configure(app: Object, conf: Object): void {
     // abstract method
   }
 
@@ -182,14 +182,6 @@ export default class Server {
     }
 
     try {
-      // Call the abstract initialize method to allow for custom setup
-      await this.configure(this.app, this.config);
-
-      const router: Object = bootstrapRouter(this.createRouter());
-
-      this.app.use(router.routes());
-      this.app.use(router.allowedMethods());
-
       return this.createServer().listen(
         this.config.get('port'),
         this.config.get('hostname'),

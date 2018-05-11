@@ -78,10 +78,10 @@ module.exports =
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/api/controllers/404.js":
-/*!************************************!*\
-  !*** ./src/api/controllers/404.js ***!
-  \************************************/
+/***/ "./src/api/handlers/404.js":
+/*!*********************************!*\
+  !*** ./src/api/handlers/404.js ***!
+  \*********************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -124,10 +124,10 @@ exports.default = function () {
 
 /***/ }),
 
-/***/ "./src/api/controllers/health.js":
-/*!***************************************!*\
-  !*** ./src/api/controllers/health.js ***!
-  \***************************************/
+/***/ "./src/api/handlers/health.js":
+/*!************************************!*\
+  !*** ./src/api/handlers/health.js ***!
+  \************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -167,43 +167,6 @@ exports.default = function () {
 
   return health;
 }();
-
-/***/ }),
-
-/***/ "./src/api/router.js":
-/*!***************************!*\
-  !*** ./src/api/router.js ***!
-  \***************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _koaRouter = __webpack_require__(/*! koa-router */ "koa-router");
-
-var _koaRouter2 = _interopRequireDefault(_koaRouter);
-
-var _health = __webpack_require__(/*! ./controllers/health */ "./src/api/controllers/health.js");
-
-var _health2 = _interopRequireDefault(_health);
-
-var _ = __webpack_require__(/*! ./controllers/404 */ "./src/api/controllers/404.js");
-
-var _2 = _interopRequireDefault(_);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function () {
-  var router = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _koaRouter2.default();
-
-  router.get('/heath', _health2.default);
-  router.all('*', _2.default);
-  return router;
-};
 
 /***/ }),
 
@@ -936,6 +899,43 @@ exports.default = function (ctx, next) {
 
 /***/ }),
 
+/***/ "./src/router.js":
+/*!***********************!*\
+  !*** ./src/router.js ***!
+  \***********************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _koaRouter = __webpack_require__(/*! koa-router */ "koa-router");
+
+var _koaRouter2 = _interopRequireDefault(_koaRouter);
+
+var _health = __webpack_require__(/*! ./api/handlers/health */ "./src/api/handlers/health.js");
+
+var _health2 = _interopRequireDefault(_health);
+
+var _ = __webpack_require__(/*! ./api/handlers/404 */ "./src/api/handlers/404.js");
+
+var _2 = _interopRequireDefault(_);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function () {
+  var router = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _koaRouter2.default();
+
+  router.get('/heath', _health2.default);
+  router.all('*', _2.default);
+  return router;
+};
+
+/***/ }),
+
 /***/ "./src/server.js":
 /*!***********************!*\
   !*** ./src/server.js ***!
@@ -990,10 +990,6 @@ var _accessLogger = __webpack_require__(/*! ./middleware/accessLogger */ "./src/
 
 var _accessLogger2 = _interopRequireDefault(_accessLogger);
 
-var _router = __webpack_require__(/*! ./api/router */ "./src/api/router.js");
-
-var _router2 = _interopRequireDefault(_router);
-
 var _error = __webpack_require__(/*! ./middleware/error */ "./src/middleware/error.js");
 
 var _error2 = _interopRequireDefault(_error);
@@ -1001,6 +997,10 @@ var _error2 = _interopRequireDefault(_error);
 var _logger = __webpack_require__(/*! ./utils/logger */ "./src/utils/logger.js");
 
 var _logger2 = _interopRequireDefault(_logger);
+
+var _router = __webpack_require__(/*! ./router */ "./src/router.js");
+
+var _router2 = _interopRequireDefault(_router);
 
 var _sigInitHandler = __webpack_require__(/*! ./utils/sigInitHandler */ "./src/utils/sigInitHandler.js");
 
@@ -1043,8 +1043,11 @@ var Server = function () {
    * @param  {[type]} void [description]
    * @return {[type]}      [description]
    */
-  function Server(config) {
+  function Server(config, appRouter) {
     _classCallCheck(this, Server);
+
+    // atexit handler
+    process.on('exit', this.destroy);
 
     this.config = config;
 
@@ -1057,19 +1060,14 @@ var Server = function () {
     // Configure the app with common middleware
     this.initialize(this.app);
 
-    // atexit handler
-    process.on('exit', this.destroy);
+    // Call the abstract initialize method to allow for custom setup
+    this.configure(this.app, this.config);
+
+    var builtRouter = (0, _router2.default)(appRouter);
+
+    this.app.use(builtRouter.routes());
+    this.app.use(builtRouter.allowedMethods());
   }
-
-  /**
-   * [app description]
-   * @type {[type]}
-   */
-
-
-  Server.prototype.createRouter = function createRouter() {
-    throw new Error('No router provided');
-  };
 
   /**
    * [createServer description]
@@ -1185,77 +1183,52 @@ var Server = function () {
   // eslint-disable-next-line no-unused-vars
 
 
-  Server.prototype.configure = function () {
-    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(app, conf) {
-      return regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-            case 'end':
-              return _context.stop();
-          }
-        }
-      }, _callee, this);
-    }));
+  Server.prototype.configure = function configure(app, conf) {}
+  // abstract method
 
-    function configure(_x, _x2) {
-      return _ref.apply(this, arguments);
-    }
-
-    return configure;
-  }();
 
   /**
    * [callback description]
    * @type {Function}
    */
+  ;
+
   Server.prototype.start = function () {
-    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
       var callback = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-      var router;
-      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context.prev = _context.next) {
             case 0:
               if (this.app) {
-                _context2.next = 2;
+                _context.next = 2;
                 break;
               }
 
               throw new Error('Cannot start server: the express instance is not defined');
 
             case 2:
-              _context2.prev = 2;
-              _context2.next = 5;
-              return this.configure(this.app, this.config);
+              _context.prev = 2;
+              return _context.abrupt('return', this.createServer().listen(this.config.get('port'), this.config.get('hostname'), this.config.get('backlog'), this.getListenCallback(callback)));
 
-            case 5:
-              router = (0, _router2.default)(this.createRouter());
+            case 6:
+              _context.prev = 6;
+              _context.t0 = _context['catch'](2);
 
-
-              this.app.use(router.routes());
-              this.app.use(router.allowedMethods());
-
-              return _context2.abrupt('return', this.createServer().listen(this.config.get('port'), this.config.get('hostname'), this.config.get('backlog'), this.getListenCallback(callback)));
+              this.logger.error(_context.t0);
+              this.destroy();
+              throw _context.t0;
 
             case 11:
-              _context2.prev = 11;
-              _context2.t0 = _context2['catch'](2);
-
-              this.logger.error(_context2.t0);
-              this.destroy();
-              throw _context2.t0;
-
-            case 16:
             case 'end':
-              return _context2.stop();
+              return _context.stop();
           }
         }
-      }, _callee2, this, [[2, 11]]);
+      }, _callee, this, [[2, 6]]);
     }));
 
     function start() {
-      return _ref2.apply(this, arguments);
+      return _ref.apply(this, arguments);
     }
 
     return start;
