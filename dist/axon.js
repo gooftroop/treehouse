@@ -926,11 +926,17 @@ var _2 = _interopRequireDefault(_);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = function () {
-  var router = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _koaRouter2.default();
+var router = new _koaRouter2.default();
 
+exports.default = function (appRouter) {
   router.get('/heath', _health2.default);
+
+  if (appRouter) {
+    router.use('/', appRouter.routes(), appRouter.allowedMethods());
+  }
+
   router.all('*', _2.default);
+
   return router;
 };
 
