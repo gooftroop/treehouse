@@ -38,7 +38,7 @@ export default class Server {
    * @param  {[type]} void [description]
    * @return {[type]}      [description]
    */
-  constructor(config: Object, appRouter: Router): void {
+  constructor(config: Object): void {
     // atexit handler
     process.on('exit', this.destroy);
 
@@ -56,10 +56,8 @@ export default class Server {
     // Call the abstract initialize method to allow for custom setup
     this.configure(this.app, this.config);
 
-    const builtRouter: Object = router(appRouter);
-
-    this.app.use(builtRouter.routes());
-    this.app.use(builtRouter.allowedMethods());
+    this.app.use(router.routes());
+    this.app.use(router.allowedMethods());
   }
 
   /**

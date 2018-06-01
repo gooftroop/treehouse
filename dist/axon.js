@@ -911,12 +911,10 @@ var router = new _koaRouter2.default();
 
 // import notFound from 'axon/api/v1/handlers/404';
 
-exports.default = function (appRouter) {
-  router.use(_routes2.default.routes(), _routes2.default.allowedMethods());
-  router.use(appRouter.routes(), appRouter.allowedMethods());
 
-  return router;
-};
+router.use('/', _routes2.default.routes(), _routes2.default.allowedMethods());
+
+exports.default = router;
 
 /***/ }),
 
@@ -1027,7 +1025,7 @@ var Server = function () {
    * @param  {[type]} void [description]
    * @return {[type]}      [description]
    */
-  function Server(config, appRouter) {
+  function Server(config) {
     _classCallCheck(this, Server);
 
     // atexit handler
@@ -1047,10 +1045,8 @@ var Server = function () {
     // Call the abstract initialize method to allow for custom setup
     this.configure(this.app, this.config);
 
-    var builtRouter = (0, _router2.default)(appRouter);
-
-    this.app.use(builtRouter.routes());
-    this.app.use(builtRouter.allowedMethods());
+    this.app.use(_router2.default.routes());
+    this.app.use(_router2.default.allowedMethods());
   }
 
   /**

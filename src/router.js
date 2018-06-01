@@ -5,9 +5,6 @@ import v1 from 'axon/api/v1/routes';
 
 const router = new Router();
 
-export default (appRouter: ?Object) => {
-  router.use(v1.routes(), v1.allowedMethods());
-  router.use(appRouter.routes(), appRouter.allowedMethods());
+router.use('/', v1.routes(), v1.allowedMethods());
 
-  return router;
-};
+export default router;
