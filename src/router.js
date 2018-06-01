@@ -1,17 +1,13 @@
 import Router from 'koa-router';
 
-import health from 'axon/api/handlers/health';
-import notFound from 'axon/api/handlers/404';
+import notFound from 'axon/api/v1/handlers/404';
+import v1 from 'axon/api/v1/routes';
 
 const router = new Router();
 
 export default (appRouter: ?Object) => {
-  router.get('/heath', health);
-
-  if (appRouter) {
-    router.use('/', appRouter.routes(), appRouter.allowedMethods());
-  }
-
+  router.use(v1.routes(), v1.allowedMethods());
+  router.use(appRouter.routes(), appRouter.allowedMethods());
   router.all('*', notFound);
 
   return router;

@@ -78,10 +78,10 @@ module.exports =
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/api/handlers/404.js":
-/*!*********************************!*\
-  !*** ./src/api/handlers/404.js ***!
-  \*********************************/
+/***/ "./src/api/v1/handlers/404.js":
+/*!************************************!*\
+  !*** ./src/api/v1/handlers/404.js ***!
+  \************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -124,10 +124,10 @@ exports.default = function () {
 
 /***/ }),
 
-/***/ "./src/api/handlers/health.js":
-/*!************************************!*\
-  !*** ./src/api/handlers/health.js ***!
-  \************************************/
+/***/ "./src/api/v1/handlers/health.js":
+/*!***************************************!*\
+  !*** ./src/api/v1/handlers/health.js ***!
+  \***************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -167,6 +167,37 @@ exports.default = function () {
 
   return health;
 }();
+
+/***/ }),
+
+/***/ "./src/api/v1/routes/index.js":
+/*!************************************!*\
+  !*** ./src/api/v1/routes/index.js ***!
+  \************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _koaRouter = __webpack_require__(/*! koa-router */ "koa-router");
+
+var _koaRouter2 = _interopRequireDefault(_koaRouter);
+
+var _health = __webpack_require__(/*! ../handlers/health */ "./src/api/v1/handlers/health.js");
+
+var _health2 = _interopRequireDefault(_health);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var router = new _koaRouter2.default();
+
+router.get('/heath', _health2.default);
+
+exports.default = router;
 
 /***/ }),
 
@@ -916,25 +947,21 @@ var _koaRouter = __webpack_require__(/*! koa-router */ "koa-router");
 
 var _koaRouter2 = _interopRequireDefault(_koaRouter);
 
-var _health = __webpack_require__(/*! ./api/handlers/health */ "./src/api/handlers/health.js");
-
-var _health2 = _interopRequireDefault(_health);
-
-var _ = __webpack_require__(/*! ./api/handlers/404 */ "./src/api/handlers/404.js");
+var _ = __webpack_require__(/*! ./api/v1/handlers/404 */ "./src/api/v1/handlers/404.js");
 
 var _2 = _interopRequireDefault(_);
+
+var _routes = __webpack_require__(/*! ./api/v1/routes */ "./src/api/v1/routes/index.js");
+
+var _routes2 = _interopRequireDefault(_routes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var router = new _koaRouter2.default();
 
 exports.default = function (appRouter) {
-  router.get('/heath', _health2.default);
-
-  if (appRouter) {
-    router.use('/', appRouter.routes(), appRouter.allowedMethods());
-  }
-
+  router.use(_routes2.default.routes(), _routes2.default.allowedMethods());
+  router.use(appRouter.routes(), appRouter.allowedMethods());
   router.all('*', _2.default);
 
   return router;
