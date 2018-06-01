@@ -78,52 +78,6 @@ module.exports =
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/api/v1/handlers/404.js":
-/*!************************************!*\
-  !*** ./src/api/v1/handlers/404.js ***!
-  \************************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-/**
- * [notFound description]
- * @param  {[type]} ctx [description]
- * @return {[type]}     [description]
- */
-exports.default = function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ctx) {
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            // Koa defaults to 404 status
-            ctx.body = "You shouldn't be here!";
-
-          case 1:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee, this);
-  }));
-
-  function notFound(_x) {
-    return _ref.apply(this, arguments);
-  }
-
-  return notFound;
-}();
-
-/***/ }),
-
 /***/ "./src/api/v1/handlers/health.js":
 /*!***************************************!*\
   !*** ./src/api/v1/handlers/health.js ***!
@@ -947,10 +901,6 @@ var _koaRouter = __webpack_require__(/*! koa-router */ "koa-router");
 
 var _koaRouter2 = _interopRequireDefault(_koaRouter);
 
-var _ = __webpack_require__(/*! ./api/v1/handlers/404 */ "./src/api/v1/handlers/404.js");
-
-var _2 = _interopRequireDefault(_);
-
 var _routes = __webpack_require__(/*! ./api/v1/routes */ "./src/api/v1/routes/index.js");
 
 var _routes2 = _interopRequireDefault(_routes);
@@ -959,10 +909,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var router = new _koaRouter2.default();
 
+// import notFound from 'axon/api/v1/handlers/404';
+
 exports.default = function (appRouter) {
   router.use(_routes2.default.routes(), _routes2.default.allowedMethods());
   router.use(appRouter.routes(), appRouter.allowedMethods());
-  router.all('*', _2.default);
 
   return router;
 };
