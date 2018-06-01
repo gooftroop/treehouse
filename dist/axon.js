@@ -884,40 +884,6 @@ exports.default = function (ctx, next) {
 
 /***/ }),
 
-/***/ "./src/router.js":
-/*!***********************!*\
-  !*** ./src/router.js ***!
-  \***********************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _koaRouter = __webpack_require__(/*! koa-router */ "koa-router");
-
-var _koaRouter2 = _interopRequireDefault(_koaRouter);
-
-var _routes = __webpack_require__(/*! ./api/v1/routes */ "./src/api/v1/routes/index.js");
-
-var _routes2 = _interopRequireDefault(_routes);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var router = new _koaRouter2.default();
-
-// import notFound from 'axon/api/v1/handlers/404';
-
-
-router.use('/', _routes2.default.routes(), _routes2.default.allowedMethods());
-
-exports.default = router;
-
-/***/ }),
-
 /***/ "./src/server.js":
 /*!***********************!*\
   !*** ./src/server.js ***!
@@ -980,10 +946,6 @@ var _logger = __webpack_require__(/*! ./utils/logger */ "./src/utils/logger.js")
 
 var _logger2 = _interopRequireDefault(_logger);
 
-var _router = __webpack_require__(/*! ./router */ "./src/router.js");
-
-var _router2 = _interopRequireDefault(_router);
-
 var _sigInitHandler = __webpack_require__(/*! ./utils/sigInitHandler */ "./src/utils/sigInitHandler.js");
 
 var _sigInitHandler2 = _interopRequireDefault(_sigInitHandler);
@@ -999,6 +961,10 @@ var _uncaughtExceptionHandler2 = _interopRequireDefault(_uncaughtExceptionHandle
 var _unhandledRejectionHandler = __webpack_require__(/*! ./utils/unhandledRejectionHandler */ "./src/utils/unhandledRejectionHandler.js");
 
 var _unhandledRejectionHandler2 = _interopRequireDefault(_unhandledRejectionHandler);
+
+var _routes = __webpack_require__(/*! ./api/v1/routes */ "./src/api/v1/routes/index.js");
+
+var _routes2 = _interopRequireDefault(_routes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1042,11 +1008,8 @@ var Server = function () {
     // Configure the app with common middleware
     this.initialize(this.app);
 
-    // Call the abstract initialize method to allow for custom setup
-    this.configure(this.app, this.config);
-
-    this.app.use(_router2.default.routes());
-    this.app.use(_router2.default.allowedMethods());
+    this.app.use(_routes2.default.routes());
+    this.app.use(_routes2.default.allowedMethods());
   }
 
   /**
@@ -1155,23 +1118,10 @@ var Server = function () {
   };
 
   /**
-   * Attach middleware & controllers to the Express app.
-   * Note: Order matters here.
-   * @param  {[type]}  void [description]
-   * @return {Promise}      [description]
-   */
-  // eslint-disable-next-line no-unused-vars
-
-
-  Server.prototype.configure = function configure(app, conf) {}
-  // abstract method
-
-
-  /**
    * [callback description]
    * @type {Function}
    */
-  ;
+
 
   Server.prototype.start = function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {

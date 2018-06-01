@@ -11,11 +11,11 @@ import serve from 'koa-static';
 import accessLogger from 'axon/middleware/accessLogger';
 import errorMiddleware from 'axon/middleware/error';
 import Logger from 'axon/utils/logger';
-import router from 'axon/router';
 import sigInitHandler from 'axon/utils/sigInitHandler';
 import transactionMiddleware from 'axon/middleware/transaction';
 import uncaughtExceptionHandler from 'axon/utils/uncaughtExceptionHandler';
 import unhandledRejectionHandler from 'axon/utils/unhandledRejectionHandler';
+import v1 from 'axon/api/v1/routes';
 
 // Catches ctrl+c event
 process.on('SIGINT', sigInitHandler);
@@ -53,11 +53,8 @@ export default class Server {
     // Configure the app with common middleware
     this.initialize(this.app);
 
-    // Call the abstract initialize method to allow for custom setup
-    this.configure(this.app, this.config);
-
-    this.app.use(router.routes());
-    this.app.use(router.allowedMethods());
+    this.app.use(v1.routes());
+    this.app.use(v1.allowedMethods());
   }
 
   /**
@@ -157,17 +154,6 @@ export default class Server {
   destroy(): void {
     // TODO logger destroy?
     process.emit('destroy');
-  }
-
-  /**
-   * Attach middleware & controllers to the Express app.
-   * Note: Order matters here.
-   * @param  {[type]}  void [description]
-   * @return {Promise}      [description]
-   */
-  // eslint-disable-next-line no-unused-vars
-  configure(app: Object, conf: Object): void {
-    // abstract method
   }
 
   /**
