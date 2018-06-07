@@ -11,11 +11,11 @@ import serve from 'koa-static';
 import accessLogger from 'axon/middleware/accessLogger';
 import errorMiddleware from 'axon/middleware/error';
 import Logger from 'axon/utils/logger';
+import router from 'axon/router';
 import sigInitHandler from 'axon/utils/sigInitHandler';
 import transactionMiddleware from 'axon/middleware/transaction';
 import uncaughtExceptionHandler from 'axon/utils/uncaughtExceptionHandler';
 import unhandledRejectionHandler from 'axon/utils/unhandledRejectionHandler';
-import v1 from 'axon/api/v1/routes';
 
 // Catches ctrl+c event
 process.on('SIGINT', sigInitHandler);
@@ -32,13 +32,14 @@ export default class Server {
   app: Function;
   config: Object;
   logger: Object;
+  router: Object;
 
   /**
    * [constructor description]
    * @param  {[type]} void [description]
    * @return {[type]}      [description]
    */
-  constructor(config: Object): void {
+  constructor(config: Object, appRouter: Object): void {
     // atexit handler
     process.on('exit', this.destroy);
 
@@ -53,8 +54,12 @@ export default class Server {
     // Configure the app with common middleware
     this.initialize(this.app);
 
-    this.app.use(v1.routes());
-    this.app.use(v1.allowedMethods());
+    // Combine with application-specific router
+    router.use(appRouter);
+    debugger;
+
+    this.app.use(router.routes());
+    this.app.use(router.allowedMethods());
   }
 
   /**

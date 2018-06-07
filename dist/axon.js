@@ -884,6 +884,37 @@ exports.default = function (ctx, next) {
 
 /***/ }),
 
+/***/ "./src/router.js":
+/*!***********************!*\
+  !*** ./src/router.js ***!
+  \***********************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _koaRouter = __webpack_require__(/*! koa-router */ "koa-router");
+
+var _koaRouter2 = _interopRequireDefault(_koaRouter);
+
+var _routes = __webpack_require__(/*! ./api/v1/routes */ "./src/api/v1/routes/index.js");
+
+var _routes2 = _interopRequireDefault(_routes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var router = new _koaRouter2.default();
+
+router.use(_routes2.default);
+
+exports.default = router;
+
+/***/ }),
+
 /***/ "./src/server.js":
 /*!***********************!*\
   !*** ./src/server.js ***!
@@ -946,6 +977,10 @@ var _logger = __webpack_require__(/*! ./utils/logger */ "./src/utils/logger.js")
 
 var _logger2 = _interopRequireDefault(_logger);
 
+var _router = __webpack_require__(/*! ./router */ "./src/router.js");
+
+var _router2 = _interopRequireDefault(_router);
+
 var _sigInitHandler = __webpack_require__(/*! ./utils/sigInitHandler */ "./src/utils/sigInitHandler.js");
 
 var _sigInitHandler2 = _interopRequireDefault(_sigInitHandler);
@@ -961,10 +996,6 @@ var _uncaughtExceptionHandler2 = _interopRequireDefault(_uncaughtExceptionHandle
 var _unhandledRejectionHandler = __webpack_require__(/*! ./utils/unhandledRejectionHandler */ "./src/utils/unhandledRejectionHandler.js");
 
 var _unhandledRejectionHandler2 = _interopRequireDefault(_unhandledRejectionHandler);
-
-var _routes = __webpack_require__(/*! ./api/v1/routes */ "./src/api/v1/routes/index.js");
-
-var _routes2 = _interopRequireDefault(_routes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -991,7 +1022,7 @@ var Server = function () {
    * @param  {[type]} void [description]
    * @return {[type]}      [description]
    */
-  function Server(config) {
+  function Server(config, appRouter) {
     _classCallCheck(this, Server);
 
     // atexit handler
@@ -1008,8 +1039,12 @@ var Server = function () {
     // Configure the app with common middleware
     this.initialize(this.app);
 
-    this.app.use(_routes2.default.routes());
-    this.app.use(_routes2.default.allowedMethods());
+    // Combine with application-specific router
+    _router2.default.use(appRouter);
+    debugger;
+
+    this.app.use(_router2.default.routes());
+    this.app.use(_router2.default.allowedMethods());
   }
 
   /**
