@@ -4,6 +4,6 @@ import v1 from 'axon/api/v1/routes';
 
 const router = new Router();
 
-router.use(v1);
+router.use(v1.routes());
 
 export default router;

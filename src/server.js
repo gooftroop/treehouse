@@ -55,7 +55,7 @@ export default class Server {
     this.initialize(this.app);
 
     // Combine with application-specific router
-    router.use(appRouter);
+    router.use(appRouter.routes());
     debugger;
 
     this.app.use(router.routes());

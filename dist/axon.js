@@ -909,7 +909,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var router = new _koaRouter2.default();
 
-router.use(_routes2.default);
+router.use(_routes2.default.routes());
 
 exports.default = router;
 
@@ -1040,7 +1040,7 @@ var Server = function () {
     this.initialize(this.app);
 
     // Combine with application-specific router
-    _router2.default.use(appRouter);
+    _router2.default.use(appRouter.routes());
     debugger;
 
     this.app.use(_router2.default.routes());
