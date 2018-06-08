@@ -149,7 +149,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var router = new _koaRouter2.default();
 
-router.get('/heath', _health2.default);
+router.get('/health', _health2.default);
 
 exports.default = router;
 

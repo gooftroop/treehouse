@@ -4,6 +4,6 @@ import health from 'axon/api/v1/handlers/health';
 
 const router = new Router();
 
-router.get('/heath', health);
+router.get('/health', health);
 
 export default router;
