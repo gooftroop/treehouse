@@ -9,7 +9,7 @@ Axon is a lightweight [Koa](https://koajs.com/), event-based server that provide
 - Application-specific Exceptions,
 - A server-side oriented GraphQL Client built around [Apollo Client](https://github.com/apollographql/apollo-client) for inter-service communication.
 
-Additional documentation can be found [here](https://rawgit.com/Harmonizly/axon/blob/master/docs/index.html).
+Additional documentation (JSDocs) can be found [here](https://harmonizly.github.io/axon/).
 
 ## Installing
 
