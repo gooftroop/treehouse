@@ -69,11 +69,11 @@ class Logger extends Bunyan {
    * @return {[type]}      [description]
    */
   static getLogger(name: string): Object {
-    const handlersConfig: Object = config.get('loggers').get('handlers');
+    const handlersConfig: Object = config.loggers.handlers;
     const loggerName: string = (name == null) ? DEFAULT_LOGGER_NAME : name.toLowerCase();
 
     if (!(loggerName in Logger.loggers)) {
-      Logger.loggers[loggerName] = new Logger(handlersConfig.get(loggerName));
+      Logger.loggers[loggerName] = new Logger(handlersConfig.loggerName);
     }
 
     return Logger.loggers[loggerName];

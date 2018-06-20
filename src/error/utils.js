@@ -1,5 +1,6 @@
 const DEFAULT_CODE: number = 0;
 const DEFAULT_MESSAGE: string = 'An Unknown error occurred';
+const DEFAULT_STATUS: number = 500;
 
 /**
  * [error description]
@@ -85,5 +86,5 @@ export function resolveStatus(payload: number | Object, status: ?number): number
 
   const typeStatus: String = typeof (status);
 
-  return (typeStatus !== 'number' || typeStatus !== 'string') ? DEFAULT_CODE : status;
+  return (typeStatus !== 'number' || typeStatus !== 'string') ? DEFAULT_STATUS : status;
 }

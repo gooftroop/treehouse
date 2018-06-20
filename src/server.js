@@ -1,6 +1,7 @@
 import body from 'koa-body';
 import compress from 'koa-compress';
 import cors from 'koa-cors';
+import EventEmitter from 'events';
 import fs from 'fs';
 import helmet from 'koa-helmet';
 import https from 'https';
@@ -28,7 +29,7 @@ process.on('unhandledRejection', unhandledRejectionHandler);
  * [app description]
  * @type {[type]}
  */
-export default class Server {
+export default class Server extends EventEmitter {
   app: Function;
   config: Object;
   logger: Object;
@@ -40,6 +41,8 @@ export default class Server {
    * @return {[type]}      [description]
    */
   constructor(config: Object, appRouter: Object): void {
+    super();
+
     // atexit handler
     process.on('exit', this.destroy);
 
@@ -54,12 +57,9 @@ export default class Server {
     // Configure the app with common middleware
     this.initialize(this.app);
 
-    // Combine with application-specific router
-    router.use(appRouter.routes());
-    debugger;
+    this.initializeRouter(router, appRouter);
 
-    this.app.use(router.routes());
-    this.app.use(router.allowedMethods());
+    this.emit('ready');
   }
 
   /**
@@ -68,7 +68,7 @@ export default class Server {
    * @return {[type]}      [description]
    */
   createServer(): Object {
-    return (this.config.get('secure')) ? this.createHttpsServer() : this.app;
+    return (this.config.server.secure) ? this.createHttpsServer() : this.app;
   }
 
   /**
@@ -82,10 +82,10 @@ export default class Server {
         return next();
       }
 
-      return response.redirect(`https://${request.hostname}:${this.config.get('port')}${request.url}`);
+      return response.redirect(`https://${request.hostname}:${this.config.server.port}${request.url}`);
     });
 
-    const sslConfig = this.config.get('ssl');
+    const sslConfig = this.config.server.ssl;
     const httpsConfig = Object.assign({}, sslConfig, {
       key: fs.readFileSync(sslConfig.get('key')),
       cert: fs.readFileSync(sslConfig.get('cert')),
@@ -104,11 +104,13 @@ export default class Server {
         callback();
       }
 
+      this.emit('start');
+
       if (process.send) {
         process.send('ready');
       }
 
-      this.logger.info(`Server listening at ${this.config.get('hostname')}:${this.config.get('port')}...`);
+      this.logger.info(`Server listening at ${this.config.server.hostname}:${this.config.server.port}...`);
     };
   }
 
@@ -135,20 +137,31 @@ export default class Server {
     // Configure Request logging
     app.use(accessLogger);
 
+    this.initializeMiddleware();
+
     // Configure the request error handling
     app.use(errorMiddleware);
+  }
 
-    // Serve asset resources using the 'assets' url
-    app.use(mount(
-      this.config.assets.get('url'),
-      serve(this.config.assets.get('path'), this.config.assets.get('options')),
-    ));
+  /**
+   * [initializeMiddleware description]
+   * @return {[type]} [description]
+   */
+  initializeMiddleware() {
+    // Override to provide custom middleware
+  }
 
-    // Serve static resources using the 'static' url
-    app.use(mount(
-      this.config.static.get('url'),
-      serve(this.config.static.get('path'), this.config.static.get('options')),
-    ));
+  /**
+   * [initializeRouter description]
+   * @param  {[type]} appRouter [description]
+   * @return {[type]}           [description]
+   */
+  initializeRouter(baseRouter: Object, appRouter: Object): void {
+    // Combine with application-specific router
+    baseRouter.use(appRouter.routes());
+
+    this.app.use(baseRouter.routes());
+    this.app.use(baseRouter.allowedMethods());
   }
 
   /**
@@ -158,6 +171,7 @@ export default class Server {
    */
   destroy(): void {
     // TODO logger destroy?
+    this.emit('destroy');
     process.emit('destroy');
   }
 
@@ -171,12 +185,14 @@ export default class Server {
     }
 
     try {
+      this.emit('before:start');
       return this.createServer().listen(
         this.config.get('port'),
         this.config.get('hostname'),
         this.config.get('backlog'),
         this.getListenCallback(callback),
       );
+      this.emi('after:start');
     } catch (e) {
       this.logger.error(e);
       this.destroy();
@@ -191,10 +207,13 @@ export default class Server {
    */
   stop(callback: Function | null = null): void {
     this.logger.info(`Server (${this.config.hostname}:${this.config.port}) stopping...`);
-    this.destroy();
 
+    this.emit('before:stop');
     if (callback) {
       callback();
     }
+
+    this.destroy();
+    this.emit('after:stop');
   }
 }

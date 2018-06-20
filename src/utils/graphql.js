@@ -1,4 +1,4 @@
-import { GraphQLException, NetworkException } from 'axon/exception';
+import { GraphQLException, NetworkException } from 'axon/error';
 
 import fetch from 'node-fetch';
 import { ApolloClient } from 'apollo-client';

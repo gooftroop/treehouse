@@ -4,14 +4,14 @@ import {
   resolveError,
   resolveMessage,
   resolveStatus,
-} from 'axon/exception/utils';
-import * as codes from 'axon/exception/codes';
+} from 'axon/error/utils';
+import * as codes from 'axon/error/codes';
 
 /**
  * [code description]
  * @type {[type]}
  */
-export default class Exception extends Error {
+export default class ApiError extends Error {
   code: number;
   error: Object;
   status: number;
@@ -42,7 +42,7 @@ export default class Exception extends Error {
  * [error description]
  * @type {[type]}
  */
-export class AuthorizationException extends Exception {
+export class AuthorizationError extends ApiError {
   /**
    * [constructor description]
    * @param {[type]} errors [description]
@@ -56,7 +56,7 @@ export class AuthorizationException extends Exception {
  * [errors description]
  * @type {[type]}
  */
-export class GraphQLException extends Exception {
+export class GraphQLError extends ApiError {
   /**
    * [constructor description]
    * @param {[type]} errors [description]
@@ -70,7 +70,7 @@ export class GraphQLException extends Exception {
  * [message description]
  * @type {[type]}
  */
-export class InternalException extends Exception {
+export class InternalError extends ApiError {
   constructor(message: String, e: ?Error) {
     super(codes.FATAL_ERROR(message), e);
   }
@@ -80,7 +80,7 @@ export class InternalException extends Exception {
  * [message description]
  * @type {[type]}
  */
-export class InvalidRequestException extends Exception {
+export class InvalidRequestError extends ApiError {
   /**
    * [constructor description]
    * @param {[type]} errors [description]
@@ -94,7 +94,7 @@ export class InvalidRequestException extends Exception {
  * [error description]
  * @type {[type]}
  */
-export class NetworkException extends Exception {
+export class NetworkError extends ApiError {
   /**
    * [constructor description]
    * @param {[type]} error [description]
@@ -107,7 +107,7 @@ export class NetworkException extends Exception {
 /**
  *
  */
-export class ServiceUnavailableException extends Exception {
+export class ServiceUnavailableError extends ApiError {
   /**
    * [constructor description]
    * @param {[type]} errors [description]
