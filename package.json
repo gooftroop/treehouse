@@ -1,9 +1,9 @@
 {
   "name": "axon",
   "version": "1.0.0",
-  "description": "Core express server library for all Harmonizly nodejs-based microservices",
+  "description": "Light-weight Koa framework implementation to abstract away common boilerplate",
   "main": "index.js",
-  "repository": "https://github.com/Harmonizly/jarvis.git",
+  "repository": "https://github.com/Harmonizly/axon.git",
   "author": "Brandon Webb (webb.c.brandon@gmail.com)",
   "license": "MIT",
   "scripts": {
