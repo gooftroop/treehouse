@@ -6,8 +6,8 @@
 
 Axon is a lightweight [Koa](https://koajs.com/), event-based server that provides common configuration and setup in an Object-Oriented design. The purpose of Axon is to help speed up the development of Nodejs services by abstracting out the boilerplate and basic configuration and allow you to focus on your custom middleware or handlers. In addition to providing a core Koa server, Axon also exposes other common utilities:
 - [Bunyan](https://github.com/trentm/node-bunyan) `Logger`
-- application-specific Exceptions,
-- a server-side oriented GraphQL Client built around [Apollo Client](https://github.com/apollographql/apollo-client) for inter-service communication.
+- Application-specific Exceptions,
+- A server-side oriented GraphQL Client built around [Apollo Client](https://github.com/apollographql/apollo-client) for inter-service communication.
 
 Additional documentation can be found [here]("./docs/index.html").
 
@@ -82,7 +82,7 @@ A couple notes of interest:
 ## Deployment
 
 Axon requires only a configuration object and an app-specific router.
-Due to it's OOD, any method can be overridden. Remember, if you override a method in Axon, you must call `super.<method name>`.
+Any method can be overridden. Remember, if you override a method in Axon, you must call `super.<method name>`.
 
 A basic example of consuming Axon:
 
@@ -93,6 +93,10 @@ class MyServer extends Server {
 
   constructor(): void {
     super(config, router);
+  }
+
+  initializeMiddleware() {
+    // Initialize any custom middleware  here
   }
 }
 ```
@@ -112,16 +116,28 @@ It is highly recommended that you use [node-config](https://github.com/lorenwest
       },
       ...etc.
     },
-    streams: {},
+    streams: {
+      // Currently not used
+    },
   },
   server: {
     hostname: '0.0.0.0',
     port: 3000,
     secure: false,
-    ssl: {},  
+    ssl: {
+      // ssl configuration for nodejs HTTPS server
+    },  
   },    
 }
 ```
+
+## Building
+
+To build a deployment (production) `dist`, run `yarn build`.
+
+To build development `dist`, run `yarn build:dev`.
+
+When publishing the package to `npm`, `prepublish` will create a deployment `dist`.
 
 ## Contributing
 
@@ -135,8 +151,8 @@ To build and "deploy", run `make` at the root project directory and commit the r
 
 ## Testing
 
-Under construction
+Under construction.
 
-Tests are located under the `tests` directory and mirror the `src` directory structure. Tests are written using [Mocha](https://mochajs.org/) and [chai](http://www.chaijs.com/). Coverage reports are automatically collected on test runs using [istanbul](https://github.com/gotwarlost/istanbul).
+Both unit and integration tests are located under the `tests` directory (`tests/unit` and `tests/integration`) and mirror the `src` directory structure. Tests are written using [Mocha](https://mochajs.org/) and [chai](http://www.chaijs.com/). Coverage reports are automatically collected on test runs using [istanbul](https://github.com/gotwarlost/istanbul).
 
 To run tests, use `npm test`. You can provide additional arguments to `Mocha` by running `npm test -- <opts>`.

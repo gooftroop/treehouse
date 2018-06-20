@@ -1,4 +1,3 @@
-
 /**
  * [ping description]
  * @param  {[type]} ctx  [description]

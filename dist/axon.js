@@ -155,10 +155,10 @@ exports.default = router;
 
 /***/ }),
 
-/***/ "./src/exception/codes.js":
-/*!********************************!*\
-  !*** ./src/exception/codes.js ***!
-  \********************************/
+/***/ "./src/error/codes.js":
+/*!****************************!*\
+  !*** ./src/error/codes.js ***!
+  \****************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -167,8 +167,16 @@ exports.default = router;
 
 
 exports.__esModule = true;
+/**
+ * [DEFAULT_FATAL_ERROR description]
+ * @type {[type]}
+ */
 var DEFAULT_FATAL_ERROR = exports.DEFAULT_FATAL_ERROR = 'An error occurred. If this error persists, please contact your System Administrator';
 
+/**
+ * [FATAL_ERROR description]
+ * @type {[type]}
+ */
 var FATAL_ERROR = exports.FATAL_ERROR = function FATAL_ERROR() {
   var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_FATAL_ERROR;
 
@@ -180,8 +188,16 @@ var FATAL_ERROR = exports.FATAL_ERROR = function FATAL_ERROR() {
   };
 };
 
+/**
+ * [DEFAULT_GENERAL_ERROR description]
+ * @type {[type]}
+ */
 var DEFAULT_GENERAL_ERROR = exports.DEFAULT_GENERAL_ERROR = "Our hamsters don't know how to handle that request";
 
+/**
+ * [GENERAL_ERROR description]
+ * @type {[type]}
+ */
 var GENERAL_ERROR = exports.GENERAL_ERROR = function GENERAL_ERROR() {
   var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_GENERAL_ERROR;
 
@@ -193,8 +209,16 @@ var GENERAL_ERROR = exports.GENERAL_ERROR = function GENERAL_ERROR() {
   };
 };
 
+/**
+ * [DEFAULT_NETWORK_ERROR description]
+ * @type {[type]}
+ */
 var DEFAULT_NETWORK_ERROR = exports.DEFAULT_NETWORK_ERROR = 'The network request failed';
 
+/**
+ * [NETWORK_ERROR description]
+ * @type {[type]}
+ */
 var NETWORK_ERROR = exports.NETWORK_ERROR = function NETWORK_ERROR() {
   var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_NETWORK_ERROR;
   var status = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 500;
@@ -207,6 +231,10 @@ var NETWORK_ERROR = exports.NETWORK_ERROR = function NETWORK_ERROR() {
   };
 };
 
+/**
+ * [NOT_YET_IMPLEMENTED description]
+ * @type {[type]}
+ */
 var NOT_YET_IMPLEMENTED = exports.NOT_YET_IMPLEMENTED = function NOT_YET_IMPLEMENTED() {
   return {
     status: 501,
@@ -216,6 +244,10 @@ var NOT_YET_IMPLEMENTED = exports.NOT_YET_IMPLEMENTED = function NOT_YET_IMPLEME
   };
 };
 
+/**
+ * [ILLEGAL_STATE_EXCEPTION description]
+ * @type {[type]}
+ */
 var ILLEGAL_STATE_EXCEPTION = exports.ILLEGAL_STATE_EXCEPTION = function ILLEGAL_STATE_EXCEPTION() {
   return {
     status: 500,
@@ -225,8 +257,16 @@ var ILLEGAL_STATE_EXCEPTION = exports.ILLEGAL_STATE_EXCEPTION = function ILLEGAL
   };
 };
 
+/**
+ * [DEFAULT_INVALID_REQUEST description]
+ * @type {[type]}
+ */
 var DEFAULT_INVALID_REQUEST = exports.DEFAULT_INVALID_REQUEST = "Our hamsters don't know how to handle that request";
 
+/**
+ * [INVALID_REQUEST description]
+ * @type {[type]}
+ */
 var INVALID_REQUEST = exports.INVALID_REQUEST = function INVALID_REQUEST() {
   var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_INVALID_REQUEST;
 
@@ -238,8 +278,16 @@ var INVALID_REQUEST = exports.INVALID_REQUEST = function INVALID_REQUEST() {
   };
 };
 
+/**
+ * [DEFAULT_UNAUTHORIZED description]
+ * @type {[type]}
+ */
 var DEFAULT_UNAUTHORIZED = 'Your session is no longer valid. Please login and rety';
 
+/**
+ * [UNAUTHORIZED description]
+ * @type {[type]}
+ */
 var UNAUTHORIZED = exports.UNAUTHORIZED = function UNAUTHORIZED() {
   var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_UNAUTHORIZED;
 
@@ -251,8 +299,16 @@ var UNAUTHORIZED = exports.UNAUTHORIZED = function UNAUTHORIZED() {
   };
 };
 
+/**
+ * [DEFAULT_FORBIDDEN description]
+ * @type {[type]}
+ */
 var DEFAULT_FORBIDDEN = exports.DEFAULT_FORBIDDEN = 'You are not allowed to access that resource';
 
+/**
+ * [FORBIDDEN description]
+ * @type {[type]}
+ */
 var FORBIDDEN = exports.FORBIDDEN = function FORBIDDEN() {
   var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_FORBIDDEN;
 
@@ -264,6 +320,10 @@ var FORBIDDEN = exports.FORBIDDEN = function FORBIDDEN() {
   };
 };
 
+/**
+ * [MISSING_REQUIRED_PARAMETER description]
+ * @type {[type]}
+ */
 var MISSING_REQUIRED_PARAMETER = exports.MISSING_REQUIRED_PARAMETER = function MISSING_REQUIRED_PARAMETER() {
   return {
     status: 400,
@@ -273,8 +333,16 @@ var MISSING_REQUIRED_PARAMETER = exports.MISSING_REQUIRED_PARAMETER = function M
   };
 };
 
+/**
+ * [DEFAULT_SERVICE_UNAVAILABLE description]
+ * @type {[type]}
+ */
 var DEFAULT_SERVICE_UNAVAILABLE = exports.DEFAULT_SERVICE_UNAVAILABLE = 'Our hamsters appear to be taking a siesta';
 
+/**
+ * [SERVICE_UNAVAILABLE description]
+ * @type {[type]}
+ */
 var SERVICE_UNAVAILABLE = exports.SERVICE_UNAVAILABLE = function SERVICE_UNAVAILABLE() {
   var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_SERVICE_UNAVAILABLE;
 
@@ -286,8 +354,16 @@ var SERVICE_UNAVAILABLE = exports.SERVICE_UNAVAILABLE = function SERVICE_UNAVAIL
   };
 };
 
+/**
+ * [DEFAULT_VALIDATION_ERROR description]
+ * @type {[type]}
+ */
 var DEFAULT_VALIDATION_ERROR = exports.DEFAULT_VALIDATION_ERROR = 'Hmmm...the hamsters found a problem with that data';
 
+/**
+ * [VALIDATION_ERROR description]
+ * @type {[type]}
+ */
 var VALIDATION_ERROR = exports.VALIDATION_ERROR = function VALIDATION_ERROR() {
   var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_VALIDATION_ERROR;
 
@@ -301,10 +377,10 @@ var VALIDATION_ERROR = exports.VALIDATION_ERROR = function VALIDATION_ERROR() {
 
 /***/ }),
 
-/***/ "./src/exception/index.js":
-/*!********************************!*\
-  !*** ./src/exception/index.js ***!
-  \********************************/
+/***/ "./src/error/index.js":
+/*!****************************!*\
+  !*** ./src/error/index.js ***!
+  \****************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -313,11 +389,11 @@ var VALIDATION_ERROR = exports.VALIDATION_ERROR = function VALIDATION_ERROR() {
 
 
 exports.__esModule = true;
-exports.codes = exports.ServiceUnavailableException = exports.NetworkException = exports.InvalidRequestException = exports.InternalException = exports.GraphQLException = exports.AuthorizationException = exports.default = undefined;
+exports.codes = exports.ServiceUnavailableError = exports.NetworkError = exports.InvalidRequestError = exports.InternalError = exports.GraphQLError = exports.AuthorizationError = exports.default = undefined;
 
-var _utils = __webpack_require__(/*! ./utils */ "./src/exception/utils.js");
+var _utils = __webpack_require__(/*! ./utils */ "./src/error/utils.js");
 
-var _codes = __webpack_require__(/*! ./codes */ "./src/exception/codes.js");
+var _codes = __webpack_require__(/*! ./codes */ "./src/error/codes.js");
 
 var codes = _interopRequireWildcard(_codes);
 
@@ -333,8 +409,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * [code description]
  * @type {[type]}
  */
-var Exception = function (_Error) {
-  _inherits(Exception, _Error);
+var ApiError = function (_Error) {
+  _inherits(ApiError, _Error);
 
   /**
    * [constructor description]
@@ -344,8 +420,8 @@ var Exception = function (_Error) {
    * @param  {[type]} e       [description]
    * @return {[type]}         [description]
    */
-  function Exception(payload, status, e) {
-    _classCallCheck(this, Exception);
+  function ApiError(payload, status, e) {
+    _classCallCheck(this, ApiError);
 
     var _this = _possibleConstructorReturn(this, _Error.call(this, (0, _utils.resolveMessage)(payload)));
 
@@ -361,7 +437,7 @@ var Exception = function (_Error) {
     return _this;
   }
 
-  return Exception;
+  return ApiError;
 }(Error);
 
 /**
@@ -370,23 +446,23 @@ var Exception = function (_Error) {
  */
 
 
-exports.default = Exception;
+exports.default = ApiError;
 
-var AuthorizationException = exports.AuthorizationException = function (_Exception) {
-  _inherits(AuthorizationException, _Exception);
+var AuthorizationError = exports.AuthorizationError = function (_ApiError) {
+  _inherits(AuthorizationError, _ApiError);
 
   /**
    * [constructor description]
    * @param {[type]} errors [description]
    */
-  function AuthorizationException(e) {
-    _classCallCheck(this, AuthorizationException);
+  function AuthorizationError(e) {
+    _classCallCheck(this, AuthorizationError);
 
-    return _possibleConstructorReturn(this, _Exception.call(this, codes.NOT_ALLOWED, e));
+    return _possibleConstructorReturn(this, _ApiError.call(this, codes.NOT_ALLOWED, e));
   }
 
-  return AuthorizationException;
-}(Exception);
+  return AuthorizationError;
+}(ApiError);
 
 /**
  * [errors description]
@@ -394,21 +470,21 @@ var AuthorizationException = exports.AuthorizationException = function (_Excepti
  */
 
 
-var GraphQLException = exports.GraphQLException = function (_Exception2) {
-  _inherits(GraphQLException, _Exception2);
+var GraphQLError = exports.GraphQLError = function (_ApiError2) {
+  _inherits(GraphQLError, _ApiError2);
 
   /**
    * [constructor description]
    * @param {[type]} errors [description]
    */
-  function GraphQLException(e) {
-    _classCallCheck(this, GraphQLException);
+  function GraphQLError(e) {
+    _classCallCheck(this, GraphQLError);
 
-    return _possibleConstructorReturn(this, _Exception2.call(this, codes.GENERAL_ERROR(e.message), e));
+    return _possibleConstructorReturn(this, _ApiError2.call(this, codes.GENERAL_ERROR(e.message), e));
   }
 
-  return GraphQLException;
-}(Exception);
+  return GraphQLError;
+}(ApiError);
 
 /**
  * [message description]
@@ -416,17 +492,17 @@ var GraphQLException = exports.GraphQLException = function (_Exception2) {
  */
 
 
-var InternalException = exports.InternalException = function (_Exception3) {
-  _inherits(InternalException, _Exception3);
+var InternalError = exports.InternalError = function (_ApiError3) {
+  _inherits(InternalError, _ApiError3);
 
-  function InternalException(message, e) {
-    _classCallCheck(this, InternalException);
+  function InternalError(message, e) {
+    _classCallCheck(this, InternalError);
 
-    return _possibleConstructorReturn(this, _Exception3.call(this, codes.FATAL_ERROR(message), e));
+    return _possibleConstructorReturn(this, _ApiError3.call(this, codes.FATAL_ERROR(message), e));
   }
 
-  return InternalException;
-}(Exception);
+  return InternalError;
+}(ApiError);
 
 /**
  * [message description]
@@ -434,21 +510,21 @@ var InternalException = exports.InternalException = function (_Exception3) {
  */
 
 
-var InvalidRequestException = exports.InvalidRequestException = function (_Exception4) {
-  _inherits(InvalidRequestException, _Exception4);
+var InvalidRequestError = exports.InvalidRequestError = function (_ApiError4) {
+  _inherits(InvalidRequestError, _ApiError4);
 
   /**
    * [constructor description]
    * @param {[type]} errors [description]
    */
-  function InvalidRequestException(message, e) {
-    _classCallCheck(this, InvalidRequestException);
+  function InvalidRequestError(message, e) {
+    _classCallCheck(this, InvalidRequestError);
 
-    return _possibleConstructorReturn(this, _Exception4.call(this, codes.INVALID_REQUEST(message), e));
+    return _possibleConstructorReturn(this, _ApiError4.call(this, codes.INVALID_REQUEST(message), e));
   }
 
-  return InvalidRequestException;
-}(Exception);
+  return InvalidRequestError;
+}(ApiError);
 
 /**
  * [error description]
@@ -456,51 +532,51 @@ var InvalidRequestException = exports.InvalidRequestException = function (_Excep
  */
 
 
-var NetworkException = exports.NetworkException = function (_Exception5) {
-  _inherits(NetworkException, _Exception5);
+var NetworkError = exports.NetworkError = function (_ApiError5) {
+  _inherits(NetworkError, _ApiError5);
 
   /**
    * [constructor description]
    * @param {[type]} error [description]
    */
-  function NetworkException(e) {
-    _classCallCheck(this, NetworkException);
+  function NetworkError(e) {
+    _classCallCheck(this, NetworkError);
 
-    return _possibleConstructorReturn(this, _Exception5.call(this, codes.NETWORK_ERROR((0, _utils.convertSystemFetchErrorStatus)(e)), e));
+    return _possibleConstructorReturn(this, _ApiError5.call(this, codes.NETWORK_ERROR((0, _utils.convertSystemFetchErrorStatus)(e)), e));
   }
 
-  return NetworkException;
-}(Exception);
+  return NetworkError;
+}(ApiError);
 
 /**
  *
  */
 
 
-var ServiceUnavailableException = exports.ServiceUnavailableException = function (_Exception6) {
-  _inherits(ServiceUnavailableException, _Exception6);
+var ServiceUnavailableError = exports.ServiceUnavailableError = function (_ApiError6) {
+  _inherits(ServiceUnavailableError, _ApiError6);
 
   /**
    * [constructor description]
    * @param {[type]} errors [description]
    */
-  function ServiceUnavailableException(message, e) {
-    _classCallCheck(this, ServiceUnavailableException);
+  function ServiceUnavailableError(message, e) {
+    _classCallCheck(this, ServiceUnavailableError);
 
-    return _possibleConstructorReturn(this, _Exception6.call(this, codes.SERVICE_UNAVAILABLE(message), e));
+    return _possibleConstructorReturn(this, _ApiError6.call(this, codes.SERVICE_UNAVAILABLE(message), e));
   }
 
-  return ServiceUnavailableException;
-}(Exception);
+  return ServiceUnavailableError;
+}(ApiError);
 
 exports.codes = codes;
 
 /***/ }),
 
-/***/ "./src/exception/utils.js":
-/*!********************************!*\
-  !*** ./src/exception/utils.js ***!
-  \********************************/
+/***/ "./src/error/utils.js":
+/*!****************************!*\
+  !*** ./src/error/utils.js ***!
+  \****************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
@@ -521,6 +597,7 @@ exports.resolveMessage = resolveMessage;
 exports.resolveStatus = resolveStatus;
 var DEFAULT_CODE = 0;
 var DEFAULT_MESSAGE = 'An Unknown error occurred';
+var DEFAULT_STATUS = 500;
 
 /**
  * [error description]
@@ -606,7 +683,7 @@ function resolveStatus(payload, status) {
 
   var typeStatus = typeof status === 'undefined' ? 'undefined' : _typeof(status);
 
-  return typeStatus !== 'number' || typeStatus !== 'string' ? DEFAULT_CODE : status;
+  return typeStatus !== 'number' || typeStatus !== 'string' ? DEFAULT_STATUS : status;
 }
 
 /***/ }),
@@ -623,11 +700,11 @@ function resolveStatus(payload, status) {
 
 
 exports.__esModule = true;
-exports.ServiceUnavailableException = exports.NetworkException = exports.Logger = exports.InvalidRequestException = exports.InternalException = exports.GraphQLException = exports.GraphQLClient = exports.Exception = exports.codes = exports.AuthorizationException = undefined;
+exports.ServiceUnavailableError = exports.NetworkError = exports.Logger = exports.InvalidRequestError = exports.InternalError = exports.GraphQLError = exports.GraphQLClient = exports.codes = exports.AuthorizationError = exports.ApiError = undefined;
 
-var _exception = __webpack_require__(/*! ./exception */ "./src/exception/index.js");
+var _error = __webpack_require__(/*! ./error */ "./src/error/index.js");
 
-var _exception2 = _interopRequireDefault(_exception);
+var _error2 = _interopRequireDefault(_error);
 
 var _graphql = __webpack_require__(/*! ./utils/graphql */ "./src/utils/graphql.js");
 
@@ -641,7 +718,7 @@ var _server = __webpack_require__(/*! ./server */ "./src/server.js");
 
 var _server2 = _interopRequireDefault(_server);
 
-var _codes = __webpack_require__(/*! ./exception/codes */ "./src/exception/codes.js");
+var _codes = __webpack_require__(/*! ./error/codes */ "./src/error/codes.js");
 
 var codes = _interopRequireWildcard(_codes);
 
@@ -649,17 +726,20 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = _server2.default;
-exports.AuthorizationException = _exception.AuthorizationException;
+exports.default = _server2.default; /**
+                                     * Export file for Axon 
+                                     */
+
+exports.ApiError = _error2.default;
+exports.AuthorizationError = _error.AuthorizationError;
 exports.codes = codes;
-exports.Exception = _exception2.default;
 exports.GraphQLClient = _graphql2.default;
-exports.GraphQLException = _exception.GraphQLException;
-exports.InternalException = _exception.InternalException;
-exports.InvalidRequestException = _exception.InvalidRequestException;
+exports.GraphQLError = _error.GraphQLError;
+exports.InternalError = _error.InternalError;
+exports.InvalidRequestError = _error.InvalidRequestError;
 exports.Logger = _logger2.default;
-exports.NetworkException = _exception.NetworkException;
-exports.ServiceUnavailableException = _exception.ServiceUnavailableException;
+exports.NetworkError = _error.NetworkError;
+exports.ServiceUnavailableError = _error.ServiceUnavailableError;
 
 /***/ }),
 
@@ -752,6 +832,10 @@ exports.default = (0, _koaMorgan2.default)(formatter, {
 
 exports.__esModule = true;
 
+var _error = __webpack_require__(/*! ../error */ "./src/error/index.js");
+
+var _error2 = _interopRequireDefault(_error);
+
 var _logger = __webpack_require__(/*! ../utils/logger */ "./src/utils/logger.js");
 
 var _logger2 = _interopRequireDefault(_logger);
@@ -771,6 +855,7 @@ var LOGGER = _logger2.default.getLogger('root');
 
 exports.default = function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ctx, next) {
+    var err;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -780,20 +865,26 @@ exports.default = function () {
             return next();
 
           case 3:
-            _context.next = 12;
+            _context.next = 13;
             break;
 
           case 5:
             _context.prev = 5;
             _context.t0 = _context['catch'](0);
+            err = _context.t0;
 
-            debugger;
-            LOGGER.error(_context.t0, ctx);
-            ctx.status = _context.t0.status || 500;
-            ctx.body = _context.t0.message;
-            ctx.app.emit('error', _context.t0, ctx);
 
-          case 12:
+            if (!(_context.t0 instanceof _error2.default)) {
+              err = ctx.status === 500 ? new _error.InternalError(_context.t0.message, _context.t0) : new _error2.default(_context.t0.message, _context.t0);
+            }
+
+            LOGGER.error(err, ctx);
+            ctx.status = err.status;
+            ctx.body = err;
+
+            ctx.app.emit('error', err, ctx);
+
+          case 13:
           case 'end':
             return _context.stop();
         }
@@ -941,6 +1032,10 @@ var _koaCors = __webpack_require__(/*! koa-cors */ "koa-cors");
 
 var _koaCors2 = _interopRequireDefault(_koaCors);
 
+var _events = __webpack_require__(/*! events */ "events");
+
+var _events2 = _interopRequireDefault(_events);
+
 var _fs = __webpack_require__(/*! fs */ "fs");
 
 var _fs2 = _interopRequireDefault(_fs);
@@ -1003,6 +1098,10 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 // Catches ctrl+c event
 process.on('SIGINT', _sigInitHandler2.default);
 
@@ -1015,10 +1114,12 @@ process.on('unhandledRejection', _unhandledRejectionHandler2.default);
  * @type {[type]}
  */
 
-var Server = function () {
+var Server = function (_EventEmitter) {
+  _inherits(Server, _EventEmitter);
 
   /**
    * [constructor description]
+   * @constructor
    * @param  {[type]} void [description]
    * @return {[type]}      [description]
    */
@@ -1026,25 +1127,25 @@ var Server = function () {
     _classCallCheck(this, Server);
 
     // atexit handler
-    process.on('exit', this.destroy);
+    var _this = _possibleConstructorReturn(this, _EventEmitter.call(this));
 
-    this.config = config;
+    process.on('exit', _this.destroy);
+
+    _this.config = config;
 
     // Initialize the express server
-    this.app = new _koa2.default();
+    _this.app = new _koa2.default();
 
     // Create the logger
-    this.logger = _logger2.default.getLogger('app');
+    _this.logger = _logger2.default.getLogger('app');
 
     // Configure the app with common middleware
-    this.initialize(this.app);
+    _this.initialize(_this.app);
 
-    // Combine with application-specific router
-    _router2.default.use(appRouter.routes());
-    debugger;
+    _this.initializeRouter(_router2.default, appRouter);
 
-    this.app.use(_router2.default.routes());
-    this.app.use(_router2.default.allowedMethods());
+    _this.emit('ready');
+    return _this;
   }
 
   /**
@@ -1055,7 +1156,7 @@ var Server = function () {
 
 
   Server.prototype.createServer = function createServer() {
-    return this.config.get('secure') ? this.createHttpsServer() : this.app;
+    return this.config.server.secure ? this.createHttpsServer() : this.app;
   };
 
   /**
@@ -1071,10 +1172,10 @@ var Server = function () {
         return next();
       }
 
-      return response.redirect('https://' + request.hostname + ':' + this.config.get('port') + request.url);
+      return response.redirect('https://' + request.hostname + ':' + this.config.server.port + request.url);
     });
 
-    var sslConfig = this.config.get('ssl');
+    var sslConfig = this.config.server.ssl;
     var httpsConfig = Object.assign({}, sslConfig, {
       key: _fs2.default.readFileSync(sslConfig.get('key')),
       cert: _fs2.default.readFileSync(sslConfig.get('cert'))
@@ -1090,18 +1191,20 @@ var Server = function () {
 
 
   Server.prototype.getListenCallback = function getListenCallback(callback) {
-    var _this = this;
+    var _this2 = this;
 
     return function () {
       if (callback != null) {
         callback();
       }
 
+      _this2.emit('start');
+
       if (process.send) {
         process.send('ready');
       }
 
-      _this.logger.info('Server listening at ' + _this.config.get('hostname') + ':' + _this.config.get('port') + '...');
+      _this2.logger.info('Server listening at ' + _this2.config.server.hostname + ':' + _this2.config.server.port + '...');
     };
   };
 
@@ -1130,14 +1233,35 @@ var Server = function () {
     // Configure Request logging
     app.use(_accessLogger2.default);
 
+    this.initializeMiddleware();
+
     // Configure the request error handling
     app.use(_error2.default);
+  };
 
-    // Serve asset resources using the 'assets' url
-    app.use((0, _koaMount2.default)(this.config.assets.get('url'), (0, _koaStatic2.default)(this.config.assets.get('path'), this.config.assets.get('options'))));
+  /**
+   * [initializeMiddleware description]
+   * @return {[type]} [description]
+   */
 
-    // Serve static resources using the 'static' url
-    app.use((0, _koaMount2.default)(this.config.static.get('url'), (0, _koaStatic2.default)(this.config.static.get('path'), this.config.static.get('options'))));
+
+  Server.prototype.initializeMiddleware = function initializeMiddleware() {}
+  // Override to provide custom middleware
+
+
+  /**
+   * [initializeRouter description]
+   * @param  {[type]} appRouter [description]
+   * @return {[type]}           [description]
+   */
+  ;
+
+  Server.prototype.initializeRouter = function initializeRouter(baseRouter, appRouter) {
+    // Combine with application-specific router
+    baseRouter.use(appRouter.routes());
+
+    this.app.use(baseRouter.routes());
+    this.app.use(baseRouter.allowedMethods());
   };
 
   /**
@@ -1149,6 +1273,7 @@ var Server = function () {
 
   Server.prototype.destroy = function destroy() {
     // TODO logger destroy?
+    this.emit('destroy');
     process.emit('destroy');
   };
 
@@ -1174,22 +1299,24 @@ var Server = function () {
 
             case 2:
               _context.prev = 2;
+
+              this.emit('before:start');
               return _context.abrupt('return', this.createServer().listen(this.config.get('port'), this.config.get('hostname'), this.config.get('backlog'), this.getListenCallback(callback)));
 
-            case 6:
-              _context.prev = 6;
+            case 8:
+              _context.prev = 8;
               _context.t0 = _context['catch'](2);
 
               this.logger.error(_context.t0);
               this.destroy();
               throw _context.t0;
 
-            case 11:
+            case 13:
             case 'end':
               return _context.stop();
           }
         }
-      }, _callee, this, [[2, 6]]);
+      }, _callee, this, [[2, 8]]);
     }));
 
     function start() {
@@ -1210,15 +1337,18 @@ var Server = function () {
     var callback = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
     this.logger.info('Server (' + this.config.hostname + ':' + this.config.port + ') stopping...');
-    this.destroy();
 
+    this.emit('before:stop');
     if (callback) {
       callback();
     }
+
+    this.destroy();
+    this.emit('after:stop');
   };
 
   return Server;
-}();
+}(_events2.default);
 
 exports.default = Server;
 
@@ -1245,7 +1375,7 @@ exports.default = function (uri) {
   });
 };
 
-var _exception = __webpack_require__(/*! ../exception */ "./src/exception/index.js");
+var _error = __webpack_require__(/*! ../error */ "./src/error/index.js");
 
 var _nodeFetch = __webpack_require__(/*! node-fetch */ "node-fetch");
 
@@ -1271,13 +1401,13 @@ function defaultErrorHandler(error) {
   if (error.graphQLErrors) {
     // eslint-disable-next-line no-param-reassign
     error.response.errors = error.graphQLError.map(function (err) {
-      return new _exception.GraphQLException(err);
+      return new _error.GraphQLException(err);
     });
   }
 
   if (error.networkError) {
     // eslint-disable-next-line no-param-reassign
-    error.networkError = new _exception.NetworkException(error.networkError);
+    error.networkError = new _error.NetworkException(error.networkError);
   }
 }
 
@@ -1414,11 +1544,11 @@ var Logger = (_temp = _class = function (_Bunyan) {
 
 
   Logger.getLogger = function getLogger(name) {
-    var handlersConfig = _config2.default.get('loggers').get('handlers');
+    var handlersConfig = _config2.default.loggers.handlers;
     var loggerName = name == null ? DEFAULT_LOGGER_NAME : name.toLowerCase();
 
     if (!(loggerName in Logger.loggers)) {
-      Logger.loggers[loggerName] = new Logger(handlersConfig.get(loggerName));
+      Logger.loggers[loggerName] = new Logger(handlersConfig.loggerName);
     }
 
     return Logger.loggers[loggerName];
@@ -1646,6 +1776,18 @@ module.exports = require("config");
 /***/ (function(module, exports) {
 
 module.exports = require("domain");
+
+/***/ }),
+
+/***/ "events":
+/*!*************************!*\
+  !*** external "events" ***!
+  \*************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("events");
 
 /***/ }),
 
