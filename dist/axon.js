@@ -94,9 +94,12 @@ exports.__esModule = true;
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 /**
- * [ping description]
- * @param  {[type]} ctx  [description]
- * @return {[type]}      [description]
+ * Health check handler.
+ * Responds to requests with a 200 and an 'OK'.
+ * Used by external services to determine if the application is alive or not.
+ * @param  {Object} ctx  The Koa context
+ * @return {void}
+ * @async
  */
 exports.default = function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ctx) {
@@ -105,7 +108,7 @@ exports.default = function () {
         switch (_context.prev = _context.next) {
           case 0:
             ctx.status = 200;
-            ctx.body = 'ok';
+            ctx.body = 'OK';
 
           case 2:
           case 'end':
@@ -146,6 +149,13 @@ var _health = __webpack_require__(/*! ../handlers/health */ "./src/api/v1/handle
 var _health2 = _interopRequireDefault(_health);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * V1 Router.
+ * Defines the health check route.
+ * @module api/v1/routes
+ * @exports V1 Router
+ */
 
 var router = new _koaRouter2.default();
 
@@ -205,28 +215,6 @@ var GENERAL_ERROR = exports.GENERAL_ERROR = function GENERAL_ERROR() {
     status: 400,
     code: '0a',
     category: 'GeneralException',
-    message: message
-  };
-};
-
-/**
- * [DEFAULT_NETWORK_ERROR description]
- * @type {[type]}
- */
-var DEFAULT_NETWORK_ERROR = exports.DEFAULT_NETWORK_ERROR = 'The network request failed';
-
-/**
- * [NETWORK_ERROR description]
- * @type {[type]}
- */
-var NETWORK_ERROR = exports.NETWORK_ERROR = function NETWORK_ERROR() {
-  var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_NETWORK_ERROR;
-  var status = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 500;
-
-  return {
-    status: status,
-    code: '0b',
-    category: 'NetworkException',
     message: message
   };
 };
@@ -389,7 +377,7 @@ var VALIDATION_ERROR = exports.VALIDATION_ERROR = function VALIDATION_ERROR() {
 
 
 exports.__esModule = true;
-exports.codes = exports.ServiceUnavailableError = exports.NetworkError = exports.InvalidRequestError = exports.InternalError = exports.GraphQLError = exports.AuthorizationError = exports.default = undefined;
+exports.codes = exports.ServiceUnavailableError = exports.InvalidRequestError = exports.InternalError = exports.AuthorizationError = exports.default = undefined;
 
 var _utils = __webpack_require__(/*! ./utils */ "./src/error/utils.js");
 
@@ -465,40 +453,18 @@ var AuthorizationError = exports.AuthorizationError = function (_ApiError) {
 }(ApiError);
 
 /**
- * [errors description]
- * @type {[type]}
- */
-
-
-var GraphQLError = exports.GraphQLError = function (_ApiError2) {
-  _inherits(GraphQLError, _ApiError2);
-
-  /**
-   * [constructor description]
-   * @param {[type]} errors [description]
-   */
-  function GraphQLError(e) {
-    _classCallCheck(this, GraphQLError);
-
-    return _possibleConstructorReturn(this, _ApiError2.call(this, codes.GENERAL_ERROR(e.message), e));
-  }
-
-  return GraphQLError;
-}(ApiError);
-
-/**
  * [message description]
  * @type {[type]}
  */
 
 
-var InternalError = exports.InternalError = function (_ApiError3) {
-  _inherits(InternalError, _ApiError3);
+var InternalError = exports.InternalError = function (_ApiError2) {
+  _inherits(InternalError, _ApiError2);
 
   function InternalError(message, e) {
     _classCallCheck(this, InternalError);
 
-    return _possibleConstructorReturn(this, _ApiError3.call(this, codes.FATAL_ERROR(message), e));
+    return _possibleConstructorReturn(this, _ApiError2.call(this, codes.FATAL_ERROR(message), e));
   }
 
   return InternalError;
@@ -510,8 +476,8 @@ var InternalError = exports.InternalError = function (_ApiError3) {
  */
 
 
-var InvalidRequestError = exports.InvalidRequestError = function (_ApiError4) {
-  _inherits(InvalidRequestError, _ApiError4);
+var InvalidRequestError = exports.InvalidRequestError = function (_ApiError3) {
+  _inherits(InvalidRequestError, _ApiError3);
 
   /**
    * [constructor description]
@@ -520,32 +486,10 @@ var InvalidRequestError = exports.InvalidRequestError = function (_ApiError4) {
   function InvalidRequestError(message, e) {
     _classCallCheck(this, InvalidRequestError);
 
-    return _possibleConstructorReturn(this, _ApiError4.call(this, codes.INVALID_REQUEST(message), e));
+    return _possibleConstructorReturn(this, _ApiError3.call(this, codes.INVALID_REQUEST(message), e));
   }
 
   return InvalidRequestError;
-}(ApiError);
-
-/**
- * [error description]
- * @type {[type]}
- */
-
-
-var NetworkError = exports.NetworkError = function (_ApiError5) {
-  _inherits(NetworkError, _ApiError5);
-
-  /**
-   * [constructor description]
-   * @param {[type]} error [description]
-   */
-  function NetworkError(e) {
-    _classCallCheck(this, NetworkError);
-
-    return _possibleConstructorReturn(this, _ApiError5.call(this, codes.NETWORK_ERROR((0, _utils.convertSystemFetchErrorStatus)(e)), e));
-  }
-
-  return NetworkError;
 }(ApiError);
 
 /**
@@ -553,8 +497,8 @@ var NetworkError = exports.NetworkError = function (_ApiError5) {
  */
 
 
-var ServiceUnavailableError = exports.ServiceUnavailableError = function (_ApiError6) {
-  _inherits(ServiceUnavailableError, _ApiError6);
+var ServiceUnavailableError = exports.ServiceUnavailableError = function (_ApiError4) {
+  _inherits(ServiceUnavailableError, _ApiError4);
 
   /**
    * [constructor description]
@@ -563,7 +507,7 @@ var ServiceUnavailableError = exports.ServiceUnavailableError = function (_ApiEr
   function ServiceUnavailableError(message, e) {
     _classCallCheck(this, ServiceUnavailableError);
 
-    return _possibleConstructorReturn(this, _ApiError6.call(this, codes.SERVICE_UNAVAILABLE(message), e));
+    return _possibleConstructorReturn(this, _ApiError4.call(this, codes.SERVICE_UNAVAILABLE(message), e));
   }
 
   return ServiceUnavailableError;
@@ -590,7 +534,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-exports.convertSystemFetchErrorStatus = convertSystemFetchErrorStatus;
 exports.resolveCode = resolveCode;
 exports.resolveError = resolveError;
 exports.resolveMessage = resolveMessage;
@@ -598,42 +541,6 @@ exports.resolveStatus = resolveStatus;
 var DEFAULT_CODE = 0;
 var DEFAULT_MESSAGE = 'An Unknown error occurred';
 var DEFAULT_STATUS = 500;
-
-/**
- * [error description]
- * @type {[type]}
- */
-function convertSystemFetchErrorStatus(error) {
-  if (error.type === 'system') {
-    switch (error.errno) {
-      case 'ENOTFOUND':
-        return 503;
-      case 'ECONNRESET':
-        return 503;
-      case 'ECONNREFUSED':
-        return 503;
-      default:
-        return 500;
-    }
-  }
-
-  switch (error.type) {
-    case 'body-timeout':
-      return 503;
-    case 'invalid-json':
-      return 400;
-    case 'max-redirect':
-      return 503;
-    case 'max-size':
-      return 400;
-    case 'no-redirect':
-      return 503;
-    case 'request-timeout':
-      return 503;
-    default:
-      return 500;
-  }
-}
 
 /**
  * [resolveCode description]
@@ -700,15 +607,11 @@ function resolveStatus(payload, status) {
 
 
 exports.__esModule = true;
-exports.ServiceUnavailableError = exports.NetworkError = exports.Logger = exports.InvalidRequestError = exports.InternalError = exports.GraphQLError = exports.GraphQLClient = exports.codes = exports.AuthorizationError = exports.ApiError = undefined;
+exports.ServiceUnavailableError = exports.Logger = exports.InvalidRequestError = exports.InternalError = exports.codes = exports.AuthorizationError = exports.ApiError = undefined;
 
 var _error = __webpack_require__(/*! ./error */ "./src/error/index.js");
 
 var _error2 = _interopRequireDefault(_error);
-
-var _graphql = __webpack_require__(/*! ./utils/graphql */ "./src/utils/graphql.js");
-
-var _graphql2 = _interopRequireDefault(_graphql);
 
 var _logger = __webpack_require__(/*! ./utils/logger */ "./src/utils/logger.js");
 
@@ -726,19 +629,19 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = _server2.default; /**
-                                     * Export file for Axon 
-                                     */
+/**
+ * Main entry point for the built Axon dist/library.
+ * @module main
+ * @exports Allthethings
+ */
 
+exports.default = _server2.default;
 exports.ApiError = _error2.default;
 exports.AuthorizationError = _error.AuthorizationError;
 exports.codes = codes;
-exports.GraphQLClient = _graphql2.default;
-exports.GraphQLError = _error.GraphQLError;
 exports.InternalError = _error.InternalError;
 exports.InvalidRequestError = _error.InvalidRequestError;
 exports.Logger = _logger2.default;
-exports.NetworkError = _error.NetworkError;
 exports.ServiceUnavailableError = _error.ServiceUnavailableError;
 
 /***/ }),
@@ -775,6 +678,7 @@ var LOGGER = _logger2.default.getLogger('access');
  * The expected output should be a JSON string as <code>bunyan</code> will
  * take the string and merge that JSON with the output (which is the desired
  * result). The expected format is:
+ * ```
  * {
  *   remote-addr: <string>,
  *   date: <clf>,
@@ -787,28 +691,35 @@ var LOGGER = _logger2.default.getLogger('access');
  *   res[content-length]: <number>,
  *   response-time: <number> ms,
  * }
- * @param  {Object} tokens The map of morgan tokens
- * @param  {Object} req    The request context
- * @param  {Object} res    The response context
- * @return {Object}        The format meta object
+ * ```
+ *
+ * @see {@link https://www.npmjs.com/package/koa-morgan}
+ *
+ * @param  {Object} tokens    The map of morgan tokens
+ * @param  {Object} request   The request context
+ * @param  {Object} response  The response context
+ * @return {Object}           The format meta object
  */
-var formatter = exports.formatter = function formatter(tokens, req, res) {
-  var responseTime = tokens['response-time'](req, res);
+var formatter = exports.formatter = function formatter(tokens, request, response) {
+  var responseTime = tokens['response-time'](request, response);
 
   return JSON.stringify({
-    'remote-addr': tokens['remote-addr'](req),
-    date: tokens.date(req, res, 'clf'),
-    method: tokens.method(req),
-    url: tokens.url(req),
-    HTTP: tokens['http-version'](req),
-    'user-agent': tokens['user-agent'](req),
-    referrer: tokens.referrer(req),
-    status: tokens.status(req, res),
-    'res[content-length]': tokens.res(req, res, 'content-length'),
+    'remote-addr': tokens['remote-addr'](request),
+    date: tokens.date(request, response, 'clf'),
+    method: tokens.method(request),
+    url: tokens.url(request),
+    HTTP: tokens['http-version'](request),
+    'user-agent': tokens['user-agent'](request),
+    referrer: tokens.referrer(request),
+    status: tokens.status(request, response),
+    'res[content-length]': tokens.res(request, response, 'content-length'),
     'response-time': responseTime + ' ms'
   });
 };
 
+/**
+ * @exports Function The access logger middleware
+ */
 exports.default = (0, _koaMorgan2.default)(formatter, {
   stream: {
     write: function write(message) {
@@ -847,10 +758,24 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 var LOGGER = _logger2.default.getLogger('root');
 
 /**
- * [errorMiddleware description]
- * @param  {[type]}   ctx  [description]
- * @param  {Function} next [description]
- * @return {[type]}        [description]
+ * Wraps all subsequent async calls to middleware or handlers in a
+ * <code>try/catch</code> block to properly handle and format errors
+ * prior to sending an error reponse.
+ * If the caught <code>Error</code> is not a subclass of the
+ * <code>ApiError</code>, it is converted into either an
+ * <code>InternalError</code> if no <code>status</code> is attached to the
+ * error or the <code>status</code> is 500, or a generic <code>ApiError</code>.
+ * The error is logged, the response status is set to the error
+ * <code>status</code>, and the response body is set to the error. Finally the
+ * `error` event is emitted on the <code>app</code>.
+ *
+ * @see {@link ApiError}
+ * @see {@link InternalError}
+ * 
+ * @param  {Object}   ctx  The Koa context
+ * @param  {Function} next The next middleware or handler in the connect chain
+ * @return {void}
+ * @async
  */
 
 exports.default = function () {
@@ -875,7 +800,7 @@ exports.default = function () {
 
 
             if (!(_context.t0 instanceof _error2.default)) {
-              err = ctx.status === 500 ? new _error.InternalError(_context.t0.message, _context.t0) : new _error2.default(_context.t0.message, _context.t0);
+              err = !err.status || err.status === 500 ? new _error.InternalError(_context.t0.message, _context.t0) : new _error2.default(_context.t0.message, _context.t0);
             }
 
             LOGGER.error(err, ctx);
@@ -925,12 +850,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 /**
- * Add a transaction identifier to every request to track a request's control flow. We use a transactoin ID instead of
- * the session ID or user since both are persistent(ish) identification.
+ * Adds a transaction identifier to every request to track a request's control
+ * flow through the entire lifetime of the request, including across
+ * asynchronous calls. We use a transactoin ID instead of the session ID or
+ * user since both are persistent(ish) identification.
  *
- * @param  {[type]}   ctx   [description]
- * @param  {Function} next  [description]
- * @return {[type]}         [description]
+ * @see {@link https://nodejs.org/api/domain.html}
+ *
+ * @param  {Object}   ctx  The Koa context
+ * @param  {Function} next The next middleware or handler in the connect chain
+ * @return {void}
  */
 exports.default = function (ctx, next) {
   var transactionId = (0, _v2.default)();
@@ -997,6 +926,19 @@ var _routes = __webpack_require__(/*! ./api/v1/routes */ "./src/api/v1/routes/in
 var _routes2 = _interopRequireDefault(_routes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Builds and exports the Axon router.
+ * Typically version Routers (i.e. v1) would be mounted to the root Router with
+ * a url prefix like <code>/v1</code>, but in this case, the Axon Router only
+ * provides global endpoints like a health check and does not need to be
+ * versioned. However, this file does establish a good pattern for organizing
+ * and building application-specific Routers, so I do recommend using this as
+ * boilerplate.
+ * @see {@link https://github.com/alexmingoia/koa-router}
+ * @module router
+ * @exports Router
+ */
 
 var router = new _koaRouter2.default();
 
@@ -1094,8 +1036,6 @@ var _unhandledRejectionHandler2 = _interopRequireDefault(_unhandledRejectionHand
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -1110,18 +1050,40 @@ process.on('uncaughtException', _uncaughtExceptionHandler2.default);
 process.on('unhandledRejection', _unhandledRejectionHandler2.default);
 
 /**
- * [app description]
- * @type {[type]}
+ * This class encapsulates a <code>Koa</code> application and provides an API
+ * for controlling the configuration and lifecycle of application server.
+ * <code>Server</code> extends <code>EventEmitter</code> to provide the following
+ * event-based lifecycle triggers:
+ * - `ready`
+ * - `before:start`
+ * - `start`
+ * - `after:start`
+ * - `before:stop`
+ * - `destroy`
+ * - `after:stop`
+ *
+ * <code>Server</code> contains the following public variables:
+ * - `app`     The instantiated Koa application
+ * - `config`  The application-specific configuration object
+ * - `logger`  A reference to the app logger
+ * - `router`  The combined universal and application-specific router
+ *
+ * @class
+ * @extends {EventEmitter}
  */
 
 var Server = function (_EventEmitter) {
   _inherits(Server, _EventEmitter);
 
   /**
-   * [constructor description]
+   * Configures and initializes the <code>Server</code> instance.
+   * Calls <code>initialize</code>, which will call
+   * </code>initializeMiddleware</code>, and <code>initializeRouter</code>
+   * prior to emitting the `ready` event.
    * @constructor
-   * @param  {[type]} void [description]
-   * @return {[type]}      [description]
+   * @param {Object} config
+   * @param {Object} appRouter
+   * @return {void}
    */
   function Server(config, appRouter) {
     _classCallCheck(this, Server);
@@ -1140,7 +1102,7 @@ var Server = function (_EventEmitter) {
     _this.logger = _logger2.default.getLogger('app');
 
     // Configure the app with common middleware
-    _this.initialize(_this.app);
+    _this.initialize();
 
     _this.initializeRouter(_router2.default, appRouter);
 
@@ -1149,9 +1111,13 @@ var Server = function (_EventEmitter) {
   }
 
   /**
-   * [createServer description]
-   * @param  {[type]} void [description]
-   * @return {[type]}      [description]
+   * Creates and makes the NodeJS HTTP(s) server available.
+   * If the <code>secure</code> configuration option is true, then this method
+   * calls <code>createHttpsServer</code>; otherwise the default HTTP Koa
+   * server is used.
+   * @see {@link createHttpsServer}
+   * @see {@link start}
+   * @return {void}
    */
 
 
@@ -1160,9 +1126,9 @@ var Server = function (_EventEmitter) {
   };
 
   /**
-   * [startHttps description]
-   * @param  {[type]} void [description]
-   * @return {[type]}      [description]
+   * Creates a NodeJS HTTPS server using the <code>ssl</code> configuration option.
+   * Setups a HTTP redirect to force all traffic to HTTP.
+   * @return {void}
    */
 
 
@@ -1185,8 +1151,14 @@ var Server = function (_EventEmitter) {
   };
 
   /**
-   * [callback description]
-   * @type {Function}
+   * Returns a Function to be used as a callback to the server start.
+   * The custom callback is invoked first, if provided. The callback function
+   * will then emit the `start` event, notify any watching proceeses via
+   * <code>process.send('ready')</code>, if <code>send</code> is available on
+   * <code>process</code>, and finally log a start message.
+   * @see {@link start}
+   * @param {Function} callback
+   * @return {Function}
    */
 
 
@@ -1209,39 +1181,46 @@ var Server = function (_EventEmitter) {
   };
 
   /**
-   * [app description]
-   * @type {[type]}
+   * Initializes and attaches common middleware to the app.
+   * <code>initializeMiddleware</code> is called prior to attaching the
+   * <code>error</code> middleware in order for implementations to easily
+   * attach custom middleware.
+   * @return {void}
    */
 
 
-  Server.prototype.initialize = function initialize(app) {
+  Server.prototype.initialize = function initialize() {
     // Add common request security measures
-    app.use((0, _koaHelmet2.default)());
+    this.app.use((0, _koaHelmet2.default)());
 
     // Enabled CORS (corss-origin resource sharing)
-    app.use((0, _koaCors2.default)(this.config.get('cors')));
+    this.app.use((0, _koaCors2.default)(this.config.get('cors')));
 
     // request compression
-    app.use((0, _koaCompress2.default)(this.config.get('compress')));
+    this.app.use((0, _koaCompress2.default)(this.config.get('compress')));
 
     // Initialize body parser before routes or body will be undefined
-    app.use((0, _koaBody2.default)(this.config.get('body')));
+    this.app.use((0, _koaBody2.default)(this.config.get('body')));
 
     // Trace a single request process (including over async)
-    app.use(_transaction2.default);
+    this.app.use(_transaction2.default);
 
     // Configure Request logging
-    app.use(_accessLogger2.default);
-
-    this.initializeMiddleware();
+    this.app.use(_accessLogger2.default);
 
     // Configure the request error handling
-    app.use(_error2.default);
+    this.app.use(_error2.default);
+
+    this.initializeMiddleware();
   };
 
   /**
-   * [initializeMiddleware description]
-   * @return {[type]} [description]
+   * Abstract function.
+   * Called when initializing middleware to expose an entry point to attach
+   * additional custom, application-specific middleware. Any middleware
+   * attached to the <code>app</code> that throws an <code>Error</code> will be
+   * handled by the <code>error</code> middleware.
+   * @return {void}
    */
 
 
@@ -1250,24 +1229,28 @@ var Server = function (_EventEmitter) {
 
 
   /**
-   * [initializeRouter description]
-   * @param  {[type]} appRouter [description]
-   * @return {[type]}           [description]
+   * Given the common/core <code>Router</code> and an application-specific
+   * <code>Router</code>, merge the app-specific <code>Router</code> into the
+   * core <code>Router</code> and mount the product to the <code>app</code>.
+   * @param  {Object} router
+   * @param  {Object} appRouter
+   * @return {void}
    */
   ;
 
-  Server.prototype.initializeRouter = function initializeRouter(baseRouter, appRouter) {
+  Server.prototype.initializeRouter = function initializeRouter(router, appRouter) {
     // Combine with application-specific router
-    baseRouter.use(appRouter.routes());
+    router.use(appRouter.routes());
 
-    this.app.use(baseRouter.routes());
-    this.app.use(baseRouter.allowedMethods());
+    this.app.use(router.routes());
+    this.app.use(router.allowedMethods());
   };
 
   /**
-   * [destroy description]
-   * @param  {[type]} void [description]
-   * @return {[type]}      [description]
+   * Performs any common cleanup and notifies any listeners of the tear-down
+   * by emitting the `destroy` event locally and on the <code>process</code>.
+   * @see {@link stop}
+   * @return {void}
    */
 
 
@@ -1278,58 +1261,52 @@ var Server = function (_EventEmitter) {
   };
 
   /**
-   * [callback description]
-   * @type {Function}
+   * Starts the server.
+   * Starting the server will create an HTTP or HTTPS server, depending on
+   * configuration, with the provided callback and begin listening on the
+   * configured hostname/port.
+   * If any errors are encountered while starting the server, the error is
+   * logged and <code>destroy</code> is called prior to the process exiting.
+   * Returns the created server instance upon successful startup.
+   * @see {@link https://nodejs.org/api/http.html}
+   * @see {@link createServer}
+   * @see {@link getListenCallback}
+   * @see {@link destroy}
+   * @param {Function|null = null} callback
+   * @return {Object}
    */
 
 
-  Server.prototype.start = function () {
-    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-      var callback = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-      return regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              if (this.app) {
-                _context.next = 2;
-                break;
-              }
+  Server.prototype.start = function start() {
+    var callback = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
-              throw new Error('Cannot start server: the express instance is not defined');
-
-            case 2:
-              _context.prev = 2;
-
-              this.emit('before:start');
-              return _context.abrupt('return', this.createServer().listen(this.config.get('port'), this.config.get('hostname'), this.config.get('backlog'), this.getListenCallback(callback)));
-
-            case 8:
-              _context.prev = 8;
-              _context.t0 = _context['catch'](2);
-
-              this.logger.error(_context.t0);
-              this.destroy();
-              throw _context.t0;
-
-            case 13:
-            case 'end':
-              return _context.stop();
-          }
-        }
-      }, _callee, this, [[2, 8]]);
-    }));
-
-    function start() {
-      return _ref.apply(this, arguments);
+    if (!this.app) {
+      throw new Error('Cannot start server: the express instance is not defined');
     }
 
-    return start;
-  }();
+    try {
+      this.emit('before:start');
+      this.app.server = this.createServer().listen(this.config.get('port'), this.config.get('hostname'), this.config.get('backlog'), this.getListenCallback(callback));
+      this.emit('after:start');
+      return this.app.server;
+    } catch (e) {
+      this.logger.error(e);
+      this.destroy();
+      throw e;
+    }
+  };
 
   /**
-   * [stop description]
-   * @param  {Function} callback [description]
-   * @return {[type]}            [description]
+   * Stops the server by executing the following routines:
+   * 1. Emits `before:stop`
+   * 2. Invokes the provided callback, if one is provided
+   * 3. Stops the server from accepting any new connections
+   * 4. Calls <code>destroy</code>
+   * 5. Emits `after:stop`
+   * @see {@link https://nodejs.org/api/net.html#net_server_close_callback}
+   * @see {@link destroy}
+   * @param  {Function|null = null} callback
+   * @return {void}
    */
 
 
@@ -1343,6 +1320,7 @@ var Server = function (_EventEmitter) {
       callback();
     }
 
+    this.app.server.close();
     this.destroy();
     this.emit('after:stop');
   };
@@ -1351,82 +1329,6 @@ var Server = function (_EventEmitter) {
 }(_events2.default);
 
 exports.default = Server;
-
-/***/ }),
-
-/***/ "./src/utils/graphql.js":
-/*!******************************!*\
-  !*** ./src/utils/graphql.js ***!
-  \******************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-exports.default = function (uri) {
-  return new _apolloClient.ApolloClient({
-    cache: new _apolloCacheInmemory.InMemoryCache(),
-    connectToDevTools: "development" === 'development',
-    link: defaultLink({ uri: uri })
-  });
-};
-
-var _error = __webpack_require__(/*! ../error */ "./src/error/index.js");
-
-var _nodeFetch = __webpack_require__(/*! node-fetch */ "node-fetch");
-
-var _nodeFetch2 = _interopRequireDefault(_nodeFetch);
-
-var _apolloClient = __webpack_require__(/*! apollo-client */ "apollo-client");
-
-var _apolloLink = __webpack_require__(/*! apollo-link */ "apollo-link");
-
-var _apolloLinkHttp = __webpack_require__(/*! apollo-link-http */ "apollo-link-http");
-
-var _apolloCacheInmemory = __webpack_require__(/*! apollo-cache-inmemory */ "apollo-cache-inmemory");
-
-var _apolloLinkError = __webpack_require__(/*! apollo-link-error */ "apollo-link-error");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * [description]
- * @return {[type]} [description]
- */
-function defaultErrorHandler(error) {
-  if (error.graphQLErrors) {
-    // eslint-disable-next-line no-param-reassign
-    error.response.errors = error.graphQLError.map(function (err) {
-      return new _error.GraphQLException(err);
-    });
-  }
-
-  if (error.networkError) {
-    // eslint-disable-next-line no-param-reassign
-    error.networkError = new _error.NetworkException(error.networkError);
-  }
-}
-
-/**
- * [DefaultLink description]
- * @param       {[type]} opts [description]
- * @constructor
- */
-function defaultLink(opts) {
-  return _apolloLink.ApolloLink.from([
-  // eslint-disable-next-line new-cap
-  new _apolloLinkError.onError(defaultErrorHandler), new _apolloLinkHttp.HttpLink({ uri: opts.uri, fetch: _nodeFetch2.default })]);
-}
-
-/**
- * [description]
- * @param  {[type]} uri  [description]
- * @return {[type]}      [description]
- */
 
 /***/ }),
 
@@ -1480,7 +1382,15 @@ var DEFAULT_LOGGER_NAME = 'root';
  */
 
 /**
+ * Implementation of the <code>Bunyan</code> logger that provides a static
+ * access method to retrieve configuration logger instances and to extend the
+ * logging output behavior to include our request <code>trasnaction</code>
+ * data as additional log metadata.
  *
+ * @see {@link https://github.com/trentm/node-bunyan}
+ *
+ * @class
+ * @extends Bunyan
  */
 var Logger = (_temp = _class = function (_Bunyan) {
   _inherits(Logger, _Bunyan);
@@ -1492,9 +1402,16 @@ var Logger = (_temp = _class = function (_Bunyan) {
   }
 
   /**
-   * [debug description]
-   * @param  {[type]} args [description]
-   * @return {[type]}      [description]
+   * Extends <code>Bunyan</code>'s functionality to include the
+   * <code>transaction</code> data in the log output. Calls
+   * <code>Bunyan._emit</code> with the modified log record.
+   * <code>_emit</code> is responsible for writing a log record to the logger
+   * instance's output.
+   *
+   * @param  {Object} rec     The log record to emit
+   * @param  {boolean} noemit Flag controlling if the current record should be
+   *                          emitted or not
+   * @return {void}
    */
   Logger.prototype._emit = function _emit(rec, noemit) {
     var r = this.serializeTransaction(rec);
@@ -1504,9 +1421,19 @@ var Logger = (_temp = _class = function (_Bunyan) {
   };
 
   /**
-   * [formatTransaction description]
-   * @param  {[type]} Object [description]
-   * @return {[type]}        [description]
+   * Generates a formatted object from the <code>transaction</code> data
+   * attached to the current <code>process.domain</code>. If such a
+   * <code>transaction</code> exists, get the <code>transaction</code>'s
+   * ID and the request context (Koa context).
+   * Attach the <code>transaction</code> ID to the record, as well as
+   * the session ID, if a session exists, and some basic information about the
+   * current logged-in user, if a user exists.
+   *
+   * The session is found on the context as <code>ctx.session</code>, and the
+   * use is found on the context as <code>ctx.user</code>.
+   *
+   * @param  {rec} Object The log record to emit
+   * @return {Object}     The modified log record
    */
 
   // loggers cache
@@ -1537,17 +1464,28 @@ var Logger = (_temp = _class = function (_Bunyan) {
   };
 
   /**
-   * [getLogger description]
-   * @param  {[type]} name [description]
-   * @return {[type]}      [description]
+   * Retrieve a logger instance by name by looking up the looger in the logger
+   * cache. If no logger name is provide, the default logger
+   * (<code>root</code>) is returned. If no logger by the provided name exists
+   * and the logger name is found in the configuration, then a new logger is
+   * created and returned; otherwise an <code>Error</code> is thrown.
+   *
+   * @param  {string = null} name
+   * @return {Object}
    */
 
 
-  Logger.getLogger = function getLogger(name) {
+  Logger.getLogger = function getLogger() {
+    var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
     var handlersConfig = _config2.default.loggers.handlers;
     var loggerName = name == null ? DEFAULT_LOGGER_NAME : name.toLowerCase();
 
     if (!(loggerName in Logger.loggers)) {
+      if (!(loggerName in handlersConfig)) {
+        throw new Error('Unable to create logger: no logger for ' + loggerName + ' found in configuration');
+      }
+
       Logger.loggers[loggerName] = new Logger(handlersConfig.loggerName);
     }
 
@@ -1583,9 +1521,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var LOGGER = _logger2.default.getLogger();
 
 /**
- * [sigIntHandler description]
- * @param  {[type]} void [description]
- * @return {[type]}      [description]
+ * Handler for capturing a the <code>siginit</code> event and stopping the
+ * current process.
+ * @return {void}
  */
 function sigInitHandler() {
   if (LOGGER) {
@@ -1620,9 +1558,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var LOGGER = _logger2.default.getLogger('error');
 
 /**
- * [uncaughtExceptionHandler description]
- * @param  {[type]} e [description]
- * @return {[type]}   [description]
+ * Called when the process encounters an uncaught <code>Error</code>.
+ * The <code>Error</code> is logged and the process exits in error.
+ * @param  {Error} e
+ * @return {void}
  */
 function uncaughtExceptionHandler(e) {
   if (LOGGER) {
@@ -1658,9 +1597,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var LOGGER = _logger2.default.getLogger('error');
 
 /**
- * [unhandledRejectionHandler description]
- * @param  {[type]} e [description]
- * @return {[type]}   [description]
+ * Called when the process encounteres an unhandled Promise rejection.
+ * The <code>Error</code> from the rejected Promise is logged and the event
+ * loop is allowed to continue.
+ * @param  {Error} e
+ * @return {void}
  */
 function unhandledRejectionHandler(e) {
   if (LOGGER) {
@@ -1680,66 +1621,6 @@ function unhandledRejectionHandler(e) {
 
 module.exports = __webpack_require__(/*! /Users/gooftroop/Development/Harmonizly/axon/src/main.js */"./src/main.js");
 
-
-/***/ }),
-
-/***/ "apollo-cache-inmemory":
-/*!****************************************!*\
-  !*** external "apollo-cache-inmemory" ***!
-  \****************************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports) {
-
-module.exports = require("apollo-cache-inmemory");
-
-/***/ }),
-
-/***/ "apollo-client":
-/*!********************************!*\
-  !*** external "apollo-client" ***!
-  \********************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports) {
-
-module.exports = require("apollo-client");
-
-/***/ }),
-
-/***/ "apollo-link":
-/*!******************************!*\
-  !*** external "apollo-link" ***!
-  \******************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports) {
-
-module.exports = require("apollo-link");
-
-/***/ }),
-
-/***/ "apollo-link-error":
-/*!************************************!*\
-  !*** external "apollo-link-error" ***!
-  \************************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports) {
-
-module.exports = require("apollo-link-error");
-
-/***/ }),
-
-/***/ "apollo-link-http":
-/*!***********************************!*\
-  !*** external "apollo-link-http" ***!
-  \***********************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports) {
-
-module.exports = require("apollo-link-http");
 
 /***/ }),
 
@@ -1920,18 +1801,6 @@ module.exports = require("koa-router");
 /***/ (function(module, exports) {
 
 module.exports = require("koa-static");
-
-/***/ }),
-
-/***/ "node-fetch":
-/*!*****************************!*\
-  !*** external "node-fetch" ***!
-  \*****************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports) {
-
-module.exports = require("node-fetch");
 
 /***/ }),
 
