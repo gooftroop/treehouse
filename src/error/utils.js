@@ -1,6 +1,16 @@
-const DEFAULT_CODE: number = 0;
-const DEFAULT_MESSAGE: string = 'An Unknown error occurred';
-const DEFAULT_STATUS: number = 500;
+/**
+ * @module error/utils
+ * @exports DEFAULT_CODE
+ * @exports DEFAULT_MESSAGE
+ * @exports DEFAULT_STATUS
+ * @exports resolveCode
+ * @exports resolveError
+ * @exports resolveMessage
+ * @exports resolveStatus
+ */
+export const DEFAULT_CODE: number = 0;
+export const DEFAULT_MESSAGE: string = 'An Unknown error occurred';
+export const DEFAULT_STATUS: number = 500;
 
 /**
  * [resolveCode description]

@@ -2,7 +2,8 @@
   "opts": {
     "encoding": "utf8",
     "destination": "./docs/",
-    "recurse": true
+    "recurse": true,
+    "template": "node_modules/jsdoc-template"
   },
   "plugins": [
     "node_modules/jsdoc-babel",
@@ -11,16 +12,19 @@
   ],
   "recurseDepth": 10,
   "source": {
-    "includePattern": ".+\\.js(doc|x)?$",
-    "excludePattern": "(^|\\/|\\\\)_"
+    "inlcude": ["./src", "package.json", "README.md"],
+    "includePattern": ".js$",
+    "excludePattern": "(node_modules/|docs/|dist/|build/|tests/)"
   },
   "sourceType": "module",
   "tags": {
     "allowUnknownTags": true,
-    "dictionaries": ["jsdoc", "closure"]
+    "dictionaries": ["jsdoc"]
   },
   "templates": {
     "cleverLinks": true,
-    "monospaceLinks": false
+    "disableSort": false,
+    "monospaceLinks": false,
+    "referenceTitle": "Axon"
   }
 }

@@ -1,3 +1,7 @@
+/**
+ * @module utils/uncaughtExceptionHandler
+ * @exports uncaughtExceptionHandler
+ */
 import Logger from 'axon/utils/logger';
 
 const LOGGER: Object = Logger.getLogger('error');

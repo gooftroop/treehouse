@@ -1,4 +1,25 @@
 /**
+ * @module error/codes
+ * @exports DEFAULT_FATAL_ERROR
+ * @exports FATAL_ERROR
+ * @exports DEFAULT_GENERAL_ERROR
+ * @exports GENERAL_ERROR
+ * @exports NOT_YET_IMPLEMENTED
+ * @exports ILLEGAL_STATE_EXCEPTION
+ * @exports DEFAULT_INVALID_REQUEST
+ * @exports INVALID_REQUEST
+ * @exports DEFAULT_UNAUTHORIZED
+ * @exports UNAUTHORIZED
+ * @exports DEFAULT_FORBIDDEN
+ * @exports FORBIDDEN
+ * @exports MISSING_REQUIRED_PARAMETER
+ * @exports DEFAULT_SERVICE_UNAVAILABLE
+ * @exports SERVICE_UNAVAILABLE
+ * @exports DEFAULT_VALIDATION_ERROR
+ * @exports VALIDATION_ERROR
+ */
+
+/**
  * [DEFAULT_FATAL_ERROR description]
  * @type {[type]}
  */

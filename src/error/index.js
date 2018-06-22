@@ -1,3 +1,12 @@
+/**
+ * @module error
+ * @exports ApiError
+ * @exports AuthorizationError
+ * @exports InternalError
+ * @exports InvalidRequestError
+ * @exports ServiceUnavailableError
+ * @exports codes
+ */
 import {
   resolveCode,
   resolveError,
@@ -7,8 +16,10 @@ import {
 import * as codes from 'axon/error/codes';
 
 /**
- * [code description]
- * @type {[type]}
+ * [description]
+ *
+ * @class
+ * @extends Error
  */
 export default class ApiError extends Error {
   code: number;
@@ -38,8 +49,10 @@ export default class ApiError extends Error {
 }
 
 /**
- * [error description]
- * @type {[type]}
+ * [description]
+ *
+ * @class
+ * @extends ApiError
  */
 export class AuthorizationError extends ApiError {
   /**
@@ -52,8 +65,10 @@ export class AuthorizationError extends ApiError {
 }
 
 /**
- * [message description]
- * @type {[type]}
+ * [description]
+ *
+ * @class
+ * @extends ApiError
  */
 export class InternalError extends ApiError {
   constructor(message: String, e: ?Error) {
@@ -62,8 +77,10 @@ export class InternalError extends ApiError {
 }
 
 /**
- * [message description]
- * @type {[type]}
+ * [description]
+ *
+ * @class
+ * @extends ApiError
  */
 export class InvalidRequestError extends ApiError {
   /**
@@ -76,7 +93,10 @@ export class InvalidRequestError extends ApiError {
 }
 
 /**
+ * [description]
  *
+ * @class
+ * @extends ApiError
  */
 export class ServiceUnavailableError extends ApiError {
   /**

@@ -1,3 +1,7 @@
+/**
+ * @module utils/sigInitHandler
+ * @exports sigInitHandler
+ */
 import Logger from 'axon/utils/logger';
 
 const LOGGER: Object = Logger.getLogger();

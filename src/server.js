@@ -58,6 +58,7 @@ export default class Server extends EventEmitter {
    * Calls <code>initialize</code>, which will call
    * </code>initializeMiddleware</code>, and <code>initializeRouter</code>
    * prior to emitting the `ready` event.
+   *
    * @constructor
    * @param {Object} config
    * @param {Object} appRouter
@@ -90,6 +91,7 @@ export default class Server extends EventEmitter {
    * If the <code>secure</code> configuration option is true, then this method
    * calls <code>createHttpsServer</code>; otherwise the default HTTP Koa
    * server is used.
+   *
    * @see {@link createHttpsServer}
    * @see {@link start}
    * @return {void}
@@ -101,6 +103,7 @@ export default class Server extends EventEmitter {
   /**
    * Creates a NodeJS HTTPS server using the <code>ssl</code> configuration option.
    * Setups a HTTP redirect to force all traffic to HTTP.
+   *
    * @return {void}
    */
   createHttpsServer(): void {
@@ -127,6 +130,7 @@ export default class Server extends EventEmitter {
    * will then emit the `start` event, notify any watching proceeses via
    * <code>process.send('ready')</code>, if <code>send</code> is available on
    * <code>process</code>, and finally log a start message.
+   * 
    * @see {@link start}
    * @param {Function} callback
    * @return {Function}
@@ -152,6 +156,7 @@ export default class Server extends EventEmitter {
    * <code>initializeMiddleware</code> is called prior to attaching the
    * <code>error</code> middleware in order for implementations to easily
    * attach custom middleware.
+   *
    * @return {void}
    */
   initialize(): void {
@@ -185,6 +190,7 @@ export default class Server extends EventEmitter {
    * additional custom, application-specific middleware. Any middleware
    * attached to the <code>app</code> that throws an <code>Error</code> will be
    * handled by the <code>error</code> middleware.
+   *
    * @return {void}
    */
   initializeMiddleware() {
@@ -195,6 +201,7 @@ export default class Server extends EventEmitter {
    * Given the common/core <code>Router</code> and an application-specific
    * <code>Router</code>, merge the app-specific <code>Router</code> into the
    * core <code>Router</code> and mount the product to the <code>app</code>.
+   *
    * @param  {Object} router
    * @param  {Object} appRouter
    * @return {void}
@@ -210,6 +217,7 @@ export default class Server extends EventEmitter {
   /**
    * Performs any common cleanup and notifies any listeners of the tear-down
    * by emitting the `destroy` event locally and on the <code>process</code>.
+   *
    * @see {@link stop}
    * @return {void}
    */
@@ -227,11 +235,12 @@ export default class Server extends EventEmitter {
    * If any errors are encountered while starting the server, the error is
    * logged and <code>destroy</code> is called prior to the process exiting.
    * Returns the created server instance upon successful startup.
+   *
    * @see {@link https://nodejs.org/api/http.html}
    * @see {@link createServer}
    * @see {@link getListenCallback}
    * @see {@link destroy}
-   * @param {Function|null = null} callback
+   * @param {Function|null} callback
    * @return {Object}
    */
   start(callback: Function | null = null): void {
@@ -263,9 +272,10 @@ export default class Server extends EventEmitter {
    * 3. Stops the server from accepting any new connections
    * 4. Calls <code>destroy</code>
    * 5. Emits `after:stop`
+   *
    * @see {@link https://nodejs.org/api/net.html#net_server_close_callback}
    * @see {@link destroy}
-   * @param  {Function|null = null} callback
+   * @param  {Function|null} callback
    * @return {void}
    */
   stop(callback: Function | null = null): void {

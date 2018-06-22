@@ -1,3 +1,8 @@
+/**
+ * @module middleware/accessLogger
+ * @exports formatter
+ * @exports morgan
+ */
 import morgan from 'koa-morgan';
 
 import Logger from 'axon/utils/logger';
@@ -49,9 +54,6 @@ export const formatter = function (tokens, request, response) {
   });
 };
 
-/**
- * @exports Function The access logger middleware
- */
 export default morgan(formatter, {
   stream: {
     write(message) {

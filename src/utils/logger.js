@@ -1,8 +1,13 @@
+/**
+ * @module utils/logger
+ * @exports DEFAULT_LOGGER_NAME
+ * @exports Logger
+ */
 import Bunyan from 'bunyan';
 import config from 'config';
 import process from 'process';
 
-const DEFAULT_LOGGER_NAME: string = 'root';
+export const DEFAULT_LOGGER_NAME: string = 'root';
 
 /*
  * BEGIN NOTE: example of stream config
@@ -95,7 +100,7 @@ class Logger extends Bunyan {
    * and the logger name is found in the configuration, then a new logger is
    * created and returned; otherwise an <code>Error</code> is thrown.
    *
-   * @param  {string = null} name
+   * @param  {string} name
    * @return {Object}
    */
   static getLogger(name: string = null): Object {

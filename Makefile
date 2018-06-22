@@ -15,8 +15,8 @@ dev:
 	$(MAKE) clean
 	$(MAKE) install
 
-docs:
-	$(CC) run jsdoc ./src -c ./jsdoc.json --verbose
+jsdoc:
+	$(CC) run jsdoc . --configure ./jsdoc.json
 
 install:
 	$(CC) run webpack --config ./build/webpack.config.js

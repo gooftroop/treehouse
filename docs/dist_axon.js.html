@@ -1,0 +1,1942 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+      dist/axon.js - Documentation
+  </title>
+
+  <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+  <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+
+  
+
+  <!-- start Mixpanel -->
+  <script type="text/javascript">(function(e,a){if(!a.__SV){var b=window;try{var c,l,i,j=b.location,g=j.hash;c=function(a,b){return(l=a.match(RegExp(b+"=([^&]*)")))?l[1]:null};g&&c(g,"state")&&(i=JSON.parse(decodeURIComponent(c(g,"state"))),"mpeditor"===i.action&&(b.sessionStorage.setItem("_mpcehash",g),history.replaceState(i.desiredHash||"",e.title,j.pathname+j.search)))}catch(m){}var k,h;window.mixpanel=a;a._i=[];a.init=function(b,c,f){function e(b,a){var c=a.split(".");2==c.length&&(b=b[c[0]],a=c[1]);b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,
+  0)))}}var d=a;"undefined"!==typeof f?d=a[f]=[]:f="mixpanel";d.people=d.people||[];d.toString=function(b){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);b||(a+=" (stub)");return a};d.people.toString=function(){return d.toString(1)+".people (stub)"};k="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
+  for(h=0;h<k.length;h++)e(d,k[h]);a._i.push([b,c,f])};a.__SV=1.2;b=e.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";c=e.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c)}})(document,window.mixpanel||[]);
+  mixpanel.init("1919205b2da72e4da3b9b6639b444d59");</script>
+  <!-- end Mixpanel -->
+</head>
+
+<body>
+  <svg style="display: none;">
+    <defs>
+      <symbol id="linkIcon" fill="#706d77" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+  <label for="nav-trigger" class="navicon-button x">
+    <div class="navicon"></div>
+  </label>
+
+  <label for="nav-trigger" class="overlay"></label>
+
+  <div class="top-nav-wrapper">
+    <ul>
+      <li >
+        <a href="index.html">
+          
+            <svg fill="#6D6D6D" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+              <path d="M0 0h24v24H0z" fill="none"/>
+            </svg>
+          
+          
+        </a>
+      </li>
+
+      
+
+    </ul>
+  </div>
+
+  <nav>
+    <h3 class="reference-title">
+      Axon
+    </h3>
+
+    <h3>Classes</h3><ul><li id="default-nav"><a href="module-error.default.html">default</a></li><li id="ApiError-nav"><a href="module-error-ApiError.html">ApiError</a></li><li id="InternalError-nav"><a href="module-error-InternalError.html">InternalError</a></li><li id="InvalidRequestError-nav"><a href="module-error-InvalidRequestError.html">InvalidRequestError</a></li><li id="ServiceUnavailableError-nav"><a href="module-error-ServiceUnavailableError.html">ServiceUnavailableError</a></li><li id="Server-nav"><a href="module-router-_._src_server.js_-Server.html">Server</a></li><li id="Logger-nav"><a href="module-router-_._src_utils_logger.js_-Logger.html">Logger</a></li><li id="Logger-nav"><a href="module-utils_logger-Logger.html">Logger</a><ul class='methods'><li data-type="method" id="Logger-getLogger-nav"><a href="module-utils_logger-Logger.html#.getLogger">getLogger</a></li><li data-type="method" id="Logger-_emit-nav"><a href="module-utils_logger-Logger.html#_emit">_emit</a></li><li data-type="method" id="Logger-serializeTransaction-nav"><a href="module-utils_logger-Logger.html#serializeTransaction">serializeTransaction</a></li></ul></li><li id="Server-nav"><a href="Server.html">Server</a></li></ul><h3>Modules</h3><ul><li id="api_v1/handlers/health-nav"><a href="module-api_v1_handlers_health.html">api/v1/handlers/health</a></li><li id="api_v1/routes-nav"><a href="module-api_v1_routes.html">api/v1/routes</a></li><li id="error-nav"><a href="module-error.html">error</a></li><li id="error_codes-nav"><a href="module-error_codes.html">error/codes</a></li><li id="error_utils-nav"><a href="module-error_utils.html">error/utils</a><ul class='methods'><li data-type="method" id="error_utils-resolveCode-nav"><a href="module-error_utils.html#~resolveCode">resolveCode</a></li><li data-type="method" id="error_utils-resolveError-nav"><a href="module-error_utils.html#~resolveError">resolveError</a></li><li data-type="method" id="error_utils-resolveMessage-nav"><a href="module-error_utils.html#~resolveMessage">resolveMessage</a></li><li data-type="method" id="error_utils-resolveStatus-nav"><a href="module-error_utils.html#~resolveStatus">resolveStatus</a></li></ul></li><li id="Function-nav"><a href="module-Function.html">Function</a><ul class='methods'><li data-type="method" id="Function-default-nav"><a href="module-Function.html#.default">default</a></li></ul></li><li id="main-nav"><a href="module-main.html">main</a></li><li id="middleware_accessLogger-nav"><a href="module-middleware_accessLogger.html">middleware/accessLogger</a></li><li id="middleware_error-nav"><a href="module-middleware_error.html">middleware/error</a></li><li id="middleware_transaction-nav"><a href="module-middleware_transaction.html">middleware/transaction</a><ul class='methods'><li data-type="method" id="middleware_transaction-default-nav"><a href="module-middleware_transaction.html#.default">default</a></li></ul></li><li id="router-nav"><a href="module-router.html">router</a></li><li id="utils_logger-nav"><a href="module-utils_logger.html">utils/logger</a></li><li id="utils_sigInitHandler-nav"><a href="module-utils_sigInitHandler.html">utils/sigInitHandler</a></li><li id="utils_uncaughtExceptionHandler-nav"><a href="module-utils_uncaughtExceptionHandler.html">utils/uncaughtExceptionHandler</a></li><li id="utils_unhandledRejectionHandler-nav"><a href="module-utils_unhandledRejectionHandler.html">utils/unhandledRejectionHandler</a></li></ul><h3 id="global-nav">Global</h3><ul><li><a href="global.html#default">default</a></li></ul>
+  </nav>
+
+  <div id="main">
+    
+      <h1 class="page-title">
+        dist/axon.js
+      </h1>
+    
+
+    
+      
+
+<section>
+  <article>
+    <pre class="prettyprint source linenums"><code>module.exports =
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// object to store loaded and loading wasm modules
+/******/ 	var installedWasmModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module &amp;&amp; module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// object with all compiled WebAssembly.Modules
+/******/ 	__webpack_require__.w = {};
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./src/api/v1/handlers/health.js":
+/*!***************************************!*\
+  !*** ./src/api/v1/handlers/health.js ***!
+  \***************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+/**
+ * Health check handler.
+ * Responds to requests with a 200 and an 'OK'.
+ * Used by external services to determine if the application is alive or not.
+ * @param  {Object} ctx  The Koa context
+ * @return {void}
+ * @async
+ */
+exports.default = function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ctx) {
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            ctx.status = 200;
+            ctx.body = 'OK';
+
+          case 2:
+          case 'end':
+            return _context.stop();
+        }
+      }
+    }, _callee, this);
+  }));
+
+  function health(_x) {
+    return _ref.apply(this, arguments);
+  }
+
+  return health;
+}();
+
+/***/ }),
+
+/***/ "./src/api/v1/routes/index.js":
+/*!************************************!*\
+  !*** ./src/api/v1/routes/index.js ***!
+  \************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _koaRouter = __webpack_require__(/*! koa-router */ "koa-router");
+
+var _koaRouter2 = _interopRequireDefault(_koaRouter);
+
+var _health = __webpack_require__(/*! ../handlers/health */ "./src/api/v1/handlers/health.js");
+
+var _health2 = _interopRequireDefault(_health);
+
+function _interopRequireDefault(obj) { return obj &amp;&amp; obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * V1 Router.
+ * Defines the health check route.
+ * @module api/v1/routes
+ * @exports V1 Router
+ */
+
+var router = new _koaRouter2.default();
+
+router.get('/health', _health2.default);
+
+exports.default = router;
+
+/***/ }),
+
+/***/ "./src/error/codes.js":
+/*!****************************!*\
+  !*** ./src/error/codes.js ***!
+  \****************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+/**
+ * [DEFAULT_FATAL_ERROR description]
+ * @type {[type]}
+ */
+var DEFAULT_FATAL_ERROR = exports.DEFAULT_FATAL_ERROR = 'An error occurred. If this error persists, please contact your System Administrator';
+
+/**
+ * [FATAL_ERROR description]
+ * @type {[type]}
+ */
+var FATAL_ERROR = exports.FATAL_ERROR = function FATAL_ERROR() {
+  var message = arguments.length > 0 &amp;&amp; arguments[0] !== undefined ? arguments[0] : DEFAULT_FATAL_ERROR;
+
+  return {
+    status: 500,
+    code: -1,
+    category: 'IllegalStateException',
+    message: message
+  };
+};
+
+/**
+ * [DEFAULT_GENERAL_ERROR description]
+ * @type {[type]}
+ */
+var DEFAULT_GENERAL_ERROR = exports.DEFAULT_GENERAL_ERROR = "Our hamsters don't know how to handle that request";
+
+/**
+ * [GENERAL_ERROR description]
+ * @type {[type]}
+ */
+var GENERAL_ERROR = exports.GENERAL_ERROR = function GENERAL_ERROR() {
+  var message = arguments.length > 0 &amp;&amp; arguments[0] !== undefined ? arguments[0] : DEFAULT_GENERAL_ERROR;
+
+  return {
+    status: 400,
+    code: '0a',
+    category: 'GeneralException',
+    message: message
+  };
+};
+
+/**
+ * [NOT_YET_IMPLEMENTED description]
+ * @type {[type]}
+ */
+var NOT_YET_IMPLEMENTED = exports.NOT_YET_IMPLEMENTED = function NOT_YET_IMPLEMENTED() {
+  return {
+    status: 501,
+    code: 1,
+    category: 'NotYetImplemented',
+    message: 'This method must be implmented'
+  };
+};
+
+/**
+ * [ILLEGAL_STATE_EXCEPTION description]
+ * @type {[type]}
+ */
+var ILLEGAL_STATE_EXCEPTION = exports.ILLEGAL_STATE_EXCEPTION = function ILLEGAL_STATE_EXCEPTION() {
+  return {
+    status: 500,
+    code: 2,
+    category: 'IllegalStateException',
+    message: 'Application not configured correctly'
+  };
+};
+
+/**
+ * [DEFAULT_INVALID_REQUEST description]
+ * @type {[type]}
+ */
+var DEFAULT_INVALID_REQUEST = exports.DEFAULT_INVALID_REQUEST = "Our hamsters don't know how to handle that request";
+
+/**
+ * [INVALID_REQUEST description]
+ * @type {[type]}
+ */
+var INVALID_REQUEST = exports.INVALID_REQUEST = function INVALID_REQUEST() {
+  var message = arguments.length > 0 &amp;&amp; arguments[0] !== undefined ? arguments[0] : DEFAULT_INVALID_REQUEST;
+
+  return {
+    status: 400,
+    code: 100,
+    category: 'UserError',
+    message: message
+  };
+};
+
+/**
+ * [DEFAULT_UNAUTHORIZED description]
+ * @type {[type]}
+ */
+var DEFAULT_UNAUTHORIZED = 'Your session is no longer valid. Please login and rety';
+
+/**
+ * [UNAUTHORIZED description]
+ * @type {[type]}
+ */
+var UNAUTHORIZED = exports.UNAUTHORIZED = function UNAUTHORIZED() {
+  var message = arguments.length > 0 &amp;&amp; arguments[0] !== undefined ? arguments[0] : DEFAULT_UNAUTHORIZED;
+
+  return {
+    status: 401,
+    code: 4,
+    category: 'SecurityException',
+    message: message
+  };
+};
+
+/**
+ * [DEFAULT_FORBIDDEN description]
+ * @type {[type]}
+ */
+var DEFAULT_FORBIDDEN = exports.DEFAULT_FORBIDDEN = 'You are not allowed to access that resource';
+
+/**
+ * [FORBIDDEN description]
+ * @type {[type]}
+ */
+var FORBIDDEN = exports.FORBIDDEN = function FORBIDDEN() {
+  var message = arguments.length > 0 &amp;&amp; arguments[0] !== undefined ? arguments[0] : DEFAULT_FORBIDDEN;
+
+  return {
+    status: 403,
+    code: 5,
+    category: 'SecurityException',
+    message: message
+  };
+};
+
+/**
+ * [MISSING_REQUIRED_PARAMETER description]
+ * @type {[type]}
+ */
+var MISSING_REQUIRED_PARAMETER = exports.MISSING_REQUIRED_PARAMETER = function MISSING_REQUIRED_PARAMETER() {
+  return {
+    status: 400,
+    code: 6,
+    category: 'GeneralException',
+    message: 'A required parameter was missing'
+  };
+};
+
+/**
+ * [DEFAULT_SERVICE_UNAVAILABLE description]
+ * @type {[type]}
+ */
+var DEFAULT_SERVICE_UNAVAILABLE = exports.DEFAULT_SERVICE_UNAVAILABLE = 'Our hamsters appear to be taking a siesta';
+
+/**
+ * [SERVICE_UNAVAILABLE description]
+ * @type {[type]}
+ */
+var SERVICE_UNAVAILABLE = exports.SERVICE_UNAVAILABLE = function SERVICE_UNAVAILABLE() {
+  var message = arguments.length > 0 &amp;&amp; arguments[0] !== undefined ? arguments[0] : DEFAULT_SERVICE_UNAVAILABLE;
+
+  return {
+    status: 503,
+    code: 7,
+    category: 'NetworkException',
+    message: message
+  };
+};
+
+/**
+ * [DEFAULT_VALIDATION_ERROR description]
+ * @type {[type]}
+ */
+var DEFAULT_VALIDATION_ERROR = exports.DEFAULT_VALIDATION_ERROR = 'Hmmm...the hamsters found a problem with that data';
+
+/**
+ * [VALIDATION_ERROR description]
+ * @type {[type]}
+ */
+var VALIDATION_ERROR = exports.VALIDATION_ERROR = function VALIDATION_ERROR() {
+  var message = arguments.length > 0 &amp;&amp; arguments[0] !== undefined ? arguments[0] : DEFAULT_VALIDATION_ERROR;
+
+  return {
+    status: 400,
+    code: 200,
+    category: 'ValidationException',
+    message: message
+  };
+};
+
+/***/ }),
+
+/***/ "./src/error/index.js":
+/*!****************************!*\
+  !*** ./src/error/index.js ***!
+  \****************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.codes = exports.ServiceUnavailableError = exports.InvalidRequestError = exports.InternalError = exports.AuthorizationError = exports.default = undefined;
+
+var _utils = __webpack_require__(/*! ./utils */ "./src/error/utils.js");
+
+var _codes = __webpack_require__(/*! ./codes */ "./src/error/codes.js");
+
+var codes = _interopRequireWildcard(_codes);
+
+function _interopRequireWildcard(obj) { if (obj &amp;&amp; obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call &amp;&amp; (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" &amp;&amp; superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass &amp;&amp; superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/**
+ * [code description]
+ * @type {[type]}
+ */
+var ApiError = function (_Error) {
+  _inherits(ApiError, _Error);
+
+  /**
+   * [constructor description]
+   * @param  {[type]} payload [description]
+   * @param  {[type]} code    [description]
+   * @param  {[type]} status  [description]
+   * @param  {[type]} e       [description]
+   * @return {[type]}         [description]
+   */
+  function ApiError(payload, status, e) {
+    _classCallCheck(this, ApiError);
+
+    var _this = _possibleConstructorReturn(this, _Error.call(this, (0, _utils.resolveMessage)(payload)));
+
+    _this.code = (0, _utils.resolveCode)(payload);
+    _this.status = (0, _utils.resolveStatus)(payload, status);
+    _this.error = (0, _utils.resolveError)(e || status);
+
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(_this, _this.constructor);
+    } else {
+      _this.stack = new Error(_this.message).stack;
+    }
+    return _this;
+  }
+
+  return ApiError;
+}(Error);
+
+/**
+ * [error description]
+ * @type {[type]}
+ */
+
+
+exports.default = ApiError;
+
+var AuthorizationError = exports.AuthorizationError = function (_ApiError) {
+  _inherits(AuthorizationError, _ApiError);
+
+  /**
+   * [constructor description]
+   * @param {[type]} errors [description]
+   */
+  function AuthorizationError(e) {
+    _classCallCheck(this, AuthorizationError);
+
+    return _possibleConstructorReturn(this, _ApiError.call(this, codes.NOT_ALLOWED, e));
+  }
+
+  return AuthorizationError;
+}(ApiError);
+
+/**
+ * [message description]
+ * @type {[type]}
+ */
+
+
+var InternalError = exports.InternalError = function (_ApiError2) {
+  _inherits(InternalError, _ApiError2);
+
+  function InternalError(message, e) {
+    _classCallCheck(this, InternalError);
+
+    return _possibleConstructorReturn(this, _ApiError2.call(this, codes.FATAL_ERROR(message), e));
+  }
+
+  return InternalError;
+}(ApiError);
+
+/**
+ * [message description]
+ * @type {[type]}
+ */
+
+
+var InvalidRequestError = exports.InvalidRequestError = function (_ApiError3) {
+  _inherits(InvalidRequestError, _ApiError3);
+
+  /**
+   * [constructor description]
+   * @param {[type]} errors [description]
+   */
+  function InvalidRequestError(message, e) {
+    _classCallCheck(this, InvalidRequestError);
+
+    return _possibleConstructorReturn(this, _ApiError3.call(this, codes.INVALID_REQUEST(message), e));
+  }
+
+  return InvalidRequestError;
+}(ApiError);
+
+/**
+ *
+ */
+
+
+var ServiceUnavailableError = exports.ServiceUnavailableError = function (_ApiError4) {
+  _inherits(ServiceUnavailableError, _ApiError4);
+
+  /**
+   * [constructor description]
+   * @param {[type]} errors [description]
+   */
+  function ServiceUnavailableError(message, e) {
+    _classCallCheck(this, ServiceUnavailableError);
+
+    return _possibleConstructorReturn(this, _ApiError4.call(this, codes.SERVICE_UNAVAILABLE(message), e));
+  }
+
+  return ServiceUnavailableError;
+}(ApiError);
+
+exports.codes = codes;
+
+/***/ }),
+
+/***/ "./src/error/utils.js":
+/*!****************************!*\
+  !*** ./src/error/utils.js ***!
+  \****************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _typeof = typeof Symbol === "function" &amp;&amp; typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj &amp;&amp; typeof Symbol === "function" &amp;&amp; obj.constructor === Symbol &amp;&amp; obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _extends = Object.assign || function (target) { for (var i = 1; i &lt; arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+exports.resolveCode = resolveCode;
+exports.resolveError = resolveError;
+exports.resolveMessage = resolveMessage;
+exports.resolveStatus = resolveStatus;
+var DEFAULT_CODE = 0;
+var DEFAULT_MESSAGE = 'An Unknown error occurred';
+var DEFAULT_STATUS = 500;
+
+/**
+ * [resolveCode description]
+ * @param  {[type]} payload [description]
+ * @return {[type]}         [description]
+ */
+function resolveCode(payload) {
+  if (typeof payload === 'number') {
+    return 'code' in payload ? DEFAULT_CODE : payload.code;
+  }
+
+  return DEFAULT_CODE;
+}
+
+/**
+ * [resolveError description]
+ * @param  {[type]} e [description]
+ * @return {[type]}   [description]
+ */
+function resolveError(e) {
+  return _extends({}, e);
+}
+
+/**
+ * [resolveMessage description]
+ * @param  {[type]} payload [description]
+ * @return {[type]}         [description]
+ */
+function resolveMessage(payload) {
+  if ((typeof payload === 'undefined' ? 'undefined' : _typeof(payload)) === 'object') {
+    return 'message' in payload ? DEFAULT_MESSAGE : payload.message;
+  }
+
+  return payload;
+}
+
+/**
+ * [resolveStatus description]
+ * @param  {[type]} payload [description]
+ * @param  {[type]} status  [description]
+ * @return {[type]}         [description]
+ */
+function resolveStatus(payload, status) {
+  if ((typeof payload === 'undefined' ? 'undefined' : _typeof(payload)) === 'object' &amp;&amp; 'status' in payload) {
+    return payload.status;
+  }
+
+  var typeStatus = typeof status === 'undefined' ? 'undefined' : _typeof(status);
+
+  return typeStatus !== 'number' || typeStatus !== 'string' ? DEFAULT_STATUS : status;
+}
+
+/***/ }),
+
+/***/ "./src/main.js":
+/*!*********************!*\
+  !*** ./src/main.js ***!
+  \*********************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.ServiceUnavailableError = exports.Logger = exports.InvalidRequestError = exports.InternalError = exports.codes = exports.AuthorizationError = exports.ApiError = undefined;
+
+var _error = __webpack_require__(/*! ./error */ "./src/error/index.js");
+
+var _error2 = _interopRequireDefault(_error);
+
+var _logger = __webpack_require__(/*! ./utils/logger */ "./src/utils/logger.js");
+
+var _logger2 = _interopRequireDefault(_logger);
+
+var _server = __webpack_require__(/*! ./server */ "./src/server.js");
+
+var _server2 = _interopRequireDefault(_server);
+
+var _codes = __webpack_require__(/*! ./error/codes */ "./src/error/codes.js");
+
+var codes = _interopRequireWildcard(_codes);
+
+function _interopRequireWildcard(obj) { if (obj &amp;&amp; obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj &amp;&amp; obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Main entry point for the built Axon dist/library.
+ * @module main
+ * @exports Allthethings
+ */
+
+exports.default = _server2.default;
+exports.ApiError = _error2.default;
+exports.AuthorizationError = _error.AuthorizationError;
+exports.codes = codes;
+exports.InternalError = _error.InternalError;
+exports.InvalidRequestError = _error.InvalidRequestError;
+exports.Logger = _logger2.default;
+exports.ServiceUnavailableError = _error.ServiceUnavailableError;
+
+/***/ }),
+
+/***/ "./src/middleware/accessLogger.js":
+/*!****************************************!*\
+  !*** ./src/middleware/accessLogger.js ***!
+  \****************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.formatter = undefined;
+
+var _koaMorgan = __webpack_require__(/*! koa-morgan */ "koa-morgan");
+
+var _koaMorgan2 = _interopRequireDefault(_koaMorgan);
+
+var _logger = __webpack_require__(/*! ../utils/logger */ "./src/utils/logger.js");
+
+var _logger2 = _interopRequireDefault(_logger);
+
+function _interopRequireDefault(obj) { return obj &amp;&amp; obj.__esModule ? obj : { default: obj }; }
+
+var LOGGER = _logger2.default.getLogger('access');
+
+/**
+ * Morgan log formatter.
+ * Returns an object containing the desired request and response attributes.
+ * The expected output should be a JSON string as &lt;code>bunyan&lt;/code> will
+ * take the string and merge that JSON with the output (which is the desired
+ * result). The expected format is:
+ * ```
+ * {
+ *   remote-addr: &lt;string>,
+ *   date: &lt;clf>,
+ *   method: &lt;string>,
+ *   url: &lt;fqd string>,
+ *   HTTP: &lt;version string>,
+ *   user-agent: &lt;string>,
+ *   referrer: &lt;string>,
+ *   status: &lt;number>,
+ *   res[content-length]: &lt;number>,
+ *   response-time: &lt;number> ms,
+ * }
+ * ```
+ *
+ * @see {@link https://www.npmjs.com/package/koa-morgan}
+ *
+ * @param  {Object} tokens    The map of morgan tokens
+ * @param  {Object} request   The request context
+ * @param  {Object} response  The response context
+ * @return {Object}           The format meta object
+ */
+var formatter = exports.formatter = function formatter(tokens, request, response) {
+  var responseTime = tokens['response-time'](request, response);
+
+  return JSON.stringify({
+    'remote-addr': tokens['remote-addr'](request),
+    date: tokens.date(request, response, 'clf'),
+    method: tokens.method(request),
+    url: tokens.url(request),
+    HTTP: tokens['http-version'](request),
+    'user-agent': tokens['user-agent'](request),
+    referrer: tokens.referrer(request),
+    status: tokens.status(request, response),
+    'res[content-length]': tokens.res(request, response, 'content-length'),
+    'response-time': responseTime + ' ms'
+  });
+};
+
+/**
+ * @exports Function The access logger middleware
+ */
+exports.default = (0, _koaMorgan2.default)(formatter, {
+  stream: {
+    write: function write(message) {
+      LOGGER.info(JSON.parse(message));
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./src/middleware/error.js":
+/*!*********************************!*\
+  !*** ./src/middleware/error.js ***!
+  \*********************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _error = __webpack_require__(/*! ../error */ "./src/error/index.js");
+
+var _error2 = _interopRequireDefault(_error);
+
+var _logger = __webpack_require__(/*! ../utils/logger */ "./src/utils/logger.js");
+
+var _logger2 = _interopRequireDefault(_logger);
+
+function _interopRequireDefault(obj) { return obj &amp;&amp; obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+var LOGGER = _logger2.default.getLogger('root');
+
+/**
+ * Wraps all subsequent async calls to middleware or handlers in a
+ * &lt;code>try/catch&lt;/code> block to properly handle and format errors
+ * prior to sending an error reponse.
+ * If the caught &lt;code>Error&lt;/code> is not a subclass of the
+ * &lt;code>ApiError&lt;/code>, it is converted into either an
+ * &lt;code>InternalError&lt;/code> if no &lt;code>status&lt;/code> is attached to the
+ * error or the &lt;code>status&lt;/code> is 500, or a generic &lt;code>ApiError&lt;/code>.
+ * The error is logged, the response status is set to the error
+ * &lt;code>status&lt;/code>, and the response body is set to the error. Finally the
+ * `error` event is emitted on the &lt;code>app&lt;/code>.
+ *
+ * @see {@link ApiError}
+ * @see {@link InternalError}
+ * 
+ * @param  {Object}   ctx  The Koa context
+ * @param  {Function} next The next middleware or handler in the connect chain
+ * @return {void}
+ * @async
+ */
+
+exports.default = function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ctx, next) {
+    var err;
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.prev = 0;
+            _context.next = 3;
+            return next();
+
+          case 3:
+            _context.next = 13;
+            break;
+
+          case 5:
+            _context.prev = 5;
+            _context.t0 = _context['catch'](0);
+            err = _context.t0;
+
+
+            if (!(_context.t0 instanceof _error2.default)) {
+              err = !err.status || err.status === 500 ? new _error.InternalError(_context.t0.message, _context.t0) : new _error2.default(_context.t0.message, _context.t0);
+            }
+
+            LOGGER.error(err, ctx);
+            ctx.status = err.status;
+            ctx.body = err;
+
+            ctx.app.emit('error', err, ctx);
+
+          case 13:
+          case 'end':
+            return _context.stop();
+        }
+      }
+    }, _callee, undefined, [[0, 5]]);
+  }));
+
+  return function (_x, _x2) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+/***/ }),
+
+/***/ "./src/middleware/transaction.js":
+/*!***************************************!*\
+  !*** ./src/middleware/transaction.js ***!
+  \***************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _domain = __webpack_require__(/*! domain */ "domain");
+
+var _domain2 = _interopRequireDefault(_domain);
+
+var _v = __webpack_require__(/*! uuid/v4 */ "uuid/v4");
+
+var _v2 = _interopRequireDefault(_v);
+
+function _interopRequireDefault(obj) { return obj &amp;&amp; obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+/**
+ * Adds a transaction identifier to every request to track a request's control
+ * flow through the entire lifetime of the request, including across
+ * asynchronous calls. We use a transactoin ID instead of the session ID or
+ * user since both are persistent(ish) identification.
+ *
+ * @see {@link https://nodejs.org/api/domain.html}
+ *
+ * @param  {Object}   ctx  The Koa context
+ * @param  {Function} next The next middleware or handler in the connect chain
+ * @return {void}
+ */
+exports.default = function (ctx, next) {
+  var transactionId = (0, _v2.default)();
+  var transaction = _domain2.default.create();
+
+  // eslint-disable-next-line no-param-reassign
+  ctx.transactionId = transactionId;
+
+  transaction.add(ctx);
+  transaction.data = {
+    id: transactionId,
+    ctx: ctx
+  };
+
+  return new Promise(function (resolve, reject) {
+    transaction.run(_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return next();
+
+            case 3:
+              return _context.abrupt('return', resolve());
+
+            case 6:
+              _context.prev = 6;
+              _context.t0 = _context['catch'](0);
+              return _context.abrupt('return', reject(_context.t0));
+
+            case 9:
+            case 'end':
+              return _context.stop();
+          }
+        }
+      }, _callee, undefined, [[0, 6]]);
+    })));
+  });
+};
+
+/***/ }),
+
+/***/ "./src/router.js":
+/*!***********************!*\
+  !*** ./src/router.js ***!
+  \***********************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _koaRouter = __webpack_require__(/*! koa-router */ "koa-router");
+
+var _koaRouter2 = _interopRequireDefault(_koaRouter);
+
+var _routes = __webpack_require__(/*! ./api/v1/routes */ "./src/api/v1/routes/index.js");
+
+var _routes2 = _interopRequireDefault(_routes);
+
+function _interopRequireDefault(obj) { return obj &amp;&amp; obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Builds and exports the Axon router.
+ * Typically version Routers (i.e. v1) would be mounted to the root Router with
+ * a url prefix like &lt;code>/v1&lt;/code>, but in this case, the Axon Router only
+ * provides global endpoints like a health check and does not need to be
+ * versioned. However, this file does establish a good pattern for organizing
+ * and building application-specific Routers, so I do recommend using this as
+ * boilerplate.
+ * @see {@link https://github.com/alexmingoia/koa-router}
+ * @module router
+ * @exports Router
+ */
+
+var router = new _koaRouter2.default();
+
+router.use(_routes2.default.routes());
+
+exports.default = router;
+
+/***/ }),
+
+/***/ "./src/server.js":
+/*!***********************!*\
+  !*** ./src/server.js ***!
+  \***********************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.default = undefined;
+
+var _koaBody = __webpack_require__(/*! koa-body */ "koa-body");
+
+var _koaBody2 = _interopRequireDefault(_koaBody);
+
+var _koaCompress = __webpack_require__(/*! koa-compress */ "koa-compress");
+
+var _koaCompress2 = _interopRequireDefault(_koaCompress);
+
+var _koaCors = __webpack_require__(/*! koa-cors */ "koa-cors");
+
+var _koaCors2 = _interopRequireDefault(_koaCors);
+
+var _events = __webpack_require__(/*! events */ "events");
+
+var _events2 = _interopRequireDefault(_events);
+
+var _fs = __webpack_require__(/*! fs */ "fs");
+
+var _fs2 = _interopRequireDefault(_fs);
+
+var _koaHelmet = __webpack_require__(/*! koa-helmet */ "koa-helmet");
+
+var _koaHelmet2 = _interopRequireDefault(_koaHelmet);
+
+var _https = __webpack_require__(/*! https */ "https");
+
+var _https2 = _interopRequireDefault(_https);
+
+var _koa = __webpack_require__(/*! koa */ "koa");
+
+var _koa2 = _interopRequireDefault(_koa);
+
+var _koaMount = __webpack_require__(/*! koa-mount */ "koa-mount");
+
+var _koaMount2 = _interopRequireDefault(_koaMount);
+
+var _koaStatic = __webpack_require__(/*! koa-static */ "koa-static");
+
+var _koaStatic2 = _interopRequireDefault(_koaStatic);
+
+var _accessLogger = __webpack_require__(/*! ./middleware/accessLogger */ "./src/middleware/accessLogger.js");
+
+var _accessLogger2 = _interopRequireDefault(_accessLogger);
+
+var _error = __webpack_require__(/*! ./middleware/error */ "./src/middleware/error.js");
+
+var _error2 = _interopRequireDefault(_error);
+
+var _logger = __webpack_require__(/*! ./utils/logger */ "./src/utils/logger.js");
+
+var _logger2 = _interopRequireDefault(_logger);
+
+var _router = __webpack_require__(/*! ./router */ "./src/router.js");
+
+var _router2 = _interopRequireDefault(_router);
+
+var _sigInitHandler = __webpack_require__(/*! ./utils/sigInitHandler */ "./src/utils/sigInitHandler.js");
+
+var _sigInitHandler2 = _interopRequireDefault(_sigInitHandler);
+
+var _transaction = __webpack_require__(/*! ./middleware/transaction */ "./src/middleware/transaction.js");
+
+var _transaction2 = _interopRequireDefault(_transaction);
+
+var _uncaughtExceptionHandler = __webpack_require__(/*! ./utils/uncaughtExceptionHandler */ "./src/utils/uncaughtExceptionHandler.js");
+
+var _uncaughtExceptionHandler2 = _interopRequireDefault(_uncaughtExceptionHandler);
+
+var _unhandledRejectionHandler = __webpack_require__(/*! ./utils/unhandledRejectionHandler */ "./src/utils/unhandledRejectionHandler.js");
+
+var _unhandledRejectionHandler2 = _interopRequireDefault(_unhandledRejectionHandler);
+
+function _interopRequireDefault(obj) { return obj &amp;&amp; obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call &amp;&amp; (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" &amp;&amp; superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass &amp;&amp; superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// Catches ctrl+c event
+process.on('SIGINT', _sigInitHandler2.default);
+
+// Catches uncaught exceptions and rejections
+process.on('uncaughtException', _uncaughtExceptionHandler2.default);
+process.on('unhandledRejection', _unhandledRejectionHandler2.default);
+
+/**
+ * This class encapsulates a &lt;code>Koa&lt;/code> application and provides an API
+ * for controlling the configuration and lifecycle of application server.
+ * &lt;code>Server&lt;/code> extends &lt;code>EventEmitter&lt;/code> to provide the following
+ * event-based lifecycle triggers:
+ * - `ready`
+ * - `before:start`
+ * - `start`
+ * - `after:start`
+ * - `before:stop`
+ * - `destroy`
+ * - `after:stop`
+ *
+ * &lt;code>Server&lt;/code> contains the following public variables:
+ * - `app`     The instantiated Koa application
+ * - `config`  The application-specific configuration object
+ * - `logger`  A reference to the app logger
+ * - `router`  The combined universal and application-specific router
+ *
+ * @class
+ * @extends {EventEmitter}
+ */
+
+var Server = function (_EventEmitter) {
+  _inherits(Server, _EventEmitter);
+
+  /**
+   * Configures and initializes the &lt;code>Server&lt;/code> instance.
+   * Calls &lt;code>initialize&lt;/code>, which will call
+   * &lt;/code>initializeMiddleware&lt;/code>, and &lt;code>initializeRouter&lt;/code>
+   * prior to emitting the `ready` event.
+   * @constructor
+   * @param {Object} config
+   * @param {Object} appRouter
+   * @return {void}
+   */
+  function Server(config, appRouter) {
+    _classCallCheck(this, Server);
+
+    // atexit handler
+    var _this = _possibleConstructorReturn(this, _EventEmitter.call(this));
+
+    process.on('exit', _this.destroy);
+
+    _this.config = config;
+
+    // Initialize the express server
+    _this.app = new _koa2.default();
+
+    // Create the logger
+    _this.logger = _logger2.default.getLogger('app');
+
+    // Configure the app with common middleware
+    _this.initialize();
+
+    _this.initializeRouter(_router2.default, appRouter);
+
+    _this.emit('ready');
+    return _this;
+  }
+
+  /**
+   * Creates and makes the NodeJS HTTP(s) server available.
+   * If the &lt;code>secure&lt;/code> configuration option is true, then this method
+   * calls &lt;code>createHttpsServer&lt;/code>; otherwise the default HTTP Koa
+   * server is used.
+   * @see {@link createHttpsServer}
+   * @see {@link start}
+   * @return {void}
+   */
+
+
+  Server.prototype.createServer = function createServer() {
+    return this.config.server.secure ? this.createHttpsServer() : this.app;
+  };
+
+  /**
+   * Creates a NodeJS HTTPS server using the &lt;code>ssl&lt;/code> configuration option.
+   * Setups a HTTP redirect to force all traffic to HTTP.
+   * @return {void}
+   */
+
+
+  Server.prototype.createHttpsServer = function createHttpsServer() {
+    this.app.all('*', function cb(request, response, next) {
+      if (request.secure) {
+        return next();
+      }
+
+      return response.redirect('https://' + request.hostname + ':' + this.config.server.port + request.url);
+    });
+
+    var sslConfig = this.config.server.ssl;
+    var httpsConfig = Object.assign({}, sslConfig, {
+      key: _fs2.default.readFileSync(sslConfig.get('key')),
+      cert: _fs2.default.readFileSync(sslConfig.get('cert'))
+    });
+
+    return _https2.default.createServer(httpsConfig, this.app.callback());
+  };
+
+  /**
+   * Returns a Function to be used as a callback to the server start.
+   * The custom callback is invoked first, if provided. The callback function
+   * will then emit the `start` event, notify any watching proceeses via
+   * &lt;code>process.send('ready')&lt;/code>, if &lt;code>send&lt;/code> is available on
+   * &lt;code>process&lt;/code>, and finally log a start message.
+   * @see {@link start}
+   * @param {Function} callback
+   * @return {Function}
+   */
+
+
+  Server.prototype.getListenCallback = function getListenCallback(callback) {
+    var _this2 = this;
+
+    return function () {
+      if (callback != null) {
+        callback();
+      }
+
+      _this2.emit('start');
+
+      if (process.send) {
+        process.send('ready');
+      }
+
+      _this2.logger.info('Server listening at ' + _this2.config.server.hostname + ':' + _this2.config.server.port + '...');
+    };
+  };
+
+  /**
+   * Initializes and attaches common middleware to the app.
+   * &lt;code>initializeMiddleware&lt;/code> is called prior to attaching the
+   * &lt;code>error&lt;/code> middleware in order for implementations to easily
+   * attach custom middleware.
+   * @return {void}
+   */
+
+
+  Server.prototype.initialize = function initialize() {
+    // Add common request security measures
+    this.app.use((0, _koaHelmet2.default)());
+
+    // Enabled CORS (corss-origin resource sharing)
+    this.app.use((0, _koaCors2.default)(this.config.get('cors')));
+
+    // request compression
+    this.app.use((0, _koaCompress2.default)(this.config.get('compress')));
+
+    // Initialize body parser before routes or body will be undefined
+    this.app.use((0, _koaBody2.default)(this.config.get('body')));
+
+    // Trace a single request process (including over async)
+    this.app.use(_transaction2.default);
+
+    // Configure Request logging
+    this.app.use(_accessLogger2.default);
+
+    // Configure the request error handling
+    this.app.use(_error2.default);
+
+    this.initializeMiddleware();
+  };
+
+  /**
+   * Abstract function.
+   * Called when initializing middleware to expose an entry point to attach
+   * additional custom, application-specific middleware. Any middleware
+   * attached to the &lt;code>app&lt;/code> that throws an &lt;code>Error&lt;/code> will be
+   * handled by the &lt;code>error&lt;/code> middleware.
+   * @return {void}
+   */
+
+
+  Server.prototype.initializeMiddleware = function initializeMiddleware() {}
+  // Override to provide custom middleware
+
+
+  /**
+   * Given the common/core &lt;code>Router&lt;/code> and an application-specific
+   * &lt;code>Router&lt;/code>, merge the app-specific &lt;code>Router&lt;/code> into the
+   * core &lt;code>Router&lt;/code> and mount the product to the &lt;code>app&lt;/code>.
+   * @param  {Object} router
+   * @param  {Object} appRouter
+   * @return {void}
+   */
+  ;
+
+  Server.prototype.initializeRouter = function initializeRouter(router, appRouter) {
+    // Combine with application-specific router
+    router.use(appRouter.routes());
+
+    this.app.use(router.routes());
+    this.app.use(router.allowedMethods());
+  };
+
+  /**
+   * Performs any common cleanup and notifies any listeners of the tear-down
+   * by emitting the `destroy` event locally and on the &lt;code>process&lt;/code>.
+   * @see {@link stop}
+   * @return {void}
+   */
+
+
+  Server.prototype.destroy = function destroy() {
+    // TODO logger destroy?
+    this.emit('destroy');
+    process.emit('destroy');
+  };
+
+  /**
+   * Starts the server.
+   * Starting the server will create an HTTP or HTTPS server, depending on
+   * configuration, with the provided callback and begin listening on the
+   * configured hostname/port.
+   * If any errors are encountered while starting the server, the error is
+   * logged and &lt;code>destroy&lt;/code> is called prior to the process exiting.
+   * Returns the created server instance upon successful startup.
+   * @see {@link https://nodejs.org/api/http.html}
+   * @see {@link createServer}
+   * @see {@link getListenCallback}
+   * @see {@link destroy}
+   * @param {Function|null = null} callback
+   * @return {Object}
+   */
+
+
+  Server.prototype.start = function start() {
+    var callback = arguments.length > 0 &amp;&amp; arguments[0] !== undefined ? arguments[0] : null;
+
+    if (!this.app) {
+      throw new Error('Cannot start server: the express instance is not defined');
+    }
+
+    try {
+      this.emit('before:start');
+      this.app.server = this.createServer().listen(this.config.get('port'), this.config.get('hostname'), this.config.get('backlog'), this.getListenCallback(callback));
+      this.emit('after:start');
+      return this.app.server;
+    } catch (e) {
+      this.logger.error(e);
+      this.destroy();
+      throw e;
+    }
+  };
+
+  /**
+   * Stops the server by executing the following routines:
+   * 1. Emits `before:stop`
+   * 2. Invokes the provided callback, if one is provided
+   * 3. Stops the server from accepting any new connections
+   * 4. Calls &lt;code>destroy&lt;/code>
+   * 5. Emits `after:stop`
+   * @see {@link https://nodejs.org/api/net.html#net_server_close_callback}
+   * @see {@link destroy}
+   * @param  {Function|null = null} callback
+   * @return {void}
+   */
+
+
+  Server.prototype.stop = function stop() {
+    var callback = arguments.length > 0 &amp;&amp; arguments[0] !== undefined ? arguments[0] : null;
+
+    this.logger.info('Server (' + this.config.hostname + ':' + this.config.port + ') stopping...');
+
+    this.emit('before:stop');
+    if (callback) {
+      callback();
+    }
+
+    this.app.server.close();
+    this.destroy();
+    this.emit('after:stop');
+  };
+
+  return Server;
+}(_events2.default);
+
+exports.default = Server;
+
+/***/ }),
+
+/***/ "./src/utils/logger.js":
+/*!*****************************!*\
+  !*** ./src/utils/logger.js ***!
+  \*****************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _class, _temp;
+
+var _bunyan = __webpack_require__(/*! bunyan */ "bunyan");
+
+var _bunyan2 = _interopRequireDefault(_bunyan);
+
+var _config = __webpack_require__(/*! config */ "config");
+
+var _config2 = _interopRequireDefault(_config);
+
+var _process = __webpack_require__(/*! process */ "process");
+
+var _process2 = _interopRequireDefault(_process);
+
+function _interopRequireDefault(obj) { return obj &amp;&amp; obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call &amp;&amp; (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" &amp;&amp; superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass &amp;&amp; superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var DEFAULT_LOGGER_NAME = 'root';
+
+/*
+ * BEGIN NOTE: example of stream config
+  streamConfig = Object.assign({}, streamsConfig.get('cloudwatch'));
+  streamConfig.logStreamName += `-${process.pid}-${uuidv4()}`;
+  logger.addStream({
+    name: 'cloudwatch',
+    type: 'raw',
+    stream: createCWStream(Object.assign({}, streamConfig)),
+  });
+ * END NOTE
+ */
+
+/**
+ * Implementation of the &lt;code>Bunyan&lt;/code> logger that provides a static
+ * access method to retrieve configuration logger instances and to extend the
+ * logging output behavior to include our request &lt;code>trasnaction&lt;/code>
+ * data as additional log metadata.
+ *
+ * @see {@link https://github.com/trentm/node-bunyan}
+ *
+ * @class
+ * @extends Bunyan
+ */
+var Logger = (_temp = _class = function (_Bunyan) {
+  _inherits(Logger, _Bunyan);
+
+  function Logger() {
+    _classCallCheck(this, Logger);
+
+    return _possibleConstructorReturn(this, _Bunyan.apply(this, arguments));
+  }
+
+  /**
+   * Extends &lt;code>Bunyan&lt;/code>'s functionality to include the
+   * &lt;code>transaction&lt;/code> data in the log output. Calls
+   * &lt;code>Bunyan._emit&lt;/code> with the modified log record.
+   * &lt;code>_emit&lt;/code> is responsible for writing a log record to the logger
+   * instance's output.
+   *
+   * @param  {Object} rec     The log record to emit
+   * @param  {boolean} noemit Flag controlling if the current record should be
+   *                          emitted or not
+   * @return {void}
+   */
+  Logger.prototype._emit = function _emit(rec, noemit) {
+    var r = this.serializeTransaction(rec);
+
+    // eslint-disable-next-line no-underscore-dangle
+    return _Bunyan.prototype._emit.call(this, r, noemit);
+  };
+
+  /**
+   * Generates a formatted object from the &lt;code>transaction&lt;/code> data
+   * attached to the current &lt;code>process.domain&lt;/code>. If such a
+   * &lt;code>transaction&lt;/code> exists, get the &lt;code>transaction&lt;/code>'s
+   * ID and the request context (Koa context).
+   * Attach the &lt;code>transaction&lt;/code> ID to the record, as well as
+   * the session ID, if a session exists, and some basic information about the
+   * current logged-in user, if a user exists.
+   *
+   * The session is found on the context as &lt;code>ctx.session&lt;/code>, and the
+   * use is found on the context as &lt;code>ctx.user&lt;/code>.
+   *
+   * @param  {rec} Object The log record to emit
+   * @return {Object}     The modified log record
+   */
+
+  // loggers cache
+
+
+  Logger.prototype.serializeTransaction = function serializeTransaction(rec) {
+    var r = rec;
+    var transaction = _process2.default.domain;
+
+    if (transaction &amp;&amp; transaction.data) {
+      var ctx = transaction.data.ctx;
+
+
+      r.transactionId = transaction.data.id;
+      if (ctx.session) {
+        r.sessionId = ctx.session.id;
+      }
+
+      if (ctx.user) {
+        r.user = {
+          id: ctx.user.id,
+          username: ctx.user.username
+        };
+      }
+    }
+
+    return rec;
+  };
+
+  /**
+   * Retrieve a logger instance by name by looking up the looger in the logger
+   * cache. If no logger name is provide, the default logger
+   * (&lt;code>root&lt;/code>) is returned. If no logger by the provided name exists
+   * and the logger name is found in the configuration, then a new logger is
+   * created and returned; otherwise an &lt;code>Error&lt;/code> is thrown.
+   *
+   * @param  {string = null} name
+   * @return {Object}
+   */
+
+
+  Logger.getLogger = function getLogger() {
+    var name = arguments.length > 0 &amp;&amp; arguments[0] !== undefined ? arguments[0] : null;
+
+    var handlersConfig = _config2.default.loggers.handlers;
+    var loggerName = name == null ? DEFAULT_LOGGER_NAME : name.toLowerCase();
+
+    if (!(loggerName in Logger.loggers)) {
+      if (!(loggerName in handlersConfig)) {
+        throw new Error('Unable to create logger: no logger for ' + loggerName + ' found in configuration');
+      }
+
+      Logger.loggers[loggerName] = new Logger(handlersConfig.loggerName);
+    }
+
+    return Logger.loggers[loggerName];
+  };
+
+  return Logger;
+}(_bunyan2.default), _class.loggers = {}, _temp);
+exports.default = Logger;
+
+/***/ }),
+
+/***/ "./src/utils/sigInitHandler.js":
+/*!*************************************!*\
+  !*** ./src/utils/sigInitHandler.js ***!
+  \*************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.default = sigInitHandler;
+
+var _logger = __webpack_require__(/*! ./logger */ "./src/utils/logger.js");
+
+var _logger2 = _interopRequireDefault(_logger);
+
+function _interopRequireDefault(obj) { return obj &amp;&amp; obj.__esModule ? obj : { default: obj }; }
+
+var LOGGER = _logger2.default.getLogger();
+
+/**
+ * Handler for capturing a the &lt;code>siginit&lt;/code> event and stopping the
+ * current process.
+ * @return {void}
+ */
+function sigInitHandler() {
+  if (LOGGER) {
+    LOGGER.info('Captured ctrl-c');
+  }
+
+  process.exit(0);
+}
+
+/***/ }),
+
+/***/ "./src/utils/uncaughtExceptionHandler.js":
+/*!***********************************************!*\
+  !*** ./src/utils/uncaughtExceptionHandler.js ***!
+  \***********************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.default = uncaughtExceptionHandler;
+
+var _logger = __webpack_require__(/*! ./logger */ "./src/utils/logger.js");
+
+var _logger2 = _interopRequireDefault(_logger);
+
+function _interopRequireDefault(obj) { return obj &amp;&amp; obj.__esModule ? obj : { default: obj }; }
+
+var LOGGER = _logger2.default.getLogger('error');
+
+/**
+ * Called when the process encounters an uncaught &lt;code>Error&lt;/code>.
+ * The &lt;code>Error&lt;/code> is logged and the process exits in error.
+ * @param  {Error} e
+ * @return {void}
+ */
+function uncaughtExceptionHandler(e) {
+  if (LOGGER) {
+    LOGGER.error('An unhandled exception occurred. Server is exiting...');
+    LOGGER.error(e);
+  }
+
+  process.exit(1);
+}
+
+/***/ }),
+
+/***/ "./src/utils/unhandledRejectionHandler.js":
+/*!************************************************!*\
+  !*** ./src/utils/unhandledRejectionHandler.js ***!
+  \************************************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.default = unhandledRejectionHandler;
+
+var _logger = __webpack_require__(/*! ./logger */ "./src/utils/logger.js");
+
+var _logger2 = _interopRequireDefault(_logger);
+
+function _interopRequireDefault(obj) { return obj &amp;&amp; obj.__esModule ? obj : { default: obj }; }
+
+var LOGGER = _logger2.default.getLogger('error');
+
+/**
+ * Called when the process encounteres an unhandled Promise rejection.
+ * The &lt;code>Error&lt;/code> from the rejected Promise is logged and the event
+ * loop is allowed to continue.
+ * @param  {Error} e
+ * @return {void}
+ */
+function unhandledRejectionHandler(e) {
+  if (LOGGER) {
+    LOGGER.error('An unhandled promise rejection occurred: ' + e);
+  }
+}
+
+/***/ }),
+
+/***/ 0:
+/*!***************************!*\
+  !*** multi ./src/main.js ***!
+  \***************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! /Users/gooftroop/Development/Harmonizly/axon/src/main.js */"./src/main.js");
+
+
+/***/ }),
+
+/***/ "bunyan":
+/*!*************************!*\
+  !*** external "bunyan" ***!
+  \*************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("bunyan");
+
+/***/ }),
+
+/***/ "config":
+/*!*************************!*\
+  !*** external "config" ***!
+  \*************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("config");
+
+/***/ }),
+
+/***/ "domain":
+/*!*************************!*\
+  !*** external "domain" ***!
+  \*************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("domain");
+
+/***/ }),
+
+/***/ "events":
+/*!*************************!*\
+  !*** external "events" ***!
+  \*************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("events");
+
+/***/ }),
+
+/***/ "fs":
+/*!*********************!*\
+  !*** external "fs" ***!
+  \*********************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("fs");
+
+/***/ }),
+
+/***/ "https":
+/*!************************!*\
+  !*** external "https" ***!
+  \************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("https");
+
+/***/ }),
+
+/***/ "koa":
+/*!**********************!*\
+  !*** external "koa" ***!
+  \**********************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("koa");
+
+/***/ }),
+
+/***/ "koa-body":
+/*!***************************!*\
+  !*** external "koa-body" ***!
+  \***************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("koa-body");
+
+/***/ }),
+
+/***/ "koa-compress":
+/*!*******************************!*\
+  !*** external "koa-compress" ***!
+  \*******************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("koa-compress");
+
+/***/ }),
+
+/***/ "koa-cors":
+/*!***************************!*\
+  !*** external "koa-cors" ***!
+  \***************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("koa-cors");
+
+/***/ }),
+
+/***/ "koa-helmet":
+/*!*****************************!*\
+  !*** external "koa-helmet" ***!
+  \*****************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("koa-helmet");
+
+/***/ }),
+
+/***/ "koa-morgan":
+/*!*****************************!*\
+  !*** external "koa-morgan" ***!
+  \*****************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("koa-morgan");
+
+/***/ }),
+
+/***/ "koa-mount":
+/*!****************************!*\
+  !*** external "koa-mount" ***!
+  \****************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("koa-mount");
+
+/***/ }),
+
+/***/ "koa-router":
+/*!*****************************!*\
+  !*** external "koa-router" ***!
+  \*****************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("koa-router");
+
+/***/ }),
+
+/***/ "koa-static":
+/*!*****************************!*\
+  !*** external "koa-static" ***!
+  \*****************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("koa-static");
+
+/***/ }),
+
+/***/ "process":
+/*!**************************!*\
+  !*** external "process" ***!
+  \**************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("process");
+
+/***/ }),
+
+/***/ "uuid/v4":
+/*!**************************!*\
+  !*** external "uuid/v4" ***!
+  \**************************/
+/*! no static exports found */
+/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
+/***/ (function(module, exports) {
+
+module.exports = require("uuid/v4");
+
+/***/ })
+
+/******/ });
+//# sourceMappingURL=axon.js.map</code></pre>
+  </article>
+</section>
+
+    
+
+
+  </div>
+
+  <br class="clear">
+
+  <footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
+  </footer>
+
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/pagelocation.js"></script>
+
+  
+  
+</body>
+</html>

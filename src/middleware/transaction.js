@@ -1,3 +1,7 @@
+/**
+ * @module middleware/transaction
+ * @exports trasnactionMiddleware
+ */
 import domain from 'domain';
 import uuidv4 from 'uuid/v4';
 

@@ -1,3 +1,7 @@
+/**
+ * @module middleware/error
+ * @exports errorMiddleware
+ */
 import ApiError, { InternalError } from 'axon/error';
 import Logger from 'axon/utils/logger';
 
@@ -17,7 +21,7 @@ const LOGGER: Object = Logger.getLogger('root');
  *
  * @see {@link ApiError}
  * @see {@link InternalError}
- * 
+ *
  * @param  {Object}   ctx  The Koa context
  * @param  {Function} next The next middleware or handler in the connect chain
  * @return {void}
