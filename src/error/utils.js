@@ -3,42 +3,6 @@ const DEFAULT_MESSAGE: string = 'An Unknown error occurred';
 const DEFAULT_STATUS: number = 500;
 
 /**
- * [error description]
- * @type {[type]}
- */
-export function convertSystemFetchErrorStatus(error: FetchError): Number {
-  if (error.type === 'system') {
-    switch (error.errno) {
-      case 'ENOTFOUND':
-        return 503;
-      case 'ECONNRESET':
-        return 503;
-      case 'ECONNREFUSED':
-        return 503;
-      default:
-        return 500;
-    }
-  }
-
-  switch (error.type) {
-    case 'body-timeout':
-      return 503;
-    case 'invalid-json':
-      return 400;
-    case 'max-redirect':
-      return 503;
-    case 'max-size':
-      return 400;
-    case 'no-redirect':
-      return 503;
-    case 'request-timeout':
-      return 503;
-    default:
-      return 500;
-  }
-}
-
-/**
  * [resolveCode description]
  * @param  {[type]} payload [description]
  * @return {[type]}         [description]

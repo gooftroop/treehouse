@@ -1,5 +1,4 @@
 import {
-  convertSystemFetchErrorStatus,
   resolveCode,
   resolveError,
   resolveMessage,
@@ -53,20 +52,6 @@ export class AuthorizationError extends ApiError {
 }
 
 /**
- * [errors description]
- * @type {[type]}
- */
-export class GraphQLError extends ApiError {
-  /**
-   * [constructor description]
-   * @param {[type]} errors [description]
-   */
-  constructor(e: ?Error) {
-    super(codes.GENERAL_ERROR(e.message), e);
-  }
-}
-
-/**
  * [message description]
  * @type {[type]}
  */
@@ -87,20 +72,6 @@ export class InvalidRequestError extends ApiError {
    */
   constructor(message: String, e: ?Error) {
     super(codes.INVALID_REQUEST(message), e);
-  }
-}
-
-/**
- * [error description]
- * @type {[type]}
- */
-export class NetworkError extends ApiError {
-  /**
-   * [constructor description]
-   * @param {[type]} error [description]
-   */
-  constructor(e: ?FetchError) {
-    super(codes.NETWORK_ERROR(convertSystemFetchErrorStatus(e)), e);
   }
 }
 

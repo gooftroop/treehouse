@@ -32,10 +32,24 @@ import Logger from 'axon/utils/logger';
 const LOGGER: Object = Logger.getLogger('root');
 
 /**
- * [errorMiddleware description]
- * @param  {[type]}   ctx  [description]
- * @param  {Function} next [description]
- * @return {[type]}        [description]
+ * Wraps all subsequent async calls to middleware or handlers in a
+ * &lt;code>try/catch&lt;/code> block to properly handle and format errors
+ * prior to sending an error reponse.
+ * If the caught &lt;code>Error&lt;/code> is not a subclass of the
+ * &lt;code>ApiError&lt;/code>, it is converted into either an
+ * &lt;code>InternalError&lt;/code> if no &lt;code>status&lt;/code> is attached to the
+ * error or the &lt;code>status&lt;/code> is 500, or a generic &lt;code>ApiError&lt;/code>.
+ * The error is logged, the response status is set to the error
+ * &lt;code>status&lt;/code>, and the response body is set to the error. Finally the
+ * `error` event is emitted on the &lt;code>app&lt;/code>.
+ *
+ * @see {@link ApiError}
+ * @see {@link InternalError}
+ * 
+ * @param  {Object}   ctx  The Koa context
+ * @param  {Function} next The next middleware or handler in the connect chain
+ * @return {void}
+ * @async
  */
 export default async (ctx: Object, next: Function): void => {
   try {
@@ -44,7 +58,7 @@ export default async (ctx: Object, next: Function): void => {
     let err = e;
 
     if (!(e instanceof ApiError)) {
-      err = (ctx.status === 500) ? new InternalError(e.message, e) : new ApiError(e.message, e);
+      err = (!err.status || err.status === 500) ? new InternalError(e.message, e) : new ApiError(e.message, e);
     }
 
     LOGGER.error(err, ctx);
@@ -64,13 +78,13 @@ export default async (ctx: Object, next: Function): void => {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="defaultLink.html">defaultLink</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ApiError">ApiError</a></li><li><a href="global.html#convertSystemFetchErrorStatus">convertSystemFetchErrorStatus</a></li><li><a href="global.html#default">default</a></li><li><a href="global.html#DEFAULT_FATAL_ERROR">DEFAULT_FATAL_ERROR</a></li><li><a href="global.html#DEFAULT_FORBIDDEN">DEFAULT_FORBIDDEN</a></li><li><a href="global.html#DEFAULT_GENERAL_ERROR">DEFAULT_GENERAL_ERROR</a></li><li><a href="global.html#DEFAULT_INVALID_REQUEST">DEFAULT_INVALID_REQUEST</a></li><li><a href="global.html#DEFAULT_NETWORK_ERROR">DEFAULT_NETWORK_ERROR</a></li><li><a href="global.html#DEFAULT_SERVICE_UNAVAILABLE">DEFAULT_SERVICE_UNAVAILABLE</a></li><li><a href="global.html#DEFAULT_UNAUTHORIZED">DEFAULT_UNAUTHORIZED</a></li><li><a href="global.html#DEFAULT_VALIDATION_ERROR">DEFAULT_VALIDATION_ERROR</a></li><li><a href="global.html#defaultErrorHandler">defaultErrorHandler</a></li><li><a href="global.html#FATAL_ERROR">FATAL_ERROR</a></li><li><a href="global.html#FORBIDDEN">FORBIDDEN</a></li><li><a href="global.html#formatter">formatter</a></li><li><a href="global.html#GENERAL_ERROR">GENERAL_ERROR</a></li><li><a href="global.html#GraphQLError">GraphQLError</a></li><li><a href="global.html#ILLEGAL_STATE_EXCEPTION">ILLEGAL_STATE_EXCEPTION</a></li><li><a href="global.html#InternalError">InternalError</a></li><li><a href="global.html#INVALID_REQUEST">INVALID_REQUEST</a></li><li><a href="global.html#InvalidRequestError">InvalidRequestError</a></li><li><a href="global.html#Logger">Logger</a></li><li><a href="global.html#MISSING_REQUIRED_PARAMETER">MISSING_REQUIRED_PARAMETER</a></li><li><a href="global.html#NETWORK_ERROR">NETWORK_ERROR</a></li><li><a href="global.html#NetworkError">NetworkError</a></li><li><a href="global.html#NOT_YET_IMPLEMENTED">NOT_YET_IMPLEMENTED</a></li><li><a href="global.html#resolveCode">resolveCode</a></li><li><a href="global.html#resolveError">resolveError</a></li><li><a href="global.html#resolveMessage">resolveMessage</a></li><li><a href="global.html#resolveStatus">resolveStatus</a></li><li><a href="global.html#Server">Server</a></li><li><a href="global.html#SERVICE_UNAVAILABLE">SERVICE_UNAVAILABLE</a></li><li><a href="global.html#ServiceUnavailableError">ServiceUnavailableError</a></li><li><a href="global.html#sigInitHandler">sigInitHandler</a></li><li><a href="global.html#UNAUTHORIZED">UNAUTHORIZED</a></li><li><a href="global.html#uncaughtExceptionHandler">uncaughtExceptionHandler</a></li><li><a href="global.html#unhandledRejectionHandler">unhandledRejectionHandler</a></li><li><a href="global.html#VALIDATION_ERROR">VALIDATION_ERROR</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-api_v1_routes.html">api/v1/routes</a></li><li><a href="module-Function.html">Function</a></li><li><a href="module-main.html">main</a></li><li><a href="module-router.html">router</a></li></ul><h3>Classes</h3><ul><li><a href="Logger.html">Logger</a></li><li><a href="Server.html">Server</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ApiError">ApiError</a></li><li><a href="global.html#default">default</a></li><li><a href="global.html#DEFAULT_FATAL_ERROR">DEFAULT_FATAL_ERROR</a></li><li><a href="global.html#DEFAULT_FORBIDDEN">DEFAULT_FORBIDDEN</a></li><li><a href="global.html#DEFAULT_GENERAL_ERROR">DEFAULT_GENERAL_ERROR</a></li><li><a href="global.html#DEFAULT_INVALID_REQUEST">DEFAULT_INVALID_REQUEST</a></li><li><a href="global.html#DEFAULT_SERVICE_UNAVAILABLE">DEFAULT_SERVICE_UNAVAILABLE</a></li><li><a href="global.html#DEFAULT_UNAUTHORIZED">DEFAULT_UNAUTHORIZED</a></li><li><a href="global.html#DEFAULT_VALIDATION_ERROR">DEFAULT_VALIDATION_ERROR</a></li><li><a href="global.html#FATAL_ERROR">FATAL_ERROR</a></li><li><a href="global.html#FORBIDDEN">FORBIDDEN</a></li><li><a href="global.html#formatter">formatter</a></li><li><a href="global.html#GENERAL_ERROR">GENERAL_ERROR</a></li><li><a href="global.html#ILLEGAL_STATE_EXCEPTION">ILLEGAL_STATE_EXCEPTION</a></li><li><a href="global.html#InternalError">InternalError</a></li><li><a href="global.html#INVALID_REQUEST">INVALID_REQUEST</a></li><li><a href="global.html#InvalidRequestError">InvalidRequestError</a></li><li><a href="global.html#MISSING_REQUIRED_PARAMETER">MISSING_REQUIRED_PARAMETER</a></li><li><a href="global.html#NOT_YET_IMPLEMENTED">NOT_YET_IMPLEMENTED</a></li><li><a href="global.html#resolveCode">resolveCode</a></li><li><a href="global.html#resolveError">resolveError</a></li><li><a href="global.html#resolveMessage">resolveMessage</a></li><li><a href="global.html#resolveStatus">resolveStatus</a></li><li><a href="global.html#SERVICE_UNAVAILABLE">SERVICE_UNAVAILABLE</a></li><li><a href="global.html#ServiceUnavailableError">ServiceUnavailableError</a></li><li><a href="global.html#sigInitHandler">sigInitHandler</a></li><li><a href="global.html#UNAUTHORIZED">UNAUTHORIZED</a></li><li><a href="global.html#uncaughtExceptionHandler">uncaughtExceptionHandler</a></li><li><a href="global.html#unhandledRejectionHandler">unhandledRejectionHandler</a></li><li><a href="global.html#VALIDATION_ERROR">VALIDATION_ERROR</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Jun 20 2018 16:40:32 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Jun 22 2018 13:44:49 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>

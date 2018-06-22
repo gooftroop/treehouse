@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: utils/sigInitHandler.js</title>
+    <title>JSDoc: Module: router</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,34 +17,143 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: utils/sigInitHandler.js</h1>
+    <h1 class="page-title">Module: router</h1>
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>import Logger from 'axon/utils/logger';
+        
+            
+        
+    
+</header>
 
-const LOGGER: Object = Logger.getLogger();
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>Builds and exports the Axon router.
+Typically version Routers (i.e. v1) would be mounted to the root Router with
+a url prefix like <code>/v1</code>, but in this case, the Axon Router only
+provides global endpoints like a health check and does not need to be
+versioned. However, this file does establish a good pattern for organizing
+and building application-specific Routers, so I do recommend using this as
+boilerplate.</p></div>
+        
 
-/**
- * Handler for capturing a the &lt;code>siginit&lt;/code> event and stopping the
- * current process.
- * @return {void}
- */
-export default function sigInitHandler(): void {
-  if (LOGGER) {
-    LOGGER.info('Captured ctrl-c');
-  }
+        
+            
 
-  process.exit(0);
-}
-</code></pre>
-        </article>
-    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="router.js.html">router.js</a>, <a href="router.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://github.com/alexmingoia/koa-router">https://github.com/alexmingoia/koa-router</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

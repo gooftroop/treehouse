@@ -1,16 +1,15 @@
 /**
- * Export file for Axon 
+ * Main entry point for the built Axon dist/library.
+ * @module main
+ * @exports Allthethings
  */
 
 import ApiError, {
   AuthorizationError,
-  GraphQLError,
   InternalError,
   InvalidRequestError,
-  NetworkError,
   ServiceUnavailableError,
 } from 'axon/error';
-import GraphQLClient from 'axon/utils/graphql';
 import Logger from 'axon/utils/logger';
 import Server from 'axon/server';
 
@@ -21,11 +20,8 @@ export {
   ApiError,
   AuthorizationError,
   codes,
-  GraphQLClient,
-  GraphQLError,
   InternalError,
   InvalidRequestError,
   Logger,
-  NetworkError,
   ServiceUnavailableError,
 };

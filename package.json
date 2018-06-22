@@ -10,7 +10,8 @@
     "build": "make",
     "build:dev": "make dev",
     "docs": "make docs",
-    "prepublish": "make"
+    "prepublish": "make",
+    "test": "echo 'No tests!' && exit 1"
   },
   "engines": {
     "node": ">=10.0.0"

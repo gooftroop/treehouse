@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: utils/sigInitHandler.js</title>
+    <title>JSDoc: Source: api/v1/routes/index.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: utils/sigInitHandler.js</h1>
+    <h1 class="page-title">Source: api/v1/routes/index.js</h1>
 
     
 
@@ -26,22 +26,22 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import Logger from 'axon/utils/logger';
-
-const LOGGER: Object = Logger.getLogger();
-
-/**
- * Handler for capturing a the &lt;code>siginit&lt;/code> event and stopping the
- * current process.
- * @return {void}
+            <pre class="prettyprint source linenums"><code>/**
+ * V1 Router.
+ * Defines the health check route.
+ * @module api/v1/routes
+ * @exports V1 Router
  */
-export default function sigInitHandler(): void {
-  if (LOGGER) {
-    LOGGER.info('Captured ctrl-c');
-  }
 
-  process.exit(0);
-}
+import Router from 'koa-router';
+
+import health from 'axon/api/v1/handlers/health';
+
+const router = new Router();
+
+router.get('/health', health);
+
+export default router;
 </code></pre>
         </article>
     </section>

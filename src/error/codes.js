@@ -38,25 +38,6 @@ export const GENERAL_ERROR: Function = (message: String = DEFAULT_GENERAL_ERROR)
 };
 
 /**
- * [DEFAULT_NETWORK_ERROR description]
- * @type {[type]}
- */
-export const DEFAULT_NETWORK_ERROR: String = 'The network request failed';
-
-/**
- * [NETWORK_ERROR description]
- * @type {[type]}
- */
-export const NETWORK_ERROR: Function = (message: String = DEFAULT_NETWORK_ERROR, status: Number = 500): Object => {
-  return {
-    status,
-    code: '0b',
-    category: 'NetworkException',
-    message,
-  };
-};
-
-/**
  * [NOT_YET_IMPLEMENTED description]
  * @type {[type]}
  */

@@ -45,18 +45,33 @@ const DEFAULT_LOGGER_NAME: string = 'root';
  */
 
 /**
+ * Implementation of the &lt;code>Bunyan&lt;/code> logger that provides a static
+ * access method to retrieve configuration logger instances and to extend the
+ * logging output behavior to include our request &lt;code>trasnaction&lt;/code>
+ * data as additional log metadata.
  *
+ * @see {@link https://github.com/trentm/node-bunyan}
+ *
+ * @class
+ * @extends Bunyan
  */
 class Logger extends Bunyan {
   // loggers cache
   static loggers: Object = {};
 
   /**
-   * [debug description]
-   * @param  {[type]} args [description]
-   * @return {[type]}      [description]
+   * Extends &lt;code>Bunyan&lt;/code>'s functionality to include the
+   * &lt;code>transaction&lt;/code> data in the log output. Calls
+   * &lt;code>Bunyan._emit&lt;/code> with the modified log record.
+   * &lt;code>_emit&lt;/code> is responsible for writing a log record to the logger
+   * instance's output.
+   *
+   * @param  {Object} rec     The log record to emit
+   * @param  {boolean} noemit Flag controlling if the current record should be
+   *                          emitted or not
+   * @return {void}
    */
-  _emit(rec, noemit) {
+  _emit(rec: Object, noemit: boolean): void {
     const r: Object = this.serializeTransaction(rec);
 
     // eslint-disable-next-line no-underscore-dangle
@@ -64,9 +79,19 @@ class Logger extends Bunyan {
   }
 
   /**
-   * [formatTransaction description]
-   * @param  {[type]} Object [description]
-   * @return {[type]}        [description]
+   * Generates a formatted object from the &lt;code>transaction&lt;/code> data
+   * attached to the current &lt;code>process.domain&lt;/code>. If such a
+   * &lt;code>transaction&lt;/code> exists, get the &lt;code>transaction&lt;/code>'s
+   * ID and the request context (Koa context).
+   * Attach the &lt;code>transaction&lt;/code> ID to the record, as well as
+   * the session ID, if a session exists, and some basic information about the
+   * current logged-in user, if a user exists.
+   *
+   * The session is found on the context as &lt;code>ctx.session&lt;/code>, and the
+   * use is found on the context as &lt;code>ctx.user&lt;/code>.
+   *
+   * @param  {rec} Object The log record to emit
+   * @return {Object}     The modified log record
    */
   serializeTransaction(rec: Object): Object {
     const r: Object = rec;
@@ -92,15 +117,24 @@ class Logger extends Bunyan {
   }
 
   /**
-   * [getLogger description]
-   * @param  {[type]} name [description]
-   * @return {[type]}      [description]
+   * Retrieve a logger instance by name by looking up the looger in the logger
+   * cache. If no logger name is provide, the default logger
+   * (&lt;code>root&lt;/code>) is returned. If no logger by the provided name exists
+   * and the logger name is found in the configuration, then a new logger is
+   * created and returned; otherwise an &lt;code>Error&lt;/code> is thrown.
+   *
+   * @param  {string = null} name
+   * @return {Object}
    */
-  static getLogger(name: string): Object {
+  static getLogger(name: string = null): Object {
     const handlersConfig: Object = config.loggers.handlers;
     const loggerName: string = (name == null) ? DEFAULT_LOGGER_NAME : name.toLowerCase();
 
     if (!(loggerName in Logger.loggers)) {
+      if (!(loggerName in handlersConfig)) {
+        throw new Error(`Unable to create logger: no logger for ${loggerName} found in configuration`);
+      }
+
       Logger.loggers[loggerName] = new Logger(handlersConfig.loggerName);
     }
 
@@ -119,13 +153,13 @@ export default Logger;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="defaultLink.html">defaultLink</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ApiError">ApiError</a></li><li><a href="global.html#convertSystemFetchErrorStatus">convertSystemFetchErrorStatus</a></li><li><a href="global.html#default">default</a></li><li><a href="global.html#DEFAULT_FATAL_ERROR">DEFAULT_FATAL_ERROR</a></li><li><a href="global.html#DEFAULT_FORBIDDEN">DEFAULT_FORBIDDEN</a></li><li><a href="global.html#DEFAULT_GENERAL_ERROR">DEFAULT_GENERAL_ERROR</a></li><li><a href="global.html#DEFAULT_INVALID_REQUEST">DEFAULT_INVALID_REQUEST</a></li><li><a href="global.html#DEFAULT_NETWORK_ERROR">DEFAULT_NETWORK_ERROR</a></li><li><a href="global.html#DEFAULT_SERVICE_UNAVAILABLE">DEFAULT_SERVICE_UNAVAILABLE</a></li><li><a href="global.html#DEFAULT_UNAUTHORIZED">DEFAULT_UNAUTHORIZED</a></li><li><a href="global.html#DEFAULT_VALIDATION_ERROR">DEFAULT_VALIDATION_ERROR</a></li><li><a href="global.html#defaultErrorHandler">defaultErrorHandler</a></li><li><a href="global.html#FATAL_ERROR">FATAL_ERROR</a></li><li><a href="global.html#FORBIDDEN">FORBIDDEN</a></li><li><a href="global.html#formatter">formatter</a></li><li><a href="global.html#GENERAL_ERROR">GENERAL_ERROR</a></li><li><a href="global.html#GraphQLError">GraphQLError</a></li><li><a href="global.html#ILLEGAL_STATE_EXCEPTION">ILLEGAL_STATE_EXCEPTION</a></li><li><a href="global.html#InternalError">InternalError</a></li><li><a href="global.html#INVALID_REQUEST">INVALID_REQUEST</a></li><li><a href="global.html#InvalidRequestError">InvalidRequestError</a></li><li><a href="global.html#Logger">Logger</a></li><li><a href="global.html#MISSING_REQUIRED_PARAMETER">MISSING_REQUIRED_PARAMETER</a></li><li><a href="global.html#NETWORK_ERROR">NETWORK_ERROR</a></li><li><a href="global.html#NetworkError">NetworkError</a></li><li><a href="global.html#NOT_YET_IMPLEMENTED">NOT_YET_IMPLEMENTED</a></li><li><a href="global.html#resolveCode">resolveCode</a></li><li><a href="global.html#resolveError">resolveError</a></li><li><a href="global.html#resolveMessage">resolveMessage</a></li><li><a href="global.html#resolveStatus">resolveStatus</a></li><li><a href="global.html#Server">Server</a></li><li><a href="global.html#SERVICE_UNAVAILABLE">SERVICE_UNAVAILABLE</a></li><li><a href="global.html#ServiceUnavailableError">ServiceUnavailableError</a></li><li><a href="global.html#sigInitHandler">sigInitHandler</a></li><li><a href="global.html#UNAUTHORIZED">UNAUTHORIZED</a></li><li><a href="global.html#uncaughtExceptionHandler">uncaughtExceptionHandler</a></li><li><a href="global.html#unhandledRejectionHandler">unhandledRejectionHandler</a></li><li><a href="global.html#VALIDATION_ERROR">VALIDATION_ERROR</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-api_v1_routes.html">api/v1/routes</a></li><li><a href="module-Function.html">Function</a></li><li><a href="module-main.html">main</a></li><li><a href="module-router.html">router</a></li></ul><h3>Classes</h3><ul><li><a href="Logger.html">Logger</a></li><li><a href="Server.html">Server</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ApiError">ApiError</a></li><li><a href="global.html#default">default</a></li><li><a href="global.html#DEFAULT_FATAL_ERROR">DEFAULT_FATAL_ERROR</a></li><li><a href="global.html#DEFAULT_FORBIDDEN">DEFAULT_FORBIDDEN</a></li><li><a href="global.html#DEFAULT_GENERAL_ERROR">DEFAULT_GENERAL_ERROR</a></li><li><a href="global.html#DEFAULT_INVALID_REQUEST">DEFAULT_INVALID_REQUEST</a></li><li><a href="global.html#DEFAULT_SERVICE_UNAVAILABLE">DEFAULT_SERVICE_UNAVAILABLE</a></li><li><a href="global.html#DEFAULT_UNAUTHORIZED">DEFAULT_UNAUTHORIZED</a></li><li><a href="global.html#DEFAULT_VALIDATION_ERROR">DEFAULT_VALIDATION_ERROR</a></li><li><a href="global.html#FATAL_ERROR">FATAL_ERROR</a></li><li><a href="global.html#FORBIDDEN">FORBIDDEN</a></li><li><a href="global.html#formatter">formatter</a></li><li><a href="global.html#GENERAL_ERROR">GENERAL_ERROR</a></li><li><a href="global.html#ILLEGAL_STATE_EXCEPTION">ILLEGAL_STATE_EXCEPTION</a></li><li><a href="global.html#InternalError">InternalError</a></li><li><a href="global.html#INVALID_REQUEST">INVALID_REQUEST</a></li><li><a href="global.html#InvalidRequestError">InvalidRequestError</a></li><li><a href="global.html#MISSING_REQUIRED_PARAMETER">MISSING_REQUIRED_PARAMETER</a></li><li><a href="global.html#NOT_YET_IMPLEMENTED">NOT_YET_IMPLEMENTED</a></li><li><a href="global.html#resolveCode">resolveCode</a></li><li><a href="global.html#resolveError">resolveError</a></li><li><a href="global.html#resolveMessage">resolveMessage</a></li><li><a href="global.html#resolveStatus">resolveStatus</a></li><li><a href="global.html#SERVICE_UNAVAILABLE">SERVICE_UNAVAILABLE</a></li><li><a href="global.html#ServiceUnavailableError">ServiceUnavailableError</a></li><li><a href="global.html#sigInitHandler">sigInitHandler</a></li><li><a href="global.html#UNAUTHORIZED">UNAUTHORIZED</a></li><li><a href="global.html#uncaughtExceptionHandler">uncaughtExceptionHandler</a></li><li><a href="global.html#unhandledRejectionHandler">unhandledRejectionHandler</a></li><li><a href="global.html#VALIDATION_ERROR">VALIDATION_ERROR</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Jun 20 2018 16:40:32 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Jun 22 2018 13:44:49 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>
