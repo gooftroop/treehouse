@@ -86,6 +86,118 @@
       
 
 
+  <section class="readme">
+    <article>
+      <p><a href="https://greenkeeper.io/"><img src="https://badges.greenkeeper.io/Harmonizly/axon.svg" alt="Greenkeeper badge"></a>
+<a href="https://www.codacy.com/app/Harmonizly/axon?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Harmonizly/axon&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/620e6b698c91472284c97b9f2a1abb78" alt="Codacy Badge"></a>
+<a href="https://travis-ci.org/Harmonizly/axon"><img src="https://travis-ci.org/Harmonizly/axon.svg?branch=master" alt="Build Status"></a></p>
+<h1>Axon</h1><p>Axon is a lightweight <a href="https://koajs.com/">Koa</a>, event-based server that provides common configuration and setup in an Object-Oriented design. The purpose of Axon is to help speed up the development of Nodejs services by abstracting out the boilerplate and basic configuration and allow you to focus on your custom middleware or handlers. In addition to providing a core Koa server, Axon also exposes other common utilities:</p>
+<ul>
+<li><a href="https://github.com/trentm/node-bunyan">Bunyan</a> <code>Logger</code></li>
+<li>Application-specific Exceptions,</li>
+<li>A server-side oriented GraphQL Client built around <a href="https://github.com/apollographql/apollo-client">Apollo Client</a> for inter-service communication.</li>
+</ul>
+<p>Additional documentation (JSDocs) can be found <a href="https://harmonizly.github.io/axon/">here</a>.</p>
+<h2>Installing</h2><pre class="prettyprint source"><code>npm install git@github.com/Harmonizly/axon.git#&lt;verson></code></pre><p>You can find the deployment versions <a href="https://github.com/Harmonizly/axon/releases">here</a>.</p>
+<p>i.e.</p>
+<pre class="prettyprint source"><code>git@github.com/Harmonizly/axon.git#0.0.1</code></pre><h2>Lifecycle</h2><p>The lifecycle of the server is:</p>
+<ol>
+<li>Instantiation / Initialization</li>
+<li>Ready</li>
+<li>Start HTTP(S)</li>
+<li>Running</li>
+<li>Stop</li>
+<li>Destroying</li>
+<li>Destroyed</li>
+</ol>
+<p>The following events are emitted during the lifecycle, in order:</p>
+<ol>
+<li><code>ready</code></li>
+<li><code>before:start</code></li>
+<li><code>start</code></li>
+<li><code>after:start</code></li>
+<li><code>before:stop</code></li>
+<li><code>destroy</code></li>
+<li><code>after:stop</code></li>
+</ol>
+<p>Note: <code>after:stop</code> is emitted right before the process exists on a normal shut down (via calling <code>stop()</code>). This event should only be used for additional cleanup or monitoring and should not attempt to restart or respond to requests.</p>
+<p>Every request will run through the following middleware before being evaluated by the router (<a href="https://github.com/alexmingoia/koa-router">koa-router</a>):</p>
+<p style="padding: 30px 0;">
+<img src="./docs/assets/svg/request_processing.svg" />
+</p>
+
+<p>The middleware <code>transaction</code> is used to tag each request with a unique &quot;transaction&quot; ID using NodeJS <a href="">domain</a>'s to track a request through it's entire time spent in the app.</p>
+<p>The <code>access logger</code> middleware uses the <code>bunyan</code> logger to record details about each request prior to entering any custom middleware or handlers.</p>
+<p>The <code>error</code> middleware wraps all custom middleware and handlers in a <code>try/catch</code> to provide a uniform way to log the error and send the appropriate response. The <code>error</code> middleware ensures that the caught <code>Error</code> is some form of <code>ApiError</code>, so it is recommended that, if you throw a custom <code>Error</code> from any middleware or handlers, you extend <code>ApiError</code>.</p>
+<p>Axon also provides one common request handler for responding to health check requests at <code>/health</code>. The handler is located under <code>src/api/v1/handlers</code>.</p>
+<p>Third-party middleware references:</p>
+<ul>
+<li><a href="https://www.npmjs.com/package/koa-helmet">helmet</a></li>
+<li><a href="https://www.npmjs.com/package/koa-cors">cors</a></li>
+<li><a href="https://www.npmjs.com/package/koa-body">body</a></li>
+<li><a href="https://www.npmjs.com/package/koa-compress">compress</a></li>
+</ul>
+<p>Note! When adding your app-specific <code>handlers</code> and <code>middleware</code>, please take some time to understand <code>koa-router</code> and the difference between global middleware and route-specific middleware.</p>
+<h2>Details</h2><p>A couple notes of interest:</p>
+<ul>
+<li>The server instance listens to <code>process::exit</code>, which calls <code>destroy</code> to handle process termination.</li>
+<li>If <code>process.send</code> exists (i.e. when the process is managed by <code>pm2</code>), the instance sends <code>ready</code> across <code>process.send</code> to notify anyone waiting that the server has beed started.</li>
+<li>When the server is destroying, the instance will <code>emit</code> <code>destroy</code> on <code>process</code> to notify anyone watching that the server is going down.</li>
+<li>The <code>transactionId</code> is included with every logging output. The <code>transaction</code> context that's included in every logger statement includes information about the user and session, if that data exists. This assumes that an authorized user is attached to the request context as <code>user</code> and the session is attached to the request context as <code>session</code>.</li>
+</ul>
+<h2>Deployment</h2><p>Axon requires only a configuration object and an app-specific router.
+Any method can be overridden. Remember, if you override a method in Axon, you must call <code>super.&lt;method name&gt;</code>.</p>
+<p>A basic example of consuming Axon:</p>
+<pre class="prettyprint source"><code>import Server from 'axon';
+
+class MyServer extends Server {
+
+  constructor(): void {
+    super(config, router);
+  }
+
+  initializeMiddleware() {
+    // Initialize any custom middleware  here
+  }
+}</code></pre><p>It is highly recommended that you use <a href="https://github.com/lorenwest/node-config/wiki">node-config</a> as your configuration library and to pass the resulting configuration object to Axon. Axon expects, at minimum, the following configuration structure when accessing configuration variables:</p>
+<pre class="prettyprint source"><code>{
+  body: { ... }, // configuration for koa-body
+  cors: { ... }, // configuration for koa-cors
+  compress: {},  // configuration for koa-compress
+  loggers: {     // Axon logger configuration
+    handlers: {
+      access: {
+        name: 'access',
+        level: 'info',
+      },
+      ...etc.
+    },
+    streams: {
+      // Currently not used
+    },
+  },
+  server: {
+    hostname: '0.0.0.0',
+    port: 3000,
+    secure: false,
+    ssl: {
+      // ssl configuration for nodejs HTTPS server
+    },  
+  },    
+}</code></pre><h2>Building</h2><p>To build a deployment (production) <code>dist</code>, run <code>yarn build</code>.</p>
+<p>To build development <code>dist</code>, run <code>yarn build:dev</code>.</p>
+<p>When publishing the package to <code>npm</code>, <code>prepublish</code> will create a deployment <code>dist</code>.</p>
+<h2>Contributing</h2><p>Ensure that you are pushing to a branch off of <code>master</code> and not to <code>master</code> directly.
+Please follow standard git flow practices for merging branches with a PR.</p>
+<p>The <code>dist</code> bundle is created using <a href="https://webpack.js.org/">webpack</a> (located under the <code>build/</code> directory). To build in the <code>production</code> mode, ensure that the <code>NODE_ENV</code> environment variable is set to <code>production</code>.</p>
+<p>Distribution is currently hosted through Github, so the binary is currently tracked.
+To build and &quot;deploy&quot;, run <code>make</code> at the root project directory and commit the resulting <code>dist</code> bundle.</p>
+<h2>Testing</h2><p>Under construction.</p>
+<p>Both unit and integration tests are located under the <code>tests</code> directory (<code>tests/unit</code> and <code>tests/integration</code>) and mirror the <code>src</code> directory structure. Tests are written using <a href="https://mochajs.org/">Mocha</a> and <a href="http://www.chaijs.com/">chai</a>. Coverage reports are automatically collected on test runs using <a href="https://github.com/gotwarlost/istanbul">istanbul</a>.</p>
+<p>To run tests, use <code>npm test</code>. You can provide additional arguments to <code>Mocha</code> by running <code>npm test -- &lt;opts&gt;</code>.</p>
+    </article>
+  </section>
+
 
     
 

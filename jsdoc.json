@@ -2,6 +2,7 @@
   "opts": {
     "encoding": "utf8",
     "destination": "./docs/",
+    "readme": "README.md",
     "recurse": true,
     "template": "node_modules/jsdoc-template"
   },
