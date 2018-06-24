@@ -60,7 +60,7 @@
     "jsdoc-babel": "^0.4.0",
     "jsdoc-template": "https://github.com/braintree/jsdoc-template#3.2.0",
     "nyc": "^11.7.1",
-    "webpack": "^4.6.0",
+    "webpack": "^4.12.1",
     "webpack-cli": "^2.1.2",
     "webpack-node-externals": "^1.7.2"
   }
