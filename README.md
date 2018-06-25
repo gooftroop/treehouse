@@ -132,11 +132,13 @@ It is highly recommended that you use [node-config](https://github.com/lorenwest
 
 ## Building
 
-To build a deployment (production) `dist`, run `yarn build`.
+We use `Make` to run various build tasks. See `Makefile` for details on the build process.
 
-To build development `dist`, run `yarn build:dev`.
+To build a deployment (production) `dist`, run `make`.
 
-When publishing the package to `npm`, `prepublish` will create a deployment `dist`.
+To build development `dist`, run `make dev`.
+
+When publishing the package to `npm`, `prepublish` will create a production deployment.
 
 ## Contributing
 

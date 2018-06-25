@@ -7,9 +7,6 @@
   "author": "Brandon Webb (webb.c.brandon@gmail.com)",
   "license": "MIT",
   "scripts": {
-    "build": "make",
-    "build:dev": "make dev",
-    "docs": "make docs",
     "prepublish": "make",
     "test": "echo 'No tests!' && exit 1"
   },
