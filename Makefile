@@ -1,22 +1,22 @@
 CC = yarn
-NODE_ENV?=development
 
 .PHONY: clean all test
 
 all:
-	NODE_ENV=production
 	$(MAKE) clean
-	$(MAKE) install
+	NODE_ENV=production $(MAKE) bundle
+	$(MAKE) jsdoc
 
 clean:
 	rm -rf assets
 
 dev:
 	$(MAKE) clean
-	$(MAKE) install
+	NODE_ENV=development $(MAKE) bundle
+	$(MAKE) jsdoc
 
 jsdoc:
 	$(CC) run jsdoc . --configure ./jsdoc.json
 
-install:
+bundle:
 	$(CC) run webpack --config ./build/webpack.config.js

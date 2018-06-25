@@ -6,7 +6,7 @@ const webpack = require('webpack');
 const cwd = process.cwd();
 
 // For dynamic public paths: https://webpack.js.org/guides/public-path/
-const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development';
+const mode = (process.env.NODE_ENV === 'production') ? 'production' : 'development';
 
 module.exports = {
   target: 'node',
