@@ -50,7 +50,7 @@ Note: `after:stop` is emitted right before the process exists on a normal shut d
 Every request will run through the following middleware before being evaluated by the router ([koa-router](https://github.com/alexmingoia/koa-router)):
 
 <p style="padding: 30px 0;">
-<img src="docs/assets/svg/request_processing.svg" />
+<img src="://github.com/Harmonizly/axon/blob/master/docs/assets/svg/request_processing.svg" />
 </p>
 
 The middleware `transaction` is used to tag each request with a unique "transaction" ID using NodeJS [domain]()'s to track a request through it's entire time spent in the app.
