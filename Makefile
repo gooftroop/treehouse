@@ -17,6 +17,7 @@ dev:
 
 jsdoc:
 	$(CC) run jsdoc . --configure ./jsdoc.json
+	sed -i .bak -e 's/docs\/assets/assets/g' docs/index.html
 
 bundle:
 	$(CC) run webpack --config ./build/webpack.config.js

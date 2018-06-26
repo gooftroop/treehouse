@@ -122,10 +122,9 @@
 </ol>
 <p>Note: <code>after:stop</code> is emitted right before the process exists on a normal shut down (via calling <code>stop()</code>). This event should only be used for additional cleanup or monitoring and should not attempt to restart or respond to requests.</p>
 <p>Every request will run through the following middleware before being evaluated by the router (<a href="https://github.com/alexmingoia/koa-router">koa-router</a>):</p>
-<p style="padding: 30px 0;">
-<img src="./docs/assets/svg/request_processing.svg" />
-</p>
-
+<p><br /><p align="center">
+  <img src="assets/svg/request_processing.svg" />
+</p><br /></p>
 <p>The middleware <code>transaction</code> is used to tag each request with a unique &quot;transaction&quot; ID using NodeJS <a href="">domain</a>'s to track a request through it's entire time spent in the app.</p>
 <p>The <code>access logger</code> middleware uses the <code>bunyan</code> logger to record details about each request prior to entering any custom middleware or handlers.</p>
 <p>The <code>error</code> middleware wraps all custom middleware and handlers in a <code>try/catch</code> to provide a uniform way to log the error and send the appropriate response. The <code>error</code> middleware ensures that the caught <code>Error</code> is some form of <code>ApiError</code>, so it is recommended that, if you throw a custom <code>Error</code> from any middleware or handlers, you extend <code>ApiError</code>.</p>
@@ -184,9 +183,10 @@ class MyServer extends Server {
       // ssl configuration for nodejs HTTPS server
     },  
   },    
-}</code></pre><h2>Building</h2><p>To build a deployment (production) <code>dist</code>, run <code>yarn build</code>.</p>
-<p>To build development <code>dist</code>, run <code>yarn build:dev</code>.</p>
-<p>When publishing the package to <code>npm</code>, <code>prepublish</code> will create a deployment <code>dist</code>.</p>
+}</code></pre><h2>Building</h2><p>We use <code>Make</code> to run various build tasks. See <code>Makefile</code> for details on the build process.</p>
+<p>To build a deployment (production) <code>dist</code>, run <code>make</code>.</p>
+<p>To build development <code>dist</code>, run <code>make dev</code>.</p>
+<p>When publishing the package to <code>npm</code>, <code>prepublish</code> will create a production deployment.</p>
 <h2>Contributing</h2><p>Ensure that you are pushing to a branch off of <code>master</code> and not to <code>master</code> directly.
 Please follow standard git flow practices for merging branches with a PR.</p>
 <p>The <code>dist</code> bundle is created using <a href="https://webpack.js.org/">webpack</a> (located under the <code>build/</code> directory). To build in the <code>production</code> mode, ensure that the <code>NODE_ENV</code> environment variable is set to <code>production</code>.</p>
