@@ -90,7 +90,7 @@ import Server from 'axon';
 
 class MyServer extends Server {
 
-  constructor(): void {
+  constructor() {
     super(config, router);
   }
 
