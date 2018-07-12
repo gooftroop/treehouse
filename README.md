@@ -94,7 +94,9 @@ class MyServer extends Server {
     super(config, router);
   }
 
-  initializeMiddleware() {
+  initialize() {
+    // Make sure you call the original initialize before adding your own!
+    super.initialize();
     // Initialize any custom middleware  here
   }
 }

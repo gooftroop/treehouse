@@ -109,10 +109,10 @@ class Logger extends Bunyan {
 
     if (!(loggerName in Logger.loggers)) {
       if (!(loggerName in handlersConfig)) {
-        throw new Error(`Unable to create logger: no logger for ${loggerName} found in configuration`);
+        throw new Error(`Unable to create logger: no logger for "${loggerName}" found in configuration`);
       }
 
-      Logger.loggers[loggerName] = new Logger(handlersConfig.loggerName);
+      Logger.loggers[loggerName] = new Logger(handlersConfig[loggerName]);
     }
 
     return Logger.loggers[loggerName];

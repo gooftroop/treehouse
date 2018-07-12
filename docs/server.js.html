@@ -95,8 +95,6 @@ import fs from 'fs';
 import helmet from 'koa-helmet';
 import https from 'https';
 import Koa from 'koa';
-import mount from 'koa-mount';
-import serve from 'koa-static';
 
 import accessLogger from 'axon/middleware/accessLogger';
 import errorMiddleware from 'axon/middleware/error';
@@ -153,7 +151,7 @@ export default class Server extends EventEmitter {
    * @param {Object} appRouter
    * @return {void}
    */
-  constructor(config: Object, appRouter: Object): void {
+  constructor(config: Object, appRouter: ?Object = null): void {
     super();
 
     // atexit handler
@@ -219,7 +217,7 @@ export default class Server extends EventEmitter {
    * will then emit the `start` event, notify any watching proceeses via
    * &lt;code>process.send('ready')&lt;/code>, if &lt;code>send&lt;/code> is available on
    * &lt;code>process&lt;/code>, and finally log a start message.
-   * 
+   *
    * @see {@link start}
    * @param {Function} callback
    * @return {Function}
@@ -295,12 +293,14 @@ export default class Server extends EventEmitter {
    * @param  {Object} appRouter
    * @return {void}
    */
-  initializeRouter(router: Object, appRouter: Object): void {
+  initializeRouter(baseRouter: Object, appRouter: ?Object): void {
     // Combine with application-specific router
-    router.use(appRouter.routes());
+    if (appRouter) {
+      baseRouter.use(appRouter.routes());
+    }
 
-    this.app.use(router.routes());
-    this.app.use(router.allowedMethods());
+    this.app.use(baseRouter.routes());
+    this.app.use(baseRouter.allowedMethods());
   }
 
   /**
@@ -350,7 +350,8 @@ export default class Server extends EventEmitter {
     } catch (e) {
       this.logger.error(e);
       this.destroy();
-      throw e;
+
+      return null;
     }
   }
 
