@@ -1,4 +1,4 @@
-CC = yarn
+CC = npm
 
 .PHONY: clean all test
 

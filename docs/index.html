@@ -155,7 +155,9 @@ class MyServer extends Server {
     super(config, router);
   }
 
-  initializeMiddleware() {
+  initialize() {
+    // Make sure you call the original initialize before adding your own!
+    super.initialize();
     // Initialize any custom middleware  here
   }
 }</code></pre><p>It is highly recommended that you use <a href="https://github.com/lorenwest/node-config/wiki">node-config</a> as your configuration library and to pass the resulting configuration object to Axon. Axon expects, at minimum, the following configuration structure when accessing configuration variables:</p>

@@ -11,7 +11,7 @@ jobs:
   - stage: prepare cache
     script: true
   - stage: test
-    script: yarn test
+    script: npm test
 stages:
   - prepare cache
   - test
