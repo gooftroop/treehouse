@@ -7,7 +7,6 @@
   "author": "Brandon Webb (webb.c.brandon@gmail.com)",
   "license": "MIT",
   "scripts": {
-    "prepublish": "make",
     "test": "NODE_ENV=test mocha",
     "test:dev": "NODE_ENV=test mocha --inspect"
   },

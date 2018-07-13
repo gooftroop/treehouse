@@ -1,4 +1,5 @@
 CC = npm
+CCX = npx
 
 .PHONY: clean all test
 
@@ -16,8 +17,8 @@ dev:
 	$(MAKE) jsdoc
 
 jsdoc:
-	$(CC) run jsdoc . --configure ./jsdoc.json
+	$(CCX) jsdoc . --configure ./jsdoc.json
 	sed -i .bak -e 's/docs\/assets/assets/g' docs/index.html
 
 bundle:
-	$(CC) run webpack --config ./build/webpack.config.js
+	$(CCX) webpack --config ./build/webpack.config.js
