@@ -4,7 +4,13 @@
     "plugin:flowtype/recommended"
   ],
   "globals": {
+    "after": true,
+    "afterEach": true,
+    "before": true,
+    "beforeEach": true,
+    "describe": true,
     "document": true,
+    "it": true,
     "window": true
   },
   "parser": "babel-eslint",
@@ -12,7 +18,8 @@
     "ecmaVersion": 8
   },
   "plugins": [
-    "flowtype"
+    "flowtype",
+    "mocha"
   ],
   "rules": {
     "arrow-body-style": [ "error", "always" ],

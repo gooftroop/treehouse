@@ -49,9 +49,9 @@ Note: `after:stop` is emitted right before the process exists on a normal shut d
 
 Every request will run through the following middleware before being evaluated by the router ([koa-router](https://github.com/alexmingoia/koa-router)):
 
-<p style="padding: 30px 0;">
-<img src="./docs/assets/svg/request_processing.svg" />
-</p>
+<br /><p align="center">
+  <img src="docs/assets/svg/request_processing.svg" />
+</p><br />
 
 The middleware `transaction` is used to tag each request with a unique "transaction" ID using NodeJS [domain]()'s to track a request through it's entire time spent in the app.
 
@@ -90,11 +90,13 @@ import Server from 'axon';
 
 class MyServer extends Server {
 
-  constructor(): void {
+  constructor() {
     super(config, router);
   }
 
-  initializeMiddleware() {
+  initialize() {
+    // Make sure you call the original initialize before adding your own!
+    super.initialize();
     // Initialize any custom middleware  here
   }
 }
@@ -132,11 +134,13 @@ It is highly recommended that you use [node-config](https://github.com/lorenwest
 
 ## Building
 
-To build a deployment (production) `dist`, run `yarn build`.
+We use `Make` to run various build tasks. See `Makefile` for details on the build process.
 
-To build development `dist`, run `yarn build:dev`.
+To build a deployment (production) `dist`, run `make`.
 
-When publishing the package to `npm`, `prepublish` will create a deployment `dist`.
+To build development `dist`, run `make dev`.
+
+When publishing the package to `npm`, `prepublish` will create a production deployment.
 
 ## Contributing
 

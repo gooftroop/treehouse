@@ -1,22 +1,24 @@
-CC = yarn
-NODE_ENV?=development
+CC = npm
+CCX = npx
 
 .PHONY: clean all test
 
 all:
-	NODE_ENV=production
 	$(MAKE) clean
-	$(MAKE) install
+	NODE_ENV=production $(MAKE) bundle
+	$(MAKE) jsdoc
 
 clean:
 	rm -rf assets
 
 dev:
 	$(MAKE) clean
-	$(MAKE) install
+	NODE_ENV=development $(MAKE) bundle
+	$(MAKE) jsdoc
 
 jsdoc:
-	$(CC) run jsdoc . --configure ./jsdoc.json
+	$(CCX) jsdoc . --configure ./jsdoc.json
+	sed -i .bak -e 's/docs\/assets/assets/g' docs/index.html
 
-install:
-	$(CC) run webpack --config ./build/webpack.config.js
+bundle:
+	$(CCX) webpack --config ./build/webpack.config.js

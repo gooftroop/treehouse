@@ -4,7 +4,6 @@
  * @exports DEFAULT_MESSAGE
  * @exports DEFAULT_STATUS
  * @exports resolveCode
- * @exports resolveError
  * @exports resolveMessage
  * @exports resolveStatus
  */
@@ -13,52 +12,49 @@ export const DEFAULT_MESSAGE: string = 'An Unknown error occurred';
 export const DEFAULT_STATUS: number = 500;
 
 /**
- * [resolveCode description]
- * @param  {[type]} payload [description]
- * @return {[type]}         [description]
+ * Attempts to find the code in the provided payload if the payload is an
+ * object. If the payload is a number, then `payload` is returned. Otherwise,
+ * DEFAULT_CODE is returned.
+ *
+ * @param  {number|Object} payload
+ * @return {number}
  */
-export function resolveCode(payload: number | Object): number {
-  if (typeof payload === 'number') {
+export function resolveCode(payload: number|Object): number {
+  if (typeof payload === 'object') {
     return ('code' in payload) ? DEFAULT_CODE : payload.code;
   }
 
-  return DEFAULT_CODE;
+  return (payload != null) ? payload : DEFAULT_CODE;
 }
 
 /**
- * [resolveError description]
- * @param  {[type]} e [description]
- * @return {[type]}   [description]
+ * Attempts to find the message in the provided payload if the payload is an
+ * object. If the payload is a string, then `payload` is returned. Otherwise,
+ * DEFAULT_MESSAGE is returned.
+ *
+ * @param  {string|Object} payload
+ * @return {string}
  */
-export function resolveError(e: Error): Object {
-  return { ...e };
-}
-
-/**
- * [resolveMessage description]
- * @param  {[type]} payload [description]
- * @return {[type]}         [description]
- */
-export function resolveMessage(payload: string | Object): string {
+export function resolveMessage(payload: string|Object): string {
   if (typeof payload === 'object') {
     return ('message' in payload) ? DEFAULT_MESSAGE : payload.message;
   }
 
-  return payload;
+  return (payload != null) ? payload : DEFAULT_MESSAGE;
 }
 
 /**
- * [resolveStatus description]
- * @param  {[type]} payload [description]
- * @param  {[type]} status  [description]
- * @return {[type]}         [description]
+ * Attempts to find the status in the provided payload if the payload is an
+ * object. If the payload is a number, then `payload` is returned. Otherwise,
+ * DEFAULT_STATUS is returned.
+ *
+ * @param  {number|Object} payload
+ * @return {number}
  */
-export function resolveStatus(payload: number | Object, status: ?number): number {
-  if (typeof payload === 'object' && 'status' in payload) {
-    return payload.status;
+export function resolveStatus(payload: number|Object): number {
+  if (typeof payload === 'object') {
+    return ('status' in payload) ? DEFAULT_STATUS : payload.status;
   }
 
-  const typeStatus: String = typeof (status);
-
-  return (typeStatus !== 'number' || typeStatus !== 'string') ? DEFAULT_STATUS : status;
+  return (payload != null) ? payload : DEFAULT_STATUS;
 }

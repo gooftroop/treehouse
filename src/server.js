@@ -6,13 +6,11 @@ import fs from 'fs';
 import helmet from 'koa-helmet';
 import https from 'https';
 import Koa from 'koa';
-import mount from 'koa-mount';
-import serve from 'koa-static';
 
 import accessLogger from 'axon/middleware/accessLogger';
 import errorMiddleware from 'axon/middleware/error';
 import Logger from 'axon/utils/logger';
-import router from 'axon/router';
+import baseRouter from 'axon/router';
 import sigInitHandler from 'axon/utils/sigInitHandler';
 import transactionMiddleware from 'axon/middleware/transaction';
 import uncaughtExceptionHandler from 'axon/utils/uncaughtExceptionHandler';
@@ -51,7 +49,7 @@ export default class Server extends EventEmitter {
   app: Function;
   config: Object;
   logger: Object;
-  router: Object;
+  router: Object = baseRouter;
 
   /**
    * Configures and initializes the <code>Server</code> instance.
@@ -64,7 +62,7 @@ export default class Server extends EventEmitter {
    * @param {Object} appRouter
    * @return {void}
    */
-  constructor(config: Object, appRouter: Object): void {
+  constructor(config: Object, appRouter: ?Object = null): void {
     super();
 
     // atexit handler
@@ -81,7 +79,15 @@ export default class Server extends EventEmitter {
     // Configure the app with common middleware
     this.initialize();
 
-    this.initializeRouter(router, appRouter);
+    // If an additional router is provided, merge that router into the app router
+    // so that the server has a single router entry.
+    if (appRouter) {
+      this.router.use(appRouter.routes());
+    }
+
+    // Mount the router to the server
+    this.app.use(this.router.routes());
+    this.app.use(this.router.allowedMethods());
 
     this.emit('ready');
   }
@@ -107,18 +113,18 @@ export default class Server extends EventEmitter {
    * @return {void}
    */
   createHttpsServer(): void {
-    this.app.all('*', function cb(request: Object, response: Object, next: Function) {
-      if (request.secure) {
+    this.app.use(function cb(ctx: Object, next: Function) {
+      if (ctx.secure) {
         return next();
       }
 
-      return response.redirect(`https://${request.hostname}:${this.config.server.port}${request.url}`);
+      return ctx.redirect(`https://${ctx.hostname}:${this.config.server.port}${ctx.url}`);
     });
 
     const sslConfig = this.config.server.ssl;
     const httpsConfig = Object.assign({}, sslConfig, {
-      key: fs.readFileSync(sslConfig.get('key')),
-      cert: fs.readFileSync(sslConfig.get('cert')),
+      key: fs.readFileSync(sslConfig.key),
+      cert: fs.readFileSync(sslConfig.cert),
     });
 
     return https.createServer(httpsConfig, this.app.callback());
@@ -130,7 +136,7 @@ export default class Server extends EventEmitter {
    * will then emit the `start` event, notify any watching proceeses via
    * <code>process.send('ready')</code>, if <code>send</code> is available on
    * <code>process</code>, and finally log a start message.
-   * 
+   *
    * @see {@link start}
    * @param {Function} callback
    * @return {Function}
@@ -164,13 +170,13 @@ export default class Server extends EventEmitter {
     this.app.use(helmet());
 
     // Enabled CORS (corss-origin resource sharing)
-    this.app.use(cors(this.config.get('cors')));
+    this.app.use(cors(this.config.cors));
 
     // request compression
-    this.app.use(compress(this.config.get('compress')));
+    this.app.use(compress(this.config.compress));
 
     // Initialize body parser before routes or body will be undefined
-    this.app.use(body(this.config.get('body')));
+    this.app.use(body(this.config.body));
 
     // Trace a single request process (including over async)
     this.app.use(transactionMiddleware);
@@ -180,21 +186,6 @@ export default class Server extends EventEmitter {
 
     // Configure the request error handling
     this.app.use(errorMiddleware);
-
-    this.initializeMiddleware();
-  }
-
-  /**
-   * Abstract function.
-   * Called when initializing middleware to expose an entry point to attach
-   * additional custom, application-specific middleware. Any middleware
-   * attached to the <code>app</code> that throws an <code>Error</code> will be
-   * handled by the <code>error</code> middleware.
-   *
-   * @return {void}
-   */
-  initializeMiddleware() {
-    // Override to provide custom middleware
   }
 
   /**
@@ -206,12 +197,16 @@ export default class Server extends EventEmitter {
    * @param  {Object} appRouter
    * @return {void}
    */
-  initializeRouter(router: Object, appRouter: Object): void {
+  initializeRouter(appRouter: ?Object): void {
     // Combine with application-specific router
-    router.use(appRouter.routes());
+    if (appRouter) {
+      baseRouter.use(appRouter.routes());
+    }
 
-    this.app.use(router.routes());
-    this.app.use(router.allowedMethods());
+    this.app.use(baseRouter.routes());
+    this.app.use(baseRouter.allowedMethods());
+
+    return baseRouter;
   }
 
   /**
@@ -261,7 +256,8 @@ export default class Server extends EventEmitter {
     } catch (e) {
       this.logger.error(e);
       this.destroy();
-      throw e;
+
+      return null;
     }
   }
 

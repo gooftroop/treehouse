@@ -9,14 +9,22 @@
  */
 import {
   resolveCode,
-  resolveError,
   resolveMessage,
   resolveStatus,
 } from 'axon/error/utils';
 import * as codes from 'axon/error/codes';
 
 /**
- * [description]
+ * Base <code>Error</code> class for all Axon-specifc Errors.
+ * It is recommended to either use this error to wrap generic
+ * <code>Error</code>s or to create application/context-specific Error classes
+ * that extend <code>ApiError</code> in order to better/more easily consume and
+ * alter your application's behavior when Errors are thrown.
+ *
+ * <code>ApiError</code> provides a <code>message</code> and
+ * <code>stack trace</code> as <code>Error</code> does, but also provides a
+ * response <code>status</code> and an error </code>code</code> for use in
+ * production debugging/support.
  *
  * @class
  * @extends Error
@@ -27,18 +35,31 @@ export default class ApiError extends Error {
   status: number;
 
   /**
-   * [constructor description]
-   * @param  {[type]} payload [description]
-   * @param  {[type]} code    [description]
-   * @param  {[type]} status  [description]
-   * @param  {[type]} e       [description]
-   * @return {[type]}         [description]
+   * Supports both standard and Axon-specific paradigms of instantating a new
+   * <code>ApiError</code>.
+   * Standard instantion of an ApiError:
+   * ```
+   * new ApiError("some message", 500);
+   * ```
+   *
+   * Non-standard (or Axon-specific) instantation expects a payload similar to
+   * those found in <code>codes.js</code> and extrats the
+   * <code>error code</code>, <code>status</code>, and <code>message</code>.
+   * Optionally accepts <code>Error</code> for additional meta information as
+   * the second or third argument.
+   *
+   * @constructor
+   * @param  {string|Object} payload  Either the error message or payload.
+   * @param  {number} status          Optional. The error status.
+   *                                  Error can be supplied instead.
+   * @param  {Error} e                Optional. The originating Error.
+   * @return {void}
    */
-  constructor(payload: string | Object, status, e: Error) {
+  constructor(payload: string|Object, status: ?number, e: ?Error): void {
     super(resolveMessage(payload));
     this.code = resolveCode(payload);
-    this.status = resolveStatus(payload, status);
-    this.error = resolveError(e || status);
+    this.status = (status != null) ? resolveStatus(status) : resolveStatus(payload);
+    this.error = (!(status instanceof Error)) ? status : e;
 
     if (typeof Error.captureStackTrace === 'function') {
       Error.captureStackTrace(this, this.constructor);
@@ -49,23 +70,22 @@ export default class ApiError extends Error {
 }
 
 /**
- * [description]
+ * Error used when a request fails security or authorization checks to prompt
+ * the User or Client to refresh their session, or to indicate to other
+ * services to act similarly.
  *
  * @class
  * @extends ApiError
  */
 export class AuthorizationError extends ApiError {
-  /**
-   * [constructor description]
-   * @param {[type]} errors [description]
-   */
   constructor(e: ?Error) {
     super(codes.NOT_ALLOWED, e);
   }
 }
 
 /**
- * [description]
+ * Thrown when an unhandled or unrecoverable error is encountered. Optionally
+ * accepts a custom message when instantating.
  *
  * @class
  * @extends ApiError
@@ -77,32 +97,26 @@ export class InternalError extends ApiError {
 }
 
 /**
- * [description]
+ * Generic error used to signal to a User/Client that their request was
+ * invalid. Optionally accepts a custom message when instantating.
  *
  * @class
  * @extends ApiError
  */
 export class InvalidRequestError extends ApiError {
-  /**
-   * [constructor description]
-   * @param {[type]} errors [description]
-   */
   constructor(message: String, e: ?Error) {
     super(codes.INVALID_REQUEST(message), e);
   }
 }
 
 /**
- * [description]
+ * Error indicating that an external or internal Service is unreachable or
+ * unavailable. Optionally accepts a custom message when instantating.
  *
  * @class
  * @extends ApiError
  */
 export class ServiceUnavailableError extends ApiError {
-  /**
-   * [constructor description]
-   * @param {[type]} errors [description]
-   */
   constructor(message: String, e: ?Error) {
     super(codes.SERVICE_UNAVAILABLE(message), e);
   }

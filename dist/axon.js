@@ -3,9 +3,6 @@ module.exports =
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
-/******/ 	// object to store loaded and loading wasm modules
-/******/ 	var installedWasmModules = {};
-/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/
@@ -40,17 +37,32 @@ module.exports =
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
 /******/ 		}
 /******/ 	};
 /******/
 /******/ 	// define __esModule on exports
 /******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
 /******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -67,9 +79,6 @@ module.exports =
 /******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-/******/
-/******/ 	// object with all compiled WebAssembly.Modules
-/******/ 	__webpack_require__.w = {};
 /******/
 /******/
 /******/ 	// Load entry module and return exports
@@ -92,6 +101,11 @@ module.exports =
 exports.__esModule = true;
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+/**
+ * @module api/v1/handlers/health
+ * @exports health
+ */
 
 /**
  * Health check handler.
@@ -178,14 +192,40 @@ exports.default = router;
 
 exports.__esModule = true;
 /**
- * [DEFAULT_FATAL_ERROR description]
- * @type {[type]}
+ * @module error/codes
+ * @exports DEFAULT_FATAL_ERROR
+ * @exports FATAL_ERROR
+ * @exports DEFAULT_GENERAL_ERROR
+ * @exports GENERAL_ERROR
+ * @exports NOT_YET_IMPLEMENTED
+ * @exports ILLEGAL_STATE_EXCEPTION
+ * @exports DEFAULT_INVALID_REQUEST
+ * @exports INVALID_REQUEST
+ * @exports DEFAULT_UNAUTHORIZED
+ * @exports UNAUTHORIZED
+ * @exports DEFAULT_FORBIDDEN
+ * @exports FORBIDDEN
+ * @exports MISSING_REQUIRED_PARAMETER
+ * @exports DEFAULT_SERVICE_UNAVAILABLE
+ * @exports SERVICE_UNAVAILABLE
+ * @exports DEFAULT_VALIDATION_ERROR
+ * @exports VALIDATION_ERROR
  */
+
 var DEFAULT_FATAL_ERROR = exports.DEFAULT_FATAL_ERROR = 'An error occurred. If this error persists, please contact your System Administrator';
 
 /**
- * [FATAL_ERROR description]
- * @type {[type]}
+ * Factory to generate a 500 Error Message payload from the provided message.
+ * Message defaults to DEFAULT_FATAL_ERROR.
+ * ```
+ * {
+ *   status: 500,
+ *   code: -1,
+ *   category: 'IllegalStateException',
+ *   message,
+ * }
+ * ```
+ * @type {Function}
  */
 var FATAL_ERROR = exports.FATAL_ERROR = function FATAL_ERROR() {
   var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_FATAL_ERROR;
@@ -199,14 +239,25 @@ var FATAL_ERROR = exports.FATAL_ERROR = function FATAL_ERROR() {
 };
 
 /**
- * [DEFAULT_GENERAL_ERROR description]
- * @type {[type]}
+ * Whimsical default error message to surface to clients when no additional
+ * Error details are available or should be obfuscated when responding with a
+ * generalized 400 error.
+ * @type {string}
  */
 var DEFAULT_GENERAL_ERROR = exports.DEFAULT_GENERAL_ERROR = "Our hamsters don't know how to handle that request";
 
 /**
- * [GENERAL_ERROR description]
- * @type {[type]}
+ * Factory to generate a 400 Error Message payload from the provided message.
+ * Message defaults to DEFAULT_GENERAL_ERROR.
+ * ```
+ * {
+ *   status: 400,
+ *   code: '0a',
+ *   category: 'GeneralException',
+ *   message,
+ * }
+ * ```
+ * @type {Function}
  */
 var GENERAL_ERROR = exports.GENERAL_ERROR = function GENERAL_ERROR() {
   var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_GENERAL_ERROR;
@@ -220,8 +271,17 @@ var GENERAL_ERROR = exports.GENERAL_ERROR = function GENERAL_ERROR() {
 };
 
 /**
- * [NOT_YET_IMPLEMENTED description]
- * @type {[type]}
+ * Not Yet Implemented (501) Error Factory.
+ * Returns the payload:
+ * ```
+ * {
+ *   status: 501,
+ *   code: 1,
+ *   category: 'NotYetImplemented',
+ *   message: 'This method must be implmented',
+ * }
+ * ```
+ * @type {Function}
  */
 var NOT_YET_IMPLEMENTED = exports.NOT_YET_IMPLEMENTED = function NOT_YET_IMPLEMENTED() {
   return {
@@ -233,8 +293,17 @@ var NOT_YET_IMPLEMENTED = exports.NOT_YET_IMPLEMENTED = function NOT_YET_IMPLEME
 };
 
 /**
- * [ILLEGAL_STATE_EXCEPTION description]
- * @type {[type]}
+ * Illegal State Exception (500) Error Factory.
+ * Returns the payload:
+ * ```
+ * {
+ *   status: 500,
+ *   code: 2,
+ *   category: 'IllegalStateException',
+ *   message: 'Application not configured correctly',
+ * }
+ * ```
+ * @type {Function}
  */
 var ILLEGAL_STATE_EXCEPTION = exports.ILLEGAL_STATE_EXCEPTION = function ILLEGAL_STATE_EXCEPTION() {
   return {
@@ -246,35 +315,60 @@ var ILLEGAL_STATE_EXCEPTION = exports.ILLEGAL_STATE_EXCEPTION = function ILLEGAL
 };
 
 /**
- * [DEFAULT_INVALID_REQUEST description]
- * @type {[type]}
+ * Whimsical default error message to surface to clients when no additional
+ * Error details are available or should be obfuscated when responding to an
+ * invalid request.
+ * @type {string}
  */
 var DEFAULT_INVALID_REQUEST = exports.DEFAULT_INVALID_REQUEST = "Our hamsters don't know how to handle that request";
 
 /**
- * [INVALID_REQUEST description]
- * @type {[type]}
+ * Invalid Request (400) Error Factory.
+ * Generates an Error payload with the provided message, defaulting
+ * DEFAULT_INVALID_REQUEST if no message is provided.
+ * Returns the payload:
+ * ```
+ * {
+ *   status: 400,
+ *   code: 3,
+ *   category: 'UserError',
+ *   message,
+ * }
+ * ```
+ * @type {Function}
  */
 var INVALID_REQUEST = exports.INVALID_REQUEST = function INVALID_REQUEST() {
   var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_INVALID_REQUEST;
 
   return {
     status: 400,
-    code: 100,
+    code: 3,
     category: 'UserError',
     message: message
   };
 };
 
 /**
- * [DEFAULT_UNAUTHORIZED description]
- * @type {[type]}
+ * Default error message to surface to clients when they are no longer
+ * authorized to access a particular resource or service.
+ * @type {string}
  */
 var DEFAULT_UNAUTHORIZED = 'Your session is no longer valid. Please login and rety';
 
 /**
- * [UNAUTHORIZED description]
- * @type {[type]}
+ * Unauthorized (401) Error Factory.
+ * Generates an Error payload with the provided message, defaulting
+ * DEFAULT_UNAUTHORIZED if no message is provided.
+ * Returns the payload:
+ * ```
+ * {
+ *   status: 401,
+ *   code: 4,
+ *   category: 'SecurityException',
+ *   message,
+ * }
+ * ```
+ * @type {Function}
  */
 var UNAUTHORIZED = exports.UNAUTHORIZED = function UNAUTHORIZED() {
   var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_UNAUTHORIZED;
@@ -288,14 +382,26 @@ var UNAUTHORIZED = exports.UNAUTHORIZED = function UNAUTHORIZED() {
 };
 
 /**
- * [DEFAULT_FORBIDDEN description]
- * @type {[type]}
+ * Default error to surface to requests that are forbidden to make that
+ * request.
+ * @type {string}
  */
-var DEFAULT_FORBIDDEN = exports.DEFAULT_FORBIDDEN = 'You are not allowed to access that resource';
+var DEFAULT_FORBIDDEN = exports.DEFAULT_FORBIDDEN = "Whoops! You aren't allowed to do that";
 
 /**
- * [FORBIDDEN description]
- * @type {[type]}
+ * Forbidden (403) Error Factory.
+ * Generates an Error payload with the provided message, defaulting
+ * DEFAULT_FORBIDDEN if no message is provided.
+ * Returns the payload:
+ * ```
+ * {
+ *   status: 403,
+ *   code: 5,
+ *   category: 'SecurityException',
+ *   message,
+ * }
+ * ```
+ * @type {Function}
  */
 var FORBIDDEN = exports.FORBIDDEN = function FORBIDDEN() {
   var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_FORBIDDEN;
@@ -309,8 +415,17 @@ var FORBIDDEN = exports.FORBIDDEN = function FORBIDDEN() {
 };
 
 /**
- * [MISSING_REQUIRED_PARAMETER description]
- * @type {[type]}
+ * Missing Required Request Parameter (malformed request) (400) Error Factory.
+ * Returns the payload:
+ * ```
+ * {
+ *   status: 400,
+ *   code: 6,
+ *   category: 'GeneralException',
+ *   message: 'A required parameter was missing',
+ * }
+ * ```
+ * @type {Function}
  */
 var MISSING_REQUIRED_PARAMETER = exports.MISSING_REQUIRED_PARAMETER = function MISSING_REQUIRED_PARAMETER() {
   return {
@@ -322,14 +437,27 @@ var MISSING_REQUIRED_PARAMETER = exports.MISSING_REQUIRED_PARAMETER = function M
 };
 
 /**
- * [DEFAULT_SERVICE_UNAVAILABLE description]
- * @type {[type]}
+ * Whimsical default error message to surface to clients when no additional
+ * Error details are available or should be obfuscated when a service is not
+ * available.
+ * @type {string}
  */
-var DEFAULT_SERVICE_UNAVAILABLE = exports.DEFAULT_SERVICE_UNAVAILABLE = 'Our hamsters appear to be taking a siesta';
+var DEFAULT_SERVICE_UNAVAILABLE = exports.DEFAULT_SERVICE_UNAVAILABLE = 'Hmmm...our hamsters appear to be taking a siesta';
 
 /**
- * [SERVICE_UNAVAILABLE description]
- * @type {[type]}
+ * Service Unavailable (503) Error Factory.
+ * Generates an Error payload with the provided message, defaulting
+ * DEFAULT_SERVICE_UNAVAILABLE if no message is provided.
+ * Returns the payload:
+ * ```
+ * {
+ *   status: 503,
+ *   code: 7,
+ *   category: 'NetworkException',
+ *   message,
+ * }
+ * ```
+ * @type {Function}
  */
 var SERVICE_UNAVAILABLE = exports.SERVICE_UNAVAILABLE = function SERVICE_UNAVAILABLE() {
   var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_SERVICE_UNAVAILABLE;
@@ -343,21 +471,34 @@ var SERVICE_UNAVAILABLE = exports.SERVICE_UNAVAILABLE = function SERVICE_UNAVAIL
 };
 
 /**
- * [DEFAULT_VALIDATION_ERROR description]
- * @type {[type]}
+ * Whimsical default error message to surface to clients when no additional
+ * Error details are available or should be obfuscated when validating a
+ * request fails.
+ * @type {string}
  */
 var DEFAULT_VALIDATION_ERROR = exports.DEFAULT_VALIDATION_ERROR = 'Hmmm...the hamsters found a problem with that data';
 
 /**
- * [VALIDATION_ERROR description]
- * @type {[type]}
+ * Validation Failure (400) Error Factory.
+ * Generates an Error payload with the provided message, defaulting
+ * DEFAULT_VALIDATION_ERROR if no message is provided.
+ * Returns the payload:
+ * ```
+ * {
+ *   status: 400,
+ *   code: 8,
+ *   category: 'ValidationException',
+ *   message,
+ * }
+ * ```
+ * @type {Function}
  */
 var VALIDATION_ERROR = exports.VALIDATION_ERROR = function VALIDATION_ERROR() {
   var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_VALIDATION_ERROR;
 
   return {
     status: 400,
-    code: 200,
+    code: 8,
     category: 'ValidationException',
     message: message
   };
@@ -391,22 +532,55 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @module error
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @exports ApiError
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @exports AuthorizationError
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @exports InternalError
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @exports InvalidRequestError
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @exports ServiceUnavailableError
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @exports codes
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
 
 /**
- * [code description]
- * @type {[type]}
+ * Base <code>Error</code> class for all Axon-specifc Errors.
+ * It is recommended to either use this error to wrap generic
+ * <code>Error</code>s or to create application/context-specific Error classes
+ * that extend <code>ApiError</code> in order to better/more easily consume and
+ * alter your application's behavior when Errors are thrown.
+ *
+ * <code>ApiError</code> provides a <code>message</code> and
+ * <code>stack trace</code> as <code>Error</code> does, but also provides a
+ * response <code>status</code> and an error </code>code</code> for use in
+ * production debugging/support.
+ *
+ * @class
+ * @extends Error
  */
 var ApiError = function (_Error) {
   _inherits(ApiError, _Error);
 
   /**
-   * [constructor description]
-   * @param  {[type]} payload [description]
-   * @param  {[type]} code    [description]
-   * @param  {[type]} status  [description]
-   * @param  {[type]} e       [description]
-   * @return {[type]}         [description]
+   * Supports both standard and Axon-specific paradigms of instantating a new
+   * <code>ApiError</code>.
+   * Standard instantion of an ApiError:
+   * ```
+   * new ApiError("some message", 500);
+   * ```
+   *
+   * Non-standard (or Axon-specific) instantation expects a payload similar to
+   * those found in <code>codes.js</code> and extrats the
+   * <code>error code</code>, <code>status</code>, and <code>message</code>.
+   * Optionally accepts <code>Error</code> for additional meta information as
+   * the second or third argument.
+   *
+   * @constructor
+   * @param  {string|Object} payload  Either the error message or payload.
+   * @param  {number} status          Optional. The error status.
+   *                                  Error can be supplied instead.
+   * @param  {Error} e                Optional. The originating Error.
+   * @return {void}
    */
   function ApiError(payload, status, e) {
     _classCallCheck(this, ApiError);
@@ -414,8 +588,8 @@ var ApiError = function (_Error) {
     var _this = _possibleConstructorReturn(this, _Error.call(this, (0, _utils.resolveMessage)(payload)));
 
     _this.code = (0, _utils.resolveCode)(payload);
-    _this.status = (0, _utils.resolveStatus)(payload, status);
-    _this.error = (0, _utils.resolveError)(e || status);
+    _this.status = status != null ? (0, _utils.resolveStatus)(status) : (0, _utils.resolveStatus)(payload);
+    _this.error = !(status instanceof Error) ? status : e;
 
     if (typeof Error.captureStackTrace === 'function') {
       Error.captureStackTrace(_this, _this.constructor);
@@ -429,8 +603,12 @@ var ApiError = function (_Error) {
 }(Error);
 
 /**
- * [error description]
- * @type {[type]}
+ * Error used when a request fails security or authorization checks to prompt
+ * the User or Client to refresh their session, or to indicate to other
+ * services to act similarly.
+ *
+ * @class
+ * @extends ApiError
  */
 
 
@@ -439,10 +617,6 @@ exports.default = ApiError;
 var AuthorizationError = exports.AuthorizationError = function (_ApiError) {
   _inherits(AuthorizationError, _ApiError);
 
-  /**
-   * [constructor description]
-   * @param {[type]} errors [description]
-   */
   function AuthorizationError(e) {
     _classCallCheck(this, AuthorizationError);
 
@@ -453,8 +627,11 @@ var AuthorizationError = exports.AuthorizationError = function (_ApiError) {
 }(ApiError);
 
 /**
- * [message description]
- * @type {[type]}
+ * Thrown when an unhandled or unrecoverable error is encountered. Optionally
+ * accepts a custom message when instantating.
+ *
+ * @class
+ * @extends ApiError
  */
 
 
@@ -471,18 +648,17 @@ var InternalError = exports.InternalError = function (_ApiError2) {
 }(ApiError);
 
 /**
- * [message description]
- * @type {[type]}
+ * Generic error used to signal to a User/Client that their request was
+ * invalid. Optionally accepts a custom message when instantating.
+ *
+ * @class
+ * @extends ApiError
  */
 
 
 var InvalidRequestError = exports.InvalidRequestError = function (_ApiError3) {
   _inherits(InvalidRequestError, _ApiError3);
 
-  /**
-   * [constructor description]
-   * @param {[type]} errors [description]
-   */
   function InvalidRequestError(message, e) {
     _classCallCheck(this, InvalidRequestError);
 
@@ -493,17 +669,17 @@ var InvalidRequestError = exports.InvalidRequestError = function (_ApiError3) {
 }(ApiError);
 
 /**
+ * Error indicating that an external or internal Service is unreachable or
+ * unavailable. Optionally accepts a custom message when instantating.
  *
+ * @class
+ * @extends ApiError
  */
 
 
 var ServiceUnavailableError = exports.ServiceUnavailableError = function (_ApiError4) {
   _inherits(ServiceUnavailableError, _ApiError4);
 
-  /**
-   * [constructor description]
-   * @param {[type]} errors [description]
-   */
   function ServiceUnavailableError(message, e) {
     _classCallCheck(this, ServiceUnavailableError);
 
@@ -532,65 +708,68 @@ exports.__esModule = true;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 exports.resolveCode = resolveCode;
-exports.resolveError = resolveError;
 exports.resolveMessage = resolveMessage;
 exports.resolveStatus = resolveStatus;
-var DEFAULT_CODE = 0;
-var DEFAULT_MESSAGE = 'An Unknown error occurred';
-var DEFAULT_STATUS = 500;
+/**
+ * @module error/utils
+ * @exports DEFAULT_CODE
+ * @exports DEFAULT_MESSAGE
+ * @exports DEFAULT_STATUS
+ * @exports resolveCode
+ * @exports resolveMessage
+ * @exports resolveStatus
+ */
+var DEFAULT_CODE = exports.DEFAULT_CODE = 0;
+var DEFAULT_MESSAGE = exports.DEFAULT_MESSAGE = 'An Unknown error occurred';
+var DEFAULT_STATUS = exports.DEFAULT_STATUS = 500;
 
 /**
- * [resolveCode description]
- * @param  {[type]} payload [description]
- * @return {[type]}         [description]
+ * Attempts to find the code in the provided payload if the payload is an
+ * object. If the payload is a number, then `payload` is returned. Otherwise,
+ * DEFAULT_CODE is returned.
+ *
+ * @param  {number|Object} payload
+ * @return {number}
  */
 function resolveCode(payload) {
-  if (typeof payload === 'number') {
+  if ((typeof payload === 'undefined' ? 'undefined' : _typeof(payload)) === 'object') {
     return 'code' in payload ? DEFAULT_CODE : payload.code;
   }
 
-  return DEFAULT_CODE;
+  return payload != null ? payload : DEFAULT_CODE;
 }
 
 /**
- * [resolveError description]
- * @param  {[type]} e [description]
- * @return {[type]}   [description]
- */
-function resolveError(e) {
-  return _extends({}, e);
-}
-
-/**
- * [resolveMessage description]
- * @param  {[type]} payload [description]
- * @return {[type]}         [description]
+ * Attempts to find the message in the provided payload if the payload is an
+ * object. If the payload is a string, then `payload` is returned. Otherwise,
+ * DEFAULT_MESSAGE is returned.
+ *
+ * @param  {string|Object} payload
+ * @return {string}
  */
 function resolveMessage(payload) {
   if ((typeof payload === 'undefined' ? 'undefined' : _typeof(payload)) === 'object') {
     return 'message' in payload ? DEFAULT_MESSAGE : payload.message;
   }
 
-  return payload;
+  return payload != null ? payload : DEFAULT_MESSAGE;
 }
 
 /**
- * [resolveStatus description]
- * @param  {[type]} payload [description]
- * @param  {[type]} status  [description]
- * @return {[type]}         [description]
+ * Attempts to find the status in the provided payload if the payload is an
+ * object. If the payload is a number, then `payload` is returned. Otherwise,
+ * DEFAULT_STATUS is returned.
+ *
+ * @param  {number|Object} payload
+ * @return {number}
  */
-function resolveStatus(payload, status) {
-  if ((typeof payload === 'undefined' ? 'undefined' : _typeof(payload)) === 'object' && 'status' in payload) {
-    return payload.status;
+function resolveStatus(payload) {
+  if ((typeof payload === 'undefined' ? 'undefined' : _typeof(payload)) === 'object') {
+    return 'status' in payload ? DEFAULT_STATUS : payload.status;
   }
 
-  var typeStatus = typeof status === 'undefined' ? 'undefined' : _typeof(status);
-
-  return typeStatus !== 'number' || typeStatus !== 'string' ? DEFAULT_STATUS : status;
+  return payload != null ? payload : DEFAULT_STATUS;
 }
 
 /***/ }),
@@ -670,6 +849,11 @@ var _logger2 = _interopRequireDefault(_logger);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * @module middleware/accessLogger
+ * @exports formatter
+ * @exports morgan
+ */
 var LOGGER = _logger2.default.getLogger('access');
 
 /**
@@ -717,9 +901,6 @@ var formatter = exports.formatter = function formatter(tokens, request, response
   });
 };
 
-/**
- * @exports Function The access logger middleware
- */
 exports.default = (0, _koaMorgan2.default)(formatter, {
   stream: {
     write: function write(message) {
@@ -753,7 +934,11 @@ var _logger2 = _interopRequireDefault(_logger);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @module middleware/error
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @exports errorMiddleware
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            */
+
 
 var LOGGER = _logger2.default.getLogger('root');
 
@@ -771,7 +956,7 @@ var LOGGER = _logger2.default.getLogger('root');
  *
  * @see {@link ApiError}
  * @see {@link InternalError}
- * 
+ *
  * @param  {Object}   ctx  The Koa context
  * @param  {Function} next The next middleware or handler in the connect chain
  * @return {void}
@@ -847,7 +1032,11 @@ var _v2 = _interopRequireDefault(_v);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @module middleware/transaction
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @exports trasnactionMiddleware
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            */
+
 
 /**
  * Adds a transaction identifier to every request to track a request's control
@@ -994,14 +1183,6 @@ var _koa = __webpack_require__(/*! koa */ "koa");
 
 var _koa2 = _interopRequireDefault(_koa);
 
-var _koaMount = __webpack_require__(/*! koa-mount */ "koa-mount");
-
-var _koaMount2 = _interopRequireDefault(_koaMount);
-
-var _koaStatic = __webpack_require__(/*! koa-static */ "koa-static");
-
-var _koaStatic2 = _interopRequireDefault(_koaStatic);
-
 var _accessLogger = __webpack_require__(/*! ./middleware/accessLogger */ "./src/middleware/accessLogger.js");
 
 var _accessLogger2 = _interopRequireDefault(_accessLogger);
@@ -1080,17 +1261,21 @@ var Server = function (_EventEmitter) {
    * Calls <code>initialize</code>, which will call
    * </code>initializeMiddleware</code>, and <code>initializeRouter</code>
    * prior to emitting the `ready` event.
+   *
    * @constructor
    * @param {Object} config
    * @param {Object} appRouter
    * @return {void}
    */
-  function Server(config, appRouter) {
+  function Server(config) {
+    var appRouter = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
     _classCallCheck(this, Server);
 
     // atexit handler
     var _this = _possibleConstructorReturn(this, _EventEmitter.call(this));
 
+    _this.router = _router2.default;
     process.on('exit', _this.destroy);
 
     _this.config = config;
@@ -1104,7 +1289,15 @@ var Server = function (_EventEmitter) {
     // Configure the app with common middleware
     _this.initialize();
 
-    _this.initializeRouter(_router2.default, appRouter);
+    // If an additional router is provided, merge that router into the app router
+    // so that the server has a single router entry.
+    if (appRouter) {
+      _this.router.use(appRouter.routes());
+    }
+
+    // Mount the router to the server
+    _this.app.use(_this.router.routes());
+    _this.app.use(_this.router.allowedMethods());
 
     _this.emit('ready');
     return _this;
@@ -1115,6 +1308,7 @@ var Server = function (_EventEmitter) {
    * If the <code>secure</code> configuration option is true, then this method
    * calls <code>createHttpsServer</code>; otherwise the default HTTP Koa
    * server is used.
+   *
    * @see {@link createHttpsServer}
    * @see {@link start}
    * @return {void}
@@ -1128,23 +1322,24 @@ var Server = function (_EventEmitter) {
   /**
    * Creates a NodeJS HTTPS server using the <code>ssl</code> configuration option.
    * Setups a HTTP redirect to force all traffic to HTTP.
+   *
    * @return {void}
    */
 
 
   Server.prototype.createHttpsServer = function createHttpsServer() {
-    this.app.all('*', function cb(request, response, next) {
-      if (request.secure) {
+    this.app.use(function cb(ctx, next) {
+      if (ctx.secure) {
         return next();
       }
 
-      return response.redirect('https://' + request.hostname + ':' + this.config.server.port + request.url);
+      return ctx.redirect('https://' + ctx.hostname + ':' + this.config.server.port + ctx.url);
     });
 
     var sslConfig = this.config.server.ssl;
     var httpsConfig = Object.assign({}, sslConfig, {
-      key: _fs2.default.readFileSync(sslConfig.get('key')),
-      cert: _fs2.default.readFileSync(sslConfig.get('cert'))
+      key: _fs2.default.readFileSync(sslConfig.key),
+      cert: _fs2.default.readFileSync(sslConfig.cert)
     });
 
     return _https2.default.createServer(httpsConfig, this.app.callback());
@@ -1156,6 +1351,7 @@ var Server = function (_EventEmitter) {
    * will then emit the `start` event, notify any watching proceeses via
    * <code>process.send('ready')</code>, if <code>send</code> is available on
    * <code>process</code>, and finally log a start message.
+   *
    * @see {@link start}
    * @param {Function} callback
    * @return {Function}
@@ -1185,6 +1381,7 @@ var Server = function (_EventEmitter) {
    * <code>initializeMiddleware</code> is called prior to attaching the
    * <code>error</code> middleware in order for implementations to easily
    * attach custom middleware.
+   *
    * @return {void}
    */
 
@@ -1194,13 +1391,13 @@ var Server = function (_EventEmitter) {
     this.app.use((0, _koaHelmet2.default)());
 
     // Enabled CORS (corss-origin resource sharing)
-    this.app.use((0, _koaCors2.default)(this.config.get('cors')));
+    this.app.use((0, _koaCors2.default)(this.config.cors));
 
     // request compression
-    this.app.use((0, _koaCompress2.default)(this.config.get('compress')));
+    this.app.use((0, _koaCompress2.default)(this.config.compress));
 
     // Initialize body parser before routes or body will be undefined
-    this.app.use((0, _koaBody2.default)(this.config.get('body')));
+    this.app.use((0, _koaBody2.default)(this.config.body));
 
     // Trace a single request process (including over async)
     this.app.use(_transaction2.default);
@@ -1210,45 +1407,35 @@ var Server = function (_EventEmitter) {
 
     // Configure the request error handling
     this.app.use(_error2.default);
-
-    this.initializeMiddleware();
   };
-
-  /**
-   * Abstract function.
-   * Called when initializing middleware to expose an entry point to attach
-   * additional custom, application-specific middleware. Any middleware
-   * attached to the <code>app</code> that throws an <code>Error</code> will be
-   * handled by the <code>error</code> middleware.
-   * @return {void}
-   */
-
-
-  Server.prototype.initializeMiddleware = function initializeMiddleware() {}
-  // Override to provide custom middleware
-
 
   /**
    * Given the common/core <code>Router</code> and an application-specific
    * <code>Router</code>, merge the app-specific <code>Router</code> into the
    * core <code>Router</code> and mount the product to the <code>app</code>.
+   *
    * @param  {Object} router
    * @param  {Object} appRouter
    * @return {void}
    */
-  ;
 
-  Server.prototype.initializeRouter = function initializeRouter(router, appRouter) {
+
+  Server.prototype.initializeRouter = function initializeRouter(appRouter) {
     // Combine with application-specific router
-    router.use(appRouter.routes());
+    if (appRouter) {
+      _router2.default.use(appRouter.routes());
+    }
 
-    this.app.use(router.routes());
-    this.app.use(router.allowedMethods());
+    this.app.use(_router2.default.routes());
+    this.app.use(_router2.default.allowedMethods());
+
+    return _router2.default;
   };
 
   /**
    * Performs any common cleanup and notifies any listeners of the tear-down
    * by emitting the `destroy` event locally and on the <code>process</code>.
+   *
    * @see {@link stop}
    * @return {void}
    */
@@ -1268,11 +1455,12 @@ var Server = function (_EventEmitter) {
    * If any errors are encountered while starting the server, the error is
    * logged and <code>destroy</code> is called prior to the process exiting.
    * Returns the created server instance upon successful startup.
+   *
    * @see {@link https://nodejs.org/api/http.html}
    * @see {@link createServer}
    * @see {@link getListenCallback}
    * @see {@link destroy}
-   * @param {Function|null = null} callback
+   * @param {Function|null} callback
    * @return {Object}
    */
 
@@ -1292,7 +1480,8 @@ var Server = function (_EventEmitter) {
     } catch (e) {
       this.logger.error(e);
       this.destroy();
-      throw e;
+
+      return null;
     }
   };
 
@@ -1303,9 +1492,10 @@ var Server = function (_EventEmitter) {
    * 3. Stops the server from accepting any new connections
    * 4. Calls <code>destroy</code>
    * 5. Emits `after:stop`
+   *
    * @see {@link https://nodejs.org/api/net.html#net_server_close_callback}
    * @see {@link destroy}
-   * @param  {Function|null = null} callback
+   * @param  {Function|null} callback
    * @return {void}
    */
 
@@ -1344,8 +1534,14 @@ exports.default = Server;
 
 
 exports.__esModule = true;
+exports.DEFAULT_LOGGER_NAME = undefined;
 
-var _class, _temp;
+var _class, _temp; /**
+                    * @module utils/logger
+                    * @exports DEFAULT_LOGGER_NAME
+                    * @exports Logger
+                    */
+
 
 var _bunyan = __webpack_require__(/*! bunyan */ "bunyan");
 
@@ -1367,7 +1563,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var DEFAULT_LOGGER_NAME = 'root';
+var DEFAULT_LOGGER_NAME = exports.DEFAULT_LOGGER_NAME = 'root';
 
 /*
  * BEGIN NOTE: example of stream config
@@ -1470,7 +1666,7 @@ var Logger = (_temp = _class = function (_Bunyan) {
    * and the logger name is found in the configuration, then a new logger is
    * created and returned; otherwise an <code>Error</code> is thrown.
    *
-   * @param  {string = null} name
+   * @param  {string} name
    * @return {Object}
    */
 
@@ -1483,10 +1679,10 @@ var Logger = (_temp = _class = function (_Bunyan) {
 
     if (!(loggerName in Logger.loggers)) {
       if (!(loggerName in handlersConfig)) {
-        throw new Error('Unable to create logger: no logger for ' + loggerName + ' found in configuration');
+        throw new Error('Unable to create logger: no logger for "' + loggerName + '" found in configuration');
       }
 
-      Logger.loggers[loggerName] = new Logger(handlersConfig.loggerName);
+      Logger.loggers[loggerName] = new Logger(handlersConfig[loggerName]);
     }
 
     return Logger.loggers[loggerName];
@@ -1525,6 +1721,10 @@ var LOGGER = _logger2.default.getLogger();
  * current process.
  * @return {void}
  */
+/**
+ * @module utils/sigInitHandler
+ * @exports sigInitHandler
+ */
 function sigInitHandler() {
   if (LOGGER) {
     LOGGER.info('Captured ctrl-c');
@@ -1562,6 +1762,10 @@ var LOGGER = _logger2.default.getLogger('error');
  * The <code>Error</code> is logged and the process exits in error.
  * @param  {Error} e
  * @return {void}
+ */
+/**
+ * @module utils/uncaughtExceptionHandler
+ * @exports uncaughtExceptionHandler
  */
 function uncaughtExceptionHandler(e) {
   if (LOGGER) {
@@ -1602,6 +1806,10 @@ var LOGGER = _logger2.default.getLogger('error');
  * loop is allowed to continue.
  * @param  {Error} e
  * @return {void}
+ */
+/**
+ * @module utils/unhandledRejectionHandler
+ * @exports unhandledRejectionHandler
  */
 function unhandledRejectionHandler(e) {
   if (LOGGER) {
@@ -1768,18 +1976,6 @@ module.exports = require("koa-morgan");
 
 /***/ }),
 
-/***/ "koa-mount":
-/*!****************************!*\
-  !*** external "koa-mount" ***!
-  \****************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports) {
-
-module.exports = require("koa-mount");
-
-/***/ }),
-
 /***/ "koa-router":
 /*!*****************************!*\
   !*** external "koa-router" ***!
@@ -1789,18 +1985,6 @@ module.exports = require("koa-mount");
 /***/ (function(module, exports) {
 
 module.exports = require("koa-router");
-
-/***/ }),
-
-/***/ "koa-static":
-/*!*****************************!*\
-  !*** external "koa-static" ***!
-  \*****************************/
-/*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports) {
-
-module.exports = require("koa-static");
 
 /***/ }),
 
