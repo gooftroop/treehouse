@@ -9,7 +9,7 @@
   "scripts": {
     "coverage": "nyc report --reporter=lcov | codacy-coverage && rm -rf ./coverage",
     "test": "mocha",
-    "test:coverage": "nyc --reporter=lcov npm test",
+    "test:coverage": "nyc --reporter=lcov npm test && npm run coverage",
     "test:dev": "mocha --inspect"
   },
   "engines": {
