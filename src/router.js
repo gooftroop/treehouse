@@ -1,13 +1,22 @@
+/**
+ * Builds and exports the Axon router.
+ * Typically version Routers (i.e. v1) would be mounted to the root Router with
+ * a url prefix like <code>/v1</code>, but in this case, the Axon Router only
+ * provides global endpoints like a health check and does not need to be
+ * versioned. However, this file does establish a good pattern for organizing
+ * and building application-specific Routers, so I do recommend using this as
+ * boilerplate.
+ * @see {@link https://github.com/alexmingoia/koa-router}
+ * @module router
+ * @exports Router
+ */
+
 import Router from 'koa-router';
 
-// import notFound from 'axon/api/v1/handlers/404';
 import v1 from 'axon/api/v1/routes';
 
 const router = new Router();
 
-export default (appRouter: ?Object) => {
-  router.use(v1.routes(), v1.allowedMethods());
-  router.use(appRouter.routes(), appRouter.allowedMethods());
+router.use(v1.routes());
 
-  return router;
-};
+export default router;

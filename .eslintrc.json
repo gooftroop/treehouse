@@ -1,10 +1,16 @@
 {
   "extends": [
-    "airbnb",
+    "airbnb-base",
     "plugin:flowtype/recommended"
   ],
   "globals": {
+    "after": true,
+    "afterEach": true,
+    "before": true,
+    "beforeEach": true,
+    "describe": true,
     "document": true,
+    "it": true,
     "window": true
   },
   "parser": "babel-eslint",
@@ -12,7 +18,8 @@
     "ecmaVersion": 8
   },
   "plugins": [
-    "flowtype"
+    "flowtype",
+    "mocha"
   ],
   "rules": {
     "arrow-body-style": [ "error", "always" ],
@@ -31,8 +38,7 @@
       { "blankLine": "always", "prev": [ "const", "let", "var" ], "next": "*" },
       { "blankLine": "any",    "prev": [ "const", "let", "var" ], "next": [ "const", "let", "var" ] }
     ],
-    "prefer-arrow-callback": [ "error", { "allowNamedFunctions": true } ],
-    "react/jsx-filename-extension": "off"
+    "prefer-arrow-callback": [ "error", { "allowNamedFunctions": true } ]
   },
   "settings": {
     "import/resolver": {
