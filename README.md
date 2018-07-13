@@ -1,6 +1,6 @@
 [![Greenkeeper badge](https://badges.greenkeeper.io/Harmonizly/axon.svg)](https://greenkeeper.io/)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/620e6b698c91472284c97b9f2a1abb78)](https://www.codacy.com/app/Harmonizly/axon?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Harmonizly/axon&amp;utm_campaign=Badge_Grade)
-[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/620e6b698c91472284c97b9f2a1abb78)](https://www.codacy.com/app/Harmonizly/axon?utm_source=github.com&utm_medium=referral&utm_content=gooftroop/axon&utm_campaign=Badge_Coverage)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/96c50600236f4d499ee974165aa63850)](https://www.codacy.com/app/gooftroop/axon?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=gooftroop/axon&amp;utm_campaign=Badge_Grade)
 [![Build Status](https://travis-ci.org/Harmonizly/axon.svg?branch=master)](https://travis-ci.org/Harmonizly/axon)
 
 # Axon
