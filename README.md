@@ -153,6 +153,9 @@ The `dist` bundle is created using [webpack](https://webpack.js.org/) (located u
 Distribution is currently hosted through Github, so the binary is currently tracked.
 To build and "deploy", run `make` at the root project directory and commit the resulting `dist` bundle.
 
+### TODOs
+* [] Support custom streams for bunyan in log configuration
+
 ## Testing
 
 Under construction.
