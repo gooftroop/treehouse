@@ -7,9 +7,9 @@
   "author": "Brandon Webb (webb.c.brandon@gmail.com)",
   "license": "MIT",
   "scripts": {
-    "coverage": "nyc report --reporter=lcov | codacy-coverage && rm -rf ./coverage",
+    "report:coverage": "cat ./coverage/lcov.info | codacy-coverage && rm -rf ./coverage",
     "test": "mocha",
-    "test:coverage": "nyc --reporter=lcov npm test && npm run coverage",
+    "test:coverage": "nyc --reporter=lcov npm test && npm run report:coverage",
     "test:dev": "mocha --inspect"
   },
   "engines": {
