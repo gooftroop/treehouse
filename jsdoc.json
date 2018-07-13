@@ -1,0 +1,31 @@
+{
+  "opts": {
+    "encoding": "utf8",
+    "destination": "./docs/",
+    "readme": "README.md",
+    "recurse": true,
+    "template": "node_modules/jsdoc-template"
+  },
+  "plugins": [
+    "node_modules/jsdoc-babel",
+    "plugins/markdown",
+    "plugins/summarize"
+  ],
+  "recurseDepth": 10,
+  "source": {
+    "inlcude": ["./src", "package.json", "README.md"],
+    "includePattern": ".js$",
+    "excludePattern": "(node_modules/|docs/|dist/|build/|tests/)"
+  },
+  "sourceType": "module",
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": ["jsdoc"]
+  },
+  "templates": {
+    "cleverLinks": true,
+    "disableSort": false,
+    "monospaceLinks": false,
+    "referenceTitle": "Axon"
+  }
+}

@@ -1,13 +1,18 @@
-import { getLogger } from 'axon/utils/logger';
+/**
+ * @module utils/uncaughtExceptionHandler
+ * @exports uncaughtExceptionHandler
+ */
+import Logger from 'axon/utils/logger';
 
-const LOGGER: Object = getLogger('error');
+const LOGGER: Object = Logger.getLogger('error');
 
 /**
- * [uncaughtExceptionHandler description]
- * @param  {[type]} e [description]
- * @return {[type]}   [description]
+ * Called when the process encounters an uncaught <code>Error</code>.
+ * The <code>Error</code> is logged and the process exits in error.
+ * @param  {Error} e
+ * @return {void}
  */
-function uncaughtExceptionHandler(e: Error): void {
+export default function uncaughtExceptionHandler(e: Error): void {
   if (LOGGER) {
     LOGGER.error('An unhandled exception occurred. Server is exiting...');
     LOGGER.error(e);
@@ -15,5 +20,3 @@ function uncaughtExceptionHandler(e: Error): void {
 
   process.exit(1);
 }
-
-export { uncaughtExceptionHandler };

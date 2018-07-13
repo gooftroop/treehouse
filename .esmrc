@@ -1,5 +1,0 @@
-{
-  "cjs": true,
-  "esm": "all",
-  "await": true
-}

@@ -1,3 +1,8 @@
+/**
+ * @module middleware/accessLogger
+ * @exports formatter
+ * @exports morgan
+ */
 import morgan from 'koa-morgan';
 
 import Logger from 'axon/utils/logger';
@@ -10,6 +15,7 @@ const LOGGER: Object = Logger.getLogger('access');
  * The expected output should be a JSON string as <code>bunyan</code> will
  * take the string and merge that JSON with the output (which is the desired
  * result). The expected format is:
+ * ```
  * {
  *   remote-addr: <string>,
  *   date: <clf>,
@@ -22,29 +28,33 @@ const LOGGER: Object = Logger.getLogger('access');
  *   res[content-length]: <number>,
  *   response-time: <number> ms,
  * }
- * @param  {Object} tokens The map of morgan tokens
- * @param  {Object} req    The request context
- * @param  {Object} res    The response context
- * @return {Object}        The format meta object
+ * ```
+ *
+ * @see {@link https://www.npmjs.com/package/koa-morgan}
+ *
+ * @param  {Object} tokens    The map of morgan tokens
+ * @param  {Object} request   The request context
+ * @param  {Object} response  The response context
+ * @return {Object}           The format meta object
  */
-export const formatter = function (tokens, req, res) {
-  const responseTime = tokens['response-time'](req, res);
+export const formatter = function (tokens, request, response) {
+  const responseTime = tokens['response-time'](request, response);
 
   return JSON.stringify({
-    'remote-addr': tokens['remote-addr'](req),
-    date: tokens.date(req, res, 'clf'),
-    method: tokens.method(req),
-    url: tokens.url(req),
-    HTTP: tokens['http-version'](req),
-    'user-agent': tokens['user-agent'](req),
-    referrer: tokens.referrer(req),
-    status: tokens.status(req, res),
-    'res[content-length]': tokens.res(req, res, 'content-length'),
+    'remote-addr': tokens['remote-addr'](request),
+    date: tokens.date(request, response, 'clf'),
+    method: tokens.method(request),
+    url: tokens.url(request),
+    HTTP: tokens['http-version'](request),
+    'user-agent': tokens['user-agent'](request),
+    referrer: tokens.referrer(request),
+    status: tokens.status(request, response),
+    'res[content-length]': tokens.res(request, response, 'content-length'),
     'response-time': `${responseTime} ms`,
   });
 };
 
-export const accessLogger = morgan(formatter, {
+export default morgan(formatter, {
   stream: {
     write(message) {
       LOGGER.info(JSON.parse(message));
