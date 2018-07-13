@@ -16,6 +16,7 @@ jobs:
       script: NODE_ENV=development make bundle
       deploy:
         provider: npm
+        email: webb.c.brandon@gmail.com
         api_key:
           secure: q7foEV6tueYbEwKE7DVjulYB5F2n3sfiE403YwLATSu5TNZgROsMC8+CAiOVgQuCdTNK2FAokZqX2q9ZOcQYVu1lcarcOToa01QeyoGqRf6CCJhbJuOatr0I4EwobrBDYL80gqaaAosCqKT+JHJzs1Oh3IlHiEvtYAw3fJSr8RFjTi3mAxJMSauvMRJZ+BABSQ9VlT0LHW1thZ732XNMWRLl58u71yqaU3NpaNDlxuLwKzaCvuH+Za2W8jeNe8swBvFyhv2x1NikqhJQFDiYl7cLl6e2zkFzJpX7ZBnByb5t75YiW4QyH2sHzICpPKztwb3et5yzaMKckOYX71V5x/F/pxkJYaQouCYEpg0QHknkdu5/B0AGuYRmbLvEAxlAB0g/3LMwwmV9qkwiLcuQfAEKljEpXjyba9RVEmF4gx5nNjrOODo8tvaUzCV6tBJrP/DlVytj/rZvmLAmaDIVFrCPKQBdkKANVejwXEtpbdXBcAGqQAFcCSt9HO/yeR3RiBIFKDkENn+gLH/7SVxExwoL9sP2DEbjz7xQC+PlHOosXWXb0NAU8EGvBFwcVm5i+nbKfxY14ZLCxU3xk5n+WDVUtKVMluUsJJpHJRnuWqNZ6P6yPcl/3jr6QvLfPlUjua5s7mq2ZH84lOV42SZHPgnZaUnaHtcmiNT0DbES5Rk=
         # on:
