@@ -1,6 +1,5 @@
 {
   "extension": [
-    ".jsx",
     ".js"
   ],
   "reporter": [
@@ -10,6 +9,9 @@
   ],
   "include": [
     "src/**/*.js"
+  ],
+  "exclude": [
+    "test/**/*.js"
   ],
   "cache": false,
   "sourceMap": false,
