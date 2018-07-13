@@ -20,5 +20,10 @@
     ],
     "flow"
   ],
-  "sourceMaps": true
+  "sourceMaps": true,
+  "env": {
+    "test": {
+      "plugins": ["istanbul"]
+    }
+  }
 }

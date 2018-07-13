@@ -12,8 +12,11 @@ jobs:
     script: true
   - stage: test
     script: npm run test:coverage
+  - stage: report coverage
+    script: npm run coverage
 stages:
   - prepare cache
   - test
+  - report coverage
 notifications:
   slack: harmonizly:FiQyIOat1SVdXTCcZAjaGwq4
