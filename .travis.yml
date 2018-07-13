@@ -11,7 +11,7 @@ jobs:
   - stage: prepare cache
     script: true
   - stage: test
-    script: npm test
+    script: npm run test:coverage
 stages:
   - prepare cache
   - test
