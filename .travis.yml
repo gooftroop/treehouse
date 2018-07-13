@@ -8,22 +8,20 @@ before_script: greenkeeper-lockfile-update
 after_script: greenkeeper-lockfile-upload
 jobs:
   include:
-    - stage: prepare cache
-      script: true
-    - stage: test
-      script: npm run test:coverage
-    - stage: npm release
-      script: NODE_ENV=development make bundle
-      deploy:
-        provider: npm
-        email: webb.c.brandon@gmail.com
-        api_key:
-          secure: q7foEV6tueYbEwKE7DVjulYB5F2n3sfiE403YwLATSu5TNZgROsMC8+CAiOVgQuCdTNK2FAokZqX2q9ZOcQYVu1lcarcOToa01QeyoGqRf6CCJhbJuOatr0I4EwobrBDYL80gqaaAosCqKT+JHJzs1Oh3IlHiEvtYAw3fJSr8RFjTi3mAxJMSauvMRJZ+BABSQ9VlT0LHW1thZ732XNMWRLl58u71yqaU3NpaNDlxuLwKzaCvuH+Za2W8jeNe8swBvFyhv2x1NikqhJQFDiYl7cLl6e2zkFzJpX7ZBnByb5t75YiW4QyH2sHzICpPKztwb3et5yzaMKckOYX71V5x/F/pxkJYaQouCYEpg0QHknkdu5/B0AGuYRmbLvEAxlAB0g/3LMwwmV9qkwiLcuQfAEKljEpXjyba9RVEmF4gx5nNjrOODo8tvaUzCV6tBJrP/DlVytj/rZvmLAmaDIVFrCPKQBdkKANVejwXEtpbdXBcAGqQAFcCSt9HO/yeR3RiBIFKDkENn+gLH/7SVxExwoL9sP2DEbjz7xQC+PlHOosXWXb0NAU8EGvBFwcVm5i+nbKfxY14ZLCxU3xk5n+WDVUtKVMluUsJJpHJRnuWqNZ6P6yPcl/3jr6QvLfPlUjua5s7mq2ZH84lOV42SZHPgnZaUnaHtcmiNT0DbES5Rk=
-        # on:
-        #   condition: tag =~ ^v(?:(\d+)\.)?(?:(\d+)\.)?(\*|\d+)$
+  - stage: prepare cache
+    script: true
+  - stage: test
+    script: npm run test:coverage
+  - stage: npm release
+    script: NODE_ENV=development make bundle
+    deploy:
+      provider: npm
+      email: webb.c.brandon@gmail.com
+      api_key:
+        secure: ldFfEBvlzeO08Bgb2lESz7hlbuahmMWoBRdgg0Jo81VaOtwPuKL6WS1H3bwDO5Ojw8SJELQq/xCr3wIL1TY4qcaMwHeWHUA+kvGfnMHlvRh8orWJB4w4sJENbUc4rNApwneQahKR+MHzdmyF7WeoIsmNI2XyDjWZhr3UED9FDqPqdzzzfpQZ0SiWbOr0M0fETxuZQqydfAihSlB7SDhGfWbuYZoTa2KfEc3xgkcIs/pdGoks55Z61iLOTAb4cqXDwXJnhhdMXZWDrPOxRzT4/bMHE78yV0L6oKm5mpM/Cz2q6jlAeOnB+hSPpYwH/qY3gFphN7/ixDQHZqzxw05p5Stx4Uf1Ihb7MlGc/2Ti4FQIz/T4jgVF5GVlKFbyOpfpfXbd36x4apQgy4gCkJFQPrjqSWpMUwM9A5gJm0JgG/GBvOmt0d2So5cZb09BConwMv8CMjuHoXQs/HT03JuBew+pz6L7CtVckzOPtmXWqfRhkhlQ5Lhmfj1m7F+1h60xv3OGY8yvRlHzIDCA5jsM6Kueoikm5EvSjL+uJtACciUkOshgNqA3yoTCmE4h56WYylEeaacCvSp4kvZm99erzbjppUoO/bCOMGwiiYOvuG9V1JRG/ovoZR/KUR+vA3N/zhL6cSPxYRHuw0/TH5f3MzVPGbvM7CxNXd/mWXy8o9M=
 stages:
-  - prepare cache
-  - test
-  - npm release
+- prepare cache
+- test
+- npm release
 notifications:
   slack: harmonizly:FiQyIOat1SVdXTCcZAjaGwq4
