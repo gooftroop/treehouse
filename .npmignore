@@ -1,0 +1,52 @@
+# Logs
+logs/**
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+.tmp
+.idea
+
+# Coverage directory used by tools like istanbul
+coverage
+.nyc_output
+
+# node-waf configuration
+.lock-wscript
+
+# Compiled binary addons (http://nodejs.org/api/addons.html)
+build/Release
+
+# Dependency directories
+node_modules
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# git config
+.git
+
+# source files
+build
+src
+test
+.babelrc
+.eslintignore
+.eslintrc.json
+.flowconfig
+.gitignore
+.nycrc
+.travis.yml
+jsdoc.json
+Makefile
+
+# misc
+.env
+.DS_Store
+*.bak

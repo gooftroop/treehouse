@@ -1,9 +1,9 @@
 {
   "name": "axon",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Light-weight Koa framework implementation to abstract away common boilerplate",
   "main": "index.js",
-  "repository": "https://github.com/Harmonizly/axon.git",
+  "repository": "https://github.com/gooftroop/axon.git",
   "author": "Brandon Webb (webb.c.brandon@gmail.com)",
   "license": "MIT",
   "scripts": {
@@ -12,6 +12,9 @@
     "test:coverage": "nyc --reporter=lcov npm test && npm run report:coverage",
     "test:dev": "mocha --inspect"
   },
+  "publishConfig": {
+     "access": "public"
+   },
   "engines": {
     "node": ">=10.0.0"
   },
