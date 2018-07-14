@@ -2,7 +2,7 @@
  * @module utils/unhandledRejectionHandler
  * @exports unhandledRejectionHandler
  */
-import Logger from 'axon/utils/logger';
+import Logger from 'treehouse/utils/logger';
 
 const LOGGER: Object = Logger.getLogger('error');
 

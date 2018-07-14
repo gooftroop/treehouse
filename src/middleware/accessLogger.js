@@ -5,7 +5,7 @@
  */
 import morgan from 'koa-morgan';
 
-import Logger from 'axon/utils/logger';
+import Logger from 'treehouse/utils/logger';
 
 const LOGGER: Object = Logger.getLogger('access');
 

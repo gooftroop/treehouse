@@ -41,9 +41,9 @@ module.exports = {
     concatenateModules: true,
   },
   output: {
-    chunkFilename: 'axon.[id].js',
-    filename:      'axon.js',
-    library:       'axon',
+    chunkFilename: 'treehouse.[id].js',
+    filename:      'treehouse.js',
+    library:       'treehouse',
     libraryTarget: 'commonjs2',
     path:           path.join(cwd, 'dist')
   },

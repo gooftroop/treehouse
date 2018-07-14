@@ -5,7 +5,7 @@
     "transform-class-properties",
     ["module-resolver", {
       "alias": {
-        "axon": "./src",
+        "treehouse": "./src",
         "configuration": "./config"
       }
     }]

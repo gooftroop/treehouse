@@ -1,5 +1,5 @@
 /**
- * Main entry point for the built Axon dist/library.
+ * Main entry point for the built Treehouse dist/library.
  * @module main
  * @exports Allthethings
  */
@@ -9,11 +9,11 @@ import ApiError, {
   InternalError,
   InvalidRequestError,
   ServiceUnavailableError,
-} from 'axon/error';
-import Logger from 'axon/utils/logger';
-import Server from 'axon/server';
+} from 'treehouse/error';
+import Logger from 'treehouse/utils/logger';
+import Server from 'treehouse/server';
 
-import * as codes from 'axon/error/codes';
+import * as codes from 'treehouse/error/codes';
 
 export default Server;
 export {

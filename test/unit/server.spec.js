@@ -4,9 +4,9 @@ import https from 'https';
 import Koa from 'koa';
 import sinon from 'sinon';
 
-import Logger from 'axon/utils/logger';
-import router from 'axon/router';
-import Server from 'axon/server';
+import Logger from 'treehouse/utils/logger';
+import router from 'treehouse/router';
+import Server from 'treehouse/server';
 
 describe('server.js', () => {
   let config = {};

@@ -1,28 +1,28 @@
-[![Greenkeeper badge](https://badges.greenkeeper.io/Harmonizly/axon.svg)](https://greenkeeper.io/)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/96c50600236f4d499ee974165aa63850)](https://www.codacy.com/app/gooftroop/axon?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=gooftroop/axon&amp;utm_campaign=Badge_Grade)
-[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/96c50600236f4d499ee974165aa63850)](https://www.codacy.com/app/gooftroop/axon?utm_source=github.com&utm_medium=referral&utm_content=gooftroop/axon&utm_campaign=Badge_Coverage)
-[![Build Status](https://travis-ci.org/Harmonizly/axon.svg?branch=master)](https://travis-ci.org/Harmonizly/axon)
+[![Greenkeeper badge](https://badges.greenkeeper.io/Harmonizly/treehouse.svg)](https://greenkeeper.io/)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/96c50600236f4d499ee974165aa63850)](https://www.codacy.com/app/gooftroop/treehouse?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=gooftroop/treehouse&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/96c50600236f4d499ee974165aa63850)](https://www.codacy.com/app/gooftroop/treehouse?utm_source=github.com&utm_medium=referral&utm_content=gooftroop/treehouse&utm_campaign=Badge_Coverage)
+[![Build Status](https://travis-ci.org/Harmonizly/treehouse.svg?branch=master)](https://travis-ci.org/Harmonizly/treehouse)
 
-# Axon
+# Treehouse
 
-Axon is a lightweight [Koa](https://koajs.com/), event-based server that provides common configuration and setup in an Object-Oriented design. The purpose of Axon is to help speed up the development of Nodejs services by abstracting out the boilerplate and basic configuration and allow you to focus on your custom middleware or handlers. In addition to providing a core Koa server, Axon also exposes other common utilities:
+Treehouse is a lightweight [Koa](https://koajs.com/), event-based server that provides common configuration and setup in an Object-Oriented design. The purpose of Treehouse is to help speed up the development of Nodejs services by abstracting out the boilerplate and basic configuration and allow you to focus on your custom middleware or handlers. In addition to providing a core Koa server, Treehouse also exposes other common utilities:
 - [Bunyan](https://github.com/trentm/node-bunyan) `Logger`
 - Application-specific Exceptions,
 - A server-side oriented GraphQL Client built around [Apollo Client](https://github.com/apollographql/apollo-client) for inter-service communication.
 
-Additional documentation (JSDocs) can be found [here](https://gooftroop.github.io/axon/).
+Additional documentation (JSDocs) can be found [here](https://gooftroop.github.io/treehouse/).
 
 ## Installing
 
 ```
-npm install git@github.com/Harmonizly/axon.git#<verson>
+npm install git@github.com/Harmonizly/treehouse.git#<verson>
 ```
 
-You can find the deployment versions [here](https://github.com/gooftroop/axon/releases).
+You can find the deployment versions [here](https://github.com/gooftroop/treehouse/releases).
 
 i.e.
 ```
-git@github.com/Harmonizly/axon.git#0.0.1
+git@github.com/Harmonizly/treehouse.git#0.0.1
 ```
 
 ## Lifecycle
@@ -60,7 +60,7 @@ The `access logger` middleware uses the `bunyan` logger to record details about 
 
 The `error` middleware wraps all custom middleware and handlers in a `try/catch` to provide a uniform way to log the error and send the appropriate response. The `error` middleware ensures that the caught `Error` is some form of `ApiError`, so it is recommended that, if you throw a custom `Error` from any middleware or handlers, you extend `ApiError`.
 
-Axon also provides one common request handler for responding to health check requests at `/health`. The handler is located under `src/api/v1/handlers`.
+Treehouse also provides one common request handler for responding to health check requests at `/health`. The handler is located under `src/api/v1/handlers`.
 
 Third-party middleware references:
 - [helmet](https://www.npmjs.com/package/koa-helmet)
@@ -81,13 +81,13 @@ A couple notes of interest:
 
 ## Deployment
 
-Axon requires only a configuration object and an app-specific router.
-Any method can be overridden. Remember, if you override a method in Axon, you must call `super.<method name>`.
+Treehouse requires only a configuration object and an app-specific router.
+Any method can be overridden. Remember, if you override a method in Treehouse, you must call `super.<method name>`.
 
-A basic example of consuming Axon:
+A basic example of consuming Treehouse:
 
 ```
-import Server from 'axon';
+import Server from 'treehouse';
 
 class MyServer extends Server {
 
@@ -103,14 +103,14 @@ class MyServer extends Server {
 }
 ```
 
-It is highly recommended that you use [node-config](https://github.com/lorenwest/node-config/wiki) as your configuration library and to pass the resulting configuration object to Axon. Axon expects, at minimum, the following configuration structure when accessing configuration variables:
+It is highly recommended that you use [node-config](https://github.com/lorenwest/node-config/wiki) as your configuration library and to pass the resulting configuration object to Treehouse. Treehouse expects, at minimum, the following configuration structure when accessing configuration variables:
 
 ```
 {
   body: { ... }, // configuration for koa-body
   cors: { ... }, // configuration for koa-cors
   compress: {},  // configuration for koa-compress
-  loggers: {     // Axon logger configuration
+  loggers: {     // Treehouse logger configuration
     handlers: {
       access: {
         name: 'access',

@@ -1,3 +1,3 @@
-const axon = require('./dist/axon');
+const treehouse = require('./dist/treehouse');
 
-module.exports = axon;
+module.exports = treehouse;

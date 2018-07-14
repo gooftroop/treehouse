@@ -7,14 +7,14 @@ import helmet from 'koa-helmet';
 import https from 'https';
 import Koa from 'koa';
 
-import accessLogger from 'axon/middleware/accessLogger';
-import errorMiddleware from 'axon/middleware/error';
-import Logger from 'axon/utils/logger';
-import baseRouter from 'axon/router';
-import sigInitHandler from 'axon/utils/sigInitHandler';
-import transactionMiddleware from 'axon/middleware/transaction';
-import uncaughtExceptionHandler from 'axon/utils/uncaughtExceptionHandler';
-import unhandledRejectionHandler from 'axon/utils/unhandledRejectionHandler';
+import accessLogger from 'treehouse/middleware/accessLogger';
+import errorMiddleware from 'treehouse/middleware/error';
+import Logger from 'treehouse/utils/logger';
+import baseRouter from 'treehouse/router';
+import sigInitHandler from 'treehouse/utils/sigInitHandler';
+import transactionMiddleware from 'treehouse/middleware/transaction';
+import uncaughtExceptionHandler from 'treehouse/utils/uncaughtExceptionHandler';
+import unhandledRejectionHandler from 'treehouse/utils/unhandledRejectionHandler';
 
 // Catches ctrl+c event
 process.on('SIGINT', sigInitHandler);

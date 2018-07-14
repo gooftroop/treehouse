@@ -1,12 +1,12 @@
 {
-  "name": "axon",
+  "name": "@harmonizly/treehouse",
   "version": "0.0.1",
   "description": "Light-weight Koa framework implementation to abstract away common boilerplate",
   "main": "index.js",
-  "hpmepage": "https://gooftroop.github.io/axon/",
-  "repository": "https://github.com/gooftroop/axon.git",
+  "hpmepage": "https://gooftroop.github.io/treehouse/",
+  "repository": "https://github.com/gooftroop/treehouse.git",
   "bugs": {
-    "url": "https://github.com/gooftroop/axon/issues",
+    "url": "https://github.com/gooftroop/treehouse/issues",
     "email": "webb.c.brandon@gmail.com"
   },
   "author": "Brandon Webb (webb.c.brandon@gmail.com)",
@@ -18,8 +18,8 @@
     "test:dev": "mocha --inspect"
   },
   "publishConfig": {
-     "access": "public"
-   },
+    "access": "public"
+  },
   "engines": {
     "node": ">=10.0.0"
   },

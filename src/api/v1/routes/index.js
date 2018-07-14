@@ -7,7 +7,7 @@
 
 import Router from 'koa-router';
 
-import health from 'axon/api/v1/handlers/health';
+import health from 'treehouse/api/v1/handlers/health';
 
 const router = new Router();
 

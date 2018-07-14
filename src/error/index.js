@@ -11,11 +11,11 @@ import {
   resolveCode,
   resolveMessage,
   resolveStatus,
-} from 'axon/error/utils';
-import * as codes from 'axon/error/codes';
+} from 'treehouse/error/utils';
+import * as codes from 'treehouse/error/codes';
 
 /**
- * Base <code>Error</code> class for all Axon-specifc Errors.
+ * Base <code>Error</code> class for all Treehouse-specifc Errors.
  * It is recommended to either use this error to wrap generic
  * <code>Error</code>s or to create application/context-specific Error classes
  * that extend <code>ApiError</code> in order to better/more easily consume and
@@ -35,14 +35,14 @@ export default class ApiError extends Error {
   status: number;
 
   /**
-   * Supports both standard and Axon-specific paradigms of instantating a new
+   * Supports both standard and Treehouse-specific paradigms of instantating a new
    * <code>ApiError</code>.
    * Standard instantion of an ApiError:
    * ```
    * new ApiError("some message", 500);
    * ```
    *
-   * Non-standard (or Axon-specific) instantation expects a payload similar to
+   * Non-standard (or Treehouse-specific) instantation expects a payload similar to
    * those found in <code>codes.js</code> and extrats the
    * <code>error code</code>, <code>status</code>, and <code>message</code>.
    * Optionally accepts <code>Error</code> for additional meta information as
