@@ -47,8 +47,11 @@ process.on('unhandledRejection', unhandledRejectionHandler);
  */
 export default class Server extends EventEmitter {
   app: Function;
+
   config: Object;
+
   logger: Object;
+
   router: Object = baseRouter;
 
   /**
@@ -67,6 +70,12 @@ export default class Server extends EventEmitter {
 
     // atexit handler
     process.on('exit', this.destroy);
+
+    // pm2 graceful shutdown compatibility
+    process.once('SIGINT', () => {
+      this.app.stop();
+      process.kill(process.pid, 'SIGINT');
+    });
 
     this.config = config;
 

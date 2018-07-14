@@ -5,24 +5,24 @@
 
 # Treehouse
 
-Treehouse is a lightweight [Koa](https://koajs.com/), event-based server that provides common configuration and setup in an Object-Oriented design. The purpose of Treehouse is to help speed up the development of Nodejs services by abstracting out the boilerplate and basic configuration and allow you to focus on your custom middleware or handlers. In addition to providing a core Koa server, Treehouse also exposes other common utilities:
+Treehouse is a lightweight [Koa](https://koajs.com/), event-based server that provides common configuration and setup in an Object-Oriented design for both REST and GraphQL servers. The purpose of Treehouse is to help speed up the development of Nodejs services by abstracting out the boilerplate and basic configuration and allow you to focus on your custom middleware or handlers. In addition to providing a core Koa server, Treehouse also exposes other common utilities:
 - [Bunyan](https://github.com/trentm/node-bunyan) `Logger`
 - Application-specific Exceptions
+- GraphQL Server provided by [Apollo Server 2.0](https://www.apollographql.com/docs/apollo-server/v2/whats-new.html)
 
-Additional documentation (JSDocs) can be found [here](https://gooftroop.github.io/treehouse/).
+Additional documentation and API: [here](https://gooftroop.github.io/treehouse/).
+
+## Why Treehouse
+
+We get it...building your own server from scratch is fun. So if you like taking various libraries and stitching them together, then this library is probably not for you. However, maybe you like the way this library is setup and is exactly the way you'd do it. Or maybe you're tired of seeing "boilerplates" that set everything up for you, tell you how to code your server, etc. etc. which take all the fun out of coding your server, but still don't want to set all the middleware and writing common utilities. If you find yourself nodding along or saying "that's me!", then this library is for you. Treehouse aims to keep a balance between not taking the fun out of building your services while doing all the tedious work for you - all without telling you how to build, structure, or organize your app.
 
 ## Installing
 
 ```
-npm install git@github.com/Harmonizly/treehouse.git#<verson>
+npm i @harmonizly/treehouse
 ```
 
 You can find the deployment versions [here](https://github.com/gooftroop/treehouse/releases).
-
-i.e.
-```
-git@github.com/Harmonizly/treehouse.git#0.0.1
-```
 
 ## Lifecycle
 
@@ -67,9 +67,11 @@ Third-party middleware references:
 - [body](https://www.npmjs.com/package/koa-body)
 - [compress](https://www.npmjs.com/package/koa-compress)
 
-Note! When adding your app-specific `handlers` and `middleware`, please take some time to understand `koa-router` and the difference between global middleware and route-specific middleware.
+<b>Note!</b> When adding your app-specific `handlers` and `middleware`, please take some time to understand `koa-router` and the difference between global middleware and route-specific middleware.
 
 ## Details
+
+The `GraphqQLServer` is an added layer on top of the Treehouse `Server` and sets up `apollo-server 2.0` from the provided schema object using `applyMiddleware`. This merely attaches an additional router to the `Koa` app (from the `Server`) to handle `graphql` requests.
 
 A couple notes of interest:
 
@@ -99,12 +101,39 @@ class MyServer extends Server {
     // Middleware can be attached here!
     // But, make sure you call the original initialize before adding your own
     // middleware our handlers that should be included in the error handling
-    // or behind the common request parsing/security/logging middleware
+    // or behind the common request parsing/security/logging middleware.
     super.initialize();
     // More custom middleware here
   }
 }
 ```
+
+A basic example of a GraphQL Server:
+
+```
+import { GraphqQLServer } from 'treehouse';
+import { makeExecutableSchema } from 'apollo-server-koa';
+
+class MyServer extends Server {
+
+  constructor() {
+    const schema = makeExecutableSchema(typedefs, resolvers);
+
+    super(config, schema, router);
+  }
+
+  initialize() {
+    // Middleware can be attached here!
+    // But, make sure you call the original initialize before adding your own
+    // middleware our handlers that should be included in the error handling
+    // or behind the common request parsing/security/logging middleware.
+    super.initialize();
+    // More custom middleware here
+  }
+}
+```
+
+<b>Important!</b> You must call `super.initialize()` if you override `initialize`!
 
 It is highly recommended that you use [node-config](https://github.com/lorenwest/node-config/wiki) as your configuration library and to pass the resulting configuration object to Treehouse. Treehouse expects, at minimum, the following configuration structure when accessing configuration variables:
 
@@ -113,6 +142,12 @@ It is highly recommended that you use [node-config](https://github.com/lorenwest
   body: { ... }, // configuration for koa-body
   cors: { ... }, // configuration for koa-cors
   compress: {},  // configuration for koa-compress
+  // only needed if you're using the GraphQL Server
+  graphql: {
+    gui: process.env.NODE_ENV === 'development',
+    introspection: true,
+    url: "/graphql",
+  },
   loggers: {     // Treehouse logger configuration
     handlers: {
       access: {
