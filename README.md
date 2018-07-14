@@ -155,9 +155,9 @@ Distribution is currently hosted through Github, so the binary is currently trac
 To build and "deploy", run `make` at the root project directory and commit the resulting `dist` bundle.
 
 ### TODOs
-* [] Complete tests (tested manually, but need full suite)
-* [] Support custom streams for bunyan in log configuration
-* [] Apollo Server V2 GraphQL server
+* [ ] Complete tests (tested manually, but need full suite)
+* [ ] Support custom streams for bunyan in log configuration
+* [ ] Apollo Server V2 GraphQL server
 
 ## Testing
 

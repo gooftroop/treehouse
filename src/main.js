@@ -10,6 +10,7 @@ import ApiError, {
   InvalidRequestError,
   ServiceUnavailableError,
 } from 'treehouse/error';
+import GraphqQLServer from 'treehouse/graphql';
 import Logger from 'treehouse/utils/logger';
 import Server from 'treehouse/server';
 
@@ -20,6 +21,7 @@ export {
   ApiError,
   AuthorizationError,
   codes,
+  GraphqQLServer,
   InternalError,
   InvalidRequestError,
   Logger,
