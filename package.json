@@ -11,6 +11,9 @@
   },
   "author": "Brandon Webb (webb.c.brandon@gmail.com)",
   "license": "MIT",
+  "keywords": [
+    "koa", "graphql", "apollo-server", "server", "nodejs", "framework", "connect"
+  ],
   "scripts": {
     "report:coverage": "cat ./coverage/lcov.info | codacy-coverage && rm -rf ./coverage",
     "test": "mocha",

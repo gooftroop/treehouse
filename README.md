@@ -7,8 +7,7 @@
 
 Treehouse is a lightweight [Koa](https://koajs.com/), event-based server that provides common configuration and setup in an Object-Oriented design. The purpose of Treehouse is to help speed up the development of Nodejs services by abstracting out the boilerplate and basic configuration and allow you to focus on your custom middleware or handlers. In addition to providing a core Koa server, Treehouse also exposes other common utilities:
 - [Bunyan](https://github.com/trentm/node-bunyan) `Logger`
-- Application-specific Exceptions,
-- A server-side oriented GraphQL Client built around [Apollo Client](https://github.com/apollographql/apollo-client) for inter-service communication.
+- Application-specific Exceptions
 
 Additional documentation (JSDocs) can be found [here](https://gooftroop.github.io/treehouse/).
 
@@ -51,7 +50,7 @@ Note: `after:stop` is emitted right before the process exists on a normal shut d
 Every request will run through the following middleware before being evaluated by the router ([koa-router](https://github.com/alexmingoia/koa-router)):
 
 <br /><p align="center">
-  <img src="docs/assets/svg/request_processing.svg" />
+  <img src="https://gooftroop.github.io/treehouse/assets/svg/request_processing.svg" />
 </p><br />
 
 The middleware `transaction` is used to tag each request with a unique "transaction" ID using NodeJS [domain]()'s to track a request through it's entire time spent in the app.
@@ -78,6 +77,7 @@ A couple notes of interest:
 - If `process.send` exists (i.e. when the process is managed by `pm2`), the instance sends `ready` across `process.send` to notify anyone waiting that the server has beed started.
 - When the server is destroying, the instance will `emit` `destroy` on `process` to notify anyone watching that the server is going down.
 - The `transactionId` is included with every logging output. The `transaction` context that's included in every logger statement includes information about the user and session, if that data exists. This assumes that an authorized user is attached to the request context as `user` and the session is attached to the request context as `session`.
+- A health check route is exposed by default at `GET /health`.
 
 ## Deployment
 
@@ -96,9 +96,12 @@ class MyServer extends Server {
   }
 
   initialize() {
-    // Make sure you call the original initialize before adding your own!
+    // Middleware can be attached here!
+    // But, make sure you call the original initialize before adding your own
+    // middleware our handlers that should be included in the error handling
+    // or behind the common request parsing/security/logging middleware
     super.initialize();
-    // Initialize any custom middleware  here
+    // More custom middleware here
   }
 }
 ```
@@ -141,8 +144,6 @@ To build a deployment (production) `dist`, run `make`.
 
 To build development `dist`, run `make dev`.
 
-When publishing the package to `npm`, `prepublish` will create a production deployment.
-
 ## Contributing
 
 Ensure that you are pushing to a branch off of `master` and not to `master` directly.
@@ -156,6 +157,7 @@ To build and "deploy", run `make` at the root project directory and commit the r
 ### TODOs
 * [] Complete tests (tested manually, but need full suite)
 * [] Support custom streams for bunyan in log configuration
+* [] Apollo Server V2 GraphQL server
 
 ## Testing
 
