@@ -16,4 +16,9 @@ module.exports = {
     },
     streams: {},
   },
+  server: {
+    backlog: 99,
+    hostname: 'test',
+    port: 123,
+  },
 }

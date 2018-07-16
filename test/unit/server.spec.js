@@ -1,4 +1,5 @@
 import chai from 'chai';
+import config from 'config';
 import fs from 'fs';
 import https from 'https';
 import Koa from 'koa';
@@ -8,14 +9,18 @@ import Logger from 'treehouse/utils/logger';
 import router from 'treehouse/router';
 import Server from 'treehouse/server';
 
+const FAKE_LOGGER = {
+  info: sinon.fake(),
+  error: sinon.fake(),
+};
+
 describe('server.js', () => {
-  let config = {};
   let testRouter = {};
   let server;
 
   before(() => {
     sinon.stub(process, 'on');
-    sinon.stub(Logger, 'getLogger');
+    sinon.stub(Logger, 'getLogger').returns(FAKE_LOGGER);
   });
 
   after(() => {
@@ -24,7 +29,6 @@ describe('server.js', () => {
   });
 
   beforeEach(() => {
-    config = {};
     testRouter = {
       routes: sinon.fake.returns(() => { return []; }),
       allowedMethods: sinon.fake.returns(() => { return []; }),
@@ -150,11 +154,26 @@ describe('server.js', () => {
   });
 
   describe('getListenCallback', () => {
-    it('should return the callback function', () => {});
+    beforeEach(() => {
+      server = new Server(config, testRouter);
+    });
+
+    it('should return the callback function', () => {
+      const result = server.getListenCallback();
+
+      chai.expect(result).to.be.a('function');
+    });
 
     describe('when invoking the callback', () => {
       describe('when a custom callback is provided', () => {
-        it('should invoke the custom callback', () => {});
+        it('should invoke the custom callback', () => {
+          const fakeCallback = sinon.fake();
+          const fn = server.getListenCallback(fakeCallback);
+
+          fn();
+
+          chai.assert(fakeCallback.called);
+        });
       });
 
       it('should emit the start event', () => {});

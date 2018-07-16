@@ -61,8 +61,8 @@ export default class Server extends EventEmitter {
    * prior to emitting the `ready` event.
    *
    * @constructor
-   * @param {Object} config
-   * @param {Object} appRouter
+   * @param {Object} config     The application configuration object
+   * @param {Object} appRouter  (optional) Application-specific router
    * @return {void}
    */
   constructor(config: Object, appRouter: ?Object = null): void {
