@@ -1,7 +1,7 @@
 [![Greenkeeper badge](https://badges.greenkeeper.io/Harmonizly/treehouse.svg)](https://greenkeeper.io/)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/96c50600236f4d499ee974165aa63850)](https://www.codacy.com/app/gooftroop/treehouse?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=gooftroop/treehouse&amp;utm_campaign=Badge_Grade)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/96c50600236f4d499ee974165aa63850)](https://www.codacy.com/app/gooftroop/treehouse?utm_source=github.com&utm_medium=referral&utm_content=gooftroop/treehouse&utm_campaign=Badge_Coverage)
-[![Build Status](https://travis-ci.org/Harmonizly/treehouse.svg?branch=master)](https://travis-ci.org/Harmonizly/treehouse)
+[![Build Status](https://travis-ci.org/gooftroop/treehouse.svg?branch=master)](https://travis-ci.org/gooftroop/treehouse)
 
 # Treehouse
 
