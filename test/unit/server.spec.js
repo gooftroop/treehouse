@@ -21,11 +21,13 @@ describe('server.js', () => {
   before(() => {
     sinon.stub(process, 'on');
     sinon.stub(Logger, 'getLogger').returns(FAKE_LOGGER);
+    sinon.stub(Server.prototype, 'emit');
   });
 
   after(() => {
     process.on.restore();
     Logger.getLogger.restore();
+    Server.prototype.emit.restore();
   });
 
   beforeEach(() => {
@@ -39,7 +41,6 @@ describe('server.js', () => {
     before(() => {
       sinon.stub(Koa.prototype, 'use');
       sinon.stub(Server.prototype, 'initialize');
-      sinon.stub(Server.prototype, 'emit');
       sinon.stub(router, 'routes').returns(() => { return []; });
       sinon.stub(router, 'allowedMethods').returns(() => { return []; });
     });
@@ -47,7 +48,6 @@ describe('server.js', () => {
     after(() => {
       Koa.prototype.use.restore();
       Server.prototype.initialize.restore();
-      Server.prototype.emit.restore();
       router.routes.restore();
       router.allowedMethods.restore();
     });
@@ -165,24 +165,53 @@ describe('server.js', () => {
     });
 
     describe('when invoking the callback', () => {
-      describe('when a custom callback is provided', () => {
-        it('should invoke the custom callback', () => {
-          const fakeCallback = sinon.fake();
-          const fn = server.getListenCallback(fakeCallback);
+      let fn = null;
 
+      it('should emit the start event', () => {
+        fn = server.getListenCallback();
+
+        fn();
+
+        chai.assert(server.emit.calledWith('start'));
+      });
+
+      it('should log a message', () => {
+        const expectedMessage = `Server listening at ${config.server.hostname}:${config.server.port}...`;
+
+        fn = server.getListenCallback();
+
+        fn();
+
+        chai.assert(server.logger.info.calledWith(expectedMessage));
+      });
+
+      describe('when a custom callback is provided', () => {
+        let fakeCallback = null;
+
+        beforeEach(() => {
+          fakeCallback = sinon.fake();
+          fn = server.getListenCallback(fakeCallback);
+        });
+
+        it('should invoke the custom callback', () => {
           fn();
 
           chai.assert(fakeCallback.called);
         });
       });
 
-      it('should emit the start event', () => {});
-
       describe('when send is available on process', () => {
-        it('should send the ready signal', () => {});
-      });
+        beforeEach(() => {
+          process.send = sinon.fake();
+          fn = server.getListenCallback();
+        });
 
-      it('should log a message', () => {});
+        it('should send the ready signal', () => {
+          fn();
+
+          chai.assert(process.send.calledWith('ready'));
+        });
+      });
     });
   });
 
