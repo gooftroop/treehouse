@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-      utils/sigInitHandler.js - Documentation
+      graphql.js - Documentation
   </title>
 
   <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
@@ -78,7 +78,7 @@
   <div id="main">
     
       <h1 class="page-title">
-        utils/sigInitHandler.js
+        graphql.js
       </h1>
     
 
@@ -87,25 +87,69 @@
 
 <section>
   <article>
-    <pre class="prettyprint source linenums"><code>/**
- * @module utils/sigInitHandler
- * @exports sigInitHandler
- */
-import Logger from 'treehouse/utils/logger';
+    <pre class="prettyprint source linenums"><code>import { ApolloServer } from 'apollo-server-koa';
 
-const LOGGER: Object = Logger.getLogger();
+import Server from 'treehouse/server';
 
 /**
- * Handler for capturing a the &lt;code>siginit&lt;/code> event and stopping the
- * current process.
- * @return {void}
+ * Extends &lt;code>Server&lt;/code> and integrates an &lt;code>ApolloServer&lt;/code>
+ * (a GraphQL handler) into the server.
+ * Accepts the standard input that &lt;code>Server&lt;/code> does, as well as an
+ * additional &lt;code>schema&lt;/code> parameter, which is used to populate
+ * &lt;code>ApolloServer&lt;/code>.
+ *
+ * &lt;code>ApolloServer&lt;/code> integrates itself into the server by adding an
+ * additional &lt;code>router&lt;/code> to the &lt;code>Koa&lt;/code> app. This
+ * &lt;code>router&lt;/code> handles requests to &lt;code>config.graphql.url&lt;/code>.
+ *
+ * @class
+ * @extends Server
+ * @see {@link Server}
+ * @see {@link https://www.apollographql.com/docs/apollo-server/v2/whats-new.html|ApolloServer}
  */
-export default function sigInitHandler(): void {
-  if (LOGGER) {
-    LOGGER.info('Captured ctrl-c');
+export default class GraphqQLServer extends Server {
+  graphql: Object;
+
+  /**
+   * Provides the required parameters to &lt;code>Server&lt;/code> and creates the
+   * &lt;code>ApolloServer&lt;/code> instance from the &lt;code>schema&lt;/code> parameter.
+   *
+   * &lt;code>schema&lt;/code> should eb the resulting object from combining your
+   * &lt;code>typedefs&lt;/code> and your &lt;code>resolvers&lt;/code> using something like
+   * &lt;code>makeExecutableSchema&lt;/code> from &lt;code>graphql-tools&lt;/code> or
+   * &lt;code>apollo-server-koa&lt;/code>.
+   * @constructor
+   * @param {Object} config     The application configuration object
+   * @param {Object} schema     The graphql schema object
+   * @param {Object} appRouter  (optional) Application-specific router
+   */
+  constructor(config: Object, schema: Object, appRouter: ?Object = null) {
+    const graphql = new ApolloServer({
+      schema,
+      introspection: config.graphql.introspection,
+    });
+
+    super(config, appRouter);
+
+    this.graphql = graphql;
   }
 
-  process.exit(0);
+  /**
+   * Initializes the &lt;code>Server&lt;/code> middleware
+   * (via &lt;code>super.initialize&lt;/code>), then applies the
+   * &lt;code>ApolloServer&lt;/code> router and handlers to the server application.
+   * @return {void}
+   */
+  initialize() {
+    super.initialize();
+
+    // Create the graphql router and attach it to app
+    this.graphql.applyMiddleware({
+      app: this.app,
+      gui: this.config.graphql.gui,
+      path: this.config.graphql.url,
+    });
+  }
 }
 </code></pre>
   </article>
