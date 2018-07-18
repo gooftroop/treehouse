@@ -1,6 +1,6 @@
 {
   "name": "@harmonizly/treehouse",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Light-weight Koa framework implementation to abstract away common boilerplate",
   "main": "index.js",
   "hpmepage": "https://gooftroop.github.io/treehouse/",
