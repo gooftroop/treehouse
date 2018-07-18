@@ -125,24 +125,12 @@ for controlling the configuration and lifecycle of application server.</p>
 
   <div class="description">
     <p>This class encapsulates a <code>Koa</code> application and provides an API
-for controlling the configuration and lifecycle of application server.
-<code>Server</code> extends <code>EventEmitter</code> to provide the following
-event-based lifecycle triggers:</p>
-<ul>
-<li><code>ready</code></li>
-<li><code>before:start</code></li>
-<li><code>start</code></li>
-<li><code>after:start</code></li>
-<li><code>before:stop</code></li>
-<li><code>destroy</code></li>
-<li><code>after:stop</code></li>
-</ul>
+for controlling the configuration and lifecycle of application server.</p>
 <p><code>Server</code> contains the following public variables:</p>
 <ul>
 <li><code>app</code>     The instantiated Koa application</li>
 <li><code>config</code>  The application-specific configuration object</li>
 <li><code>logger</code>  A reference to the app logger</li>
-<li><code>router</code>  The combined universal and application-specific router</li>
 </ul>
   </div>
 
@@ -186,7 +174,7 @@ event-based lifecycle triggers:</p>
     <dd class="tag-source">
       <ul class="dummy">
         <li>
-          <a href="server.js.html">server.js</a>, <a href="server.js.html#line26">line 26</a>
+          <a href="server.js.html">server.js</a>, <a href="server.js.html#line25">line 25</a>
         </li>
       </ul>
     </dd>
@@ -214,17 +202,6 @@ event-based lifecycle triggers:</p>
 
       
     </div>
-
-    
-      <h3 class="subsection-title">Extends</h3>
-
-      
-
-
-  <ul>
-    <li>EventEmitter</li>
-  </ul>
-
 
     
 
