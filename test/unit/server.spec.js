@@ -1,6 +1,7 @@
 import chai from 'chai';
 import config from 'config';
 import fs from 'fs';
+import helmet from 'koa-helmet';
 import https from 'https';
 import Koa from 'koa';
 import sinon from 'sinon';
@@ -15,19 +16,19 @@ const FAKE_LOGGER = {
 };
 
 describe('server.js', () => {
-  let testRouter = {};
+  let testRouter;
   let server;
 
   before(() => {
     sinon.stub(process, 'on');
+    sinon.stub(process, 'once');
     sinon.stub(Logger, 'getLogger').returns(FAKE_LOGGER);
-    sinon.stub(Server.prototype, 'emit');
   });
 
   after(() => {
     process.on.restore();
+    process.once.restore();
     Logger.getLogger.restore();
-    Server.prototype.emit.restore();
   });
 
   beforeEach(() => {
@@ -39,48 +40,30 @@ describe('server.js', () => {
 
   describe('constructor', () => {
     before(() => {
-      sinon.stub(Koa.prototype, 'use');
       sinon.stub(Server.prototype, 'initialize');
-      sinon.stub(router, 'routes').returns(() => { return []; });
-      sinon.stub(router, 'allowedMethods').returns(() => { return []; });
     });
 
     after(() => {
-      Koa.prototype.use.restore();
       Server.prototype.initialize.restore();
-      router.routes.restore();
-      router.allowedMethods.restore();
     });
 
     beforeEach(() => {
-      server = new Server(config, testRouter);
+      server = new Server(config);
     });
 
     it('should attach to the exit event on the process', () => {
-      chai.assert(process.on.calledWith('exit', server.destroy));
+      chai.assert(process.on.calledWith('exit', server.stop));
+    });
+
+    it('should attach to the SIGINT event on the process', () => {
+      chai.assert(process.once.calledWith('SIGINT', sinon.match.func));
     });
 
     it('should create a Koa app', () => {
       chai.expect(server.app).to.be.an.instanceof(Koa);
     });
 
-    it('should call initialize', () => {
-      chai.assert(server.initialize.called);
-    });
-
-    describe('when an app router is provided', () => {
-      it('should attach the app router to the base router', () => {});
-    });
-
-    it('should attach the router', () => {
-      chai.assert(router.routes.called);
-      chai.assert(router.allowedMethods.called);
-      chai.assert(server.app.use.called);
-    });
-
-    it('should emit the ready event', () => {
-      chai.assert(server.emit.calledWith('ready'));
-    });
+    it('should call initialize', () => {});
   });
 
   describe('createServer', () => {
@@ -155,7 +138,7 @@ describe('server.js', () => {
 
   describe('getListenCallback', () => {
     beforeEach(() => {
-      server = new Server(config, testRouter);
+      server = new Server(config);
     });
 
     it('should return the callback function', () => {
@@ -166,14 +149,6 @@ describe('server.js', () => {
 
     describe('when invoking the callback', () => {
       let fn = null;
-
-      it('should emit the start event', () => {
-        fn = server.getListenCallback();
-
-        fn();
-
-        chai.assert(server.emit.calledWith('start'));
-      });
 
       it('should log a message', () => {
         const expectedMessage = `Server listening at ${config.server.hostname}:${config.server.port}...`;
@@ -216,33 +191,43 @@ describe('server.js', () => {
   });
 
   describe('initialize', () => {
-    it('should set the helmet middleware', () => {});
 
-    it('should set the cors middleware', () => {});
-
-    it('should set the compress middleware', () => {});
-
-    it('should set the body middleware', () => {});
-
-    it('should set the transaction middleware', () => {});
-
-    it('should set the access logger middleware', () => {});
-
-    it('should set the error middleware', () => {});
   });
 
-  describe('destroy', () => {
-    it('should emit the destroy event', () => {});
+  describe('middleware', () => {});
 
-    it('should send the destroy signal on the process', () => {});
+  describe('mountRouters', () => {
+    before(() => {
+      sinon.stub(Koa.prototype, 'use');
+      sinon.stub(router, 'routes').returns(() => { return []; });
+      sinon.stub(router, 'allowedMethods').returns(() => { return []; });
+    });
+
+    after(() => {
+      Koa.prototype.use.restore();
+      router.routes.restore();
+      router.allowedMethods.restore();
+    });
+
+    beforeEach(() => {
+      server = new Server(config);
+    });
+
+    it('should attach the router', () => {
+      server.mountRouters();
+
+      chai.assert(router.routes.called);
+      chai.assert(router.allowedMethods.called);
+      chai.assert(server.app.use.called);
+    });
   });
+
+  describe('routers', () => {});
 
   describe('start', () => {
     describe('when the app has not been initialized', () => {
       it('should throw an Error', () => {});
     });
-
-    it('should emit the before:start event', () => {});
 
     it('should call getListenCallback', () => {});
 
@@ -254,30 +239,20 @@ describe('server.js', () => {
       });
     });
 
-    it('should emit the after:start event', () => {});
-
     it('should return the http(s) server', () => {});
 
     describe('when starting causes an error', () => {
-      it('call destroy', () => {});
-
-      it('should return null', () => {});
+      it('should log the error', () => {});
     });
   });
 
   describe('stop', () => {
     it('should log a message', () => {});
 
-    it('should emit the before:stop event', () => {});
-
     describe('when a custom callback is provided', () => {
       it('should invoke the callback', () => {});
     });
 
     it('should close the HTTP(s) connection', () => {});
-
-    it('should call destroy', () => {});
-
-    it('should emit the after:stop event', () => {});
   });
 });

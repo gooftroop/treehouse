@@ -22,43 +22,44 @@ export default class GraphqQLServer extends Server {
   graphql: Object;
 
   /**
-   * Provides the required parameters to <code>Server</code> and creates the
-   * <code>ApolloServer</code> instance from the <code>schema</code> parameter.
+   * Instantiates the base <code>Server</code> and intializes the GraphQL
+   * Server capabilities.
    *
-   * <code>schema</code> should eb the resulting object from combining your
+   * <code>schema</code> should be the resulting object from combining your
    * <code>typedefs</code> and your <code>resolvers</code> using something like
    * <code>makeExecutableSchema</code> from <code>graphql-tools</code> or
    * <code>apollo-server-koa</code>.
+   *
    * @constructor
    * @param {Object} config     The application configuration object
    * @param {Object} schema     The graphql schema object
-   * @param {Object} appRouter  (optional) Application-specific router
    */
-  constructor(config: Object, schema: Object, appRouter: ?Object = null) {
-    const graphql = new ApolloServer({
+  constructor(config: Object, schema: Object) {
+    super(config);
+
+    this.initializeGraphQl(this.app, schema, config);
+  }
+
+  /**
+   * Initializes <code>ApolloServer</code> with the provided
+   * <code>schema</code>, then applies the
+   * <code>ApolloServer</code> router and handlers to the server application.
+   *
+   * @param {Object} config     The application configuration object
+   * @param {Object} schema     The graphql schema object
+   * @return {void}
+   */
+  initializeGraphQl(app, schema, config) {
+    this.graphql = new ApolloServer({
       schema,
       introspection: config.graphql.introspection,
     });
 
-    super(config, appRouter);
-
-    this.graphql = graphql;
-  }
-
-  /**
-   * Initializes the <code>Server</code> middleware
-   * (via <code>super.initialize</code>), then applies the
-   * <code>ApolloServer</code> router and handlers to the server application.
-   * @return {void}
-   */
-  initialize() {
-    super.initialize();
-
-    // Create the graphql router and attach it to app
+    // Attach the graphql router to the app
     this.graphql.applyMiddleware({
-      app: this.app,
-      gui: this.config.graphql.gui,
-      path: this.config.graphql.url,
+      app,
+      gui: config.graphql.gui,
+      path: config.graphql.url,
     });
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@harmonizly/treehouse",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Light-weight Koa framework implementation to abstract away common boilerplate",
   "main": "index.js",
   "hpmepage": "https://gooftroop.github.io/treehouse/",
@@ -24,7 +24,7 @@
     "report:coverage": "cat ./coverage/lcov.info | codacy-coverage && rm -rf ./coverage",
     "test": "mocha",
     "test:coverage": "nyc --reporter=lcov npm test && npm run report:coverage",
-    "test:dev": "mocha --inspect"
+    "test:dev": "mocha --inspect-brk"
   },
   "publishConfig": {
     "access": "public"

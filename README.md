@@ -83,10 +83,43 @@ A couple notes of interest:
 
 ## Deployment
 
-Treehouse requires only a configuration object and an app-specific router.
-Any method can be overridden. Remember, if you override a method in Treehouse, you must call `super.<method name>`.
+Treehouse requires only a configuration object, but provides flexibility in how you build you app.
+The most basic, quick way to get your server running with Treehouse with or without custom middleware and one or more application-specific routers is:
 
-A basic example of consuming Treehouse:
+```
+import Server from 'treehouse';
+
+const server = new Server(config)
+                  .middleware(app => {
+                    // Attach any middleware here
+                  })
+                  .routers((app, defaultRouter) => {
+                    // Attach any application-specific routers to either the app or the defaultRouter
+                  });
+
+server.start();
+```
+
+The GraphQL Server follows the same pattern, but requires a `schema` object:
+
+```
+import { GraphqQLServer } from 'treehouse';
+import { makeExecutableSchema } from 'apollo-server-koa';
+
+const schema = makeExecutableSchema(typedefs, resolvers);
+
+const server = new GraphqQLServer(config, schema)
+                  .middleware(app => {
+                    // Attach any middleware here
+                  })
+                  .routers((app, defaultRouter) => {
+                    // Attach any application-specific routers to either the app or the defaultRouter
+                  });
+
+server.start();
+```
+
+Treehouse can also be extended to provide more complex implementations:
 
 ```
 import Server from 'treehouse';
@@ -94,46 +127,25 @@ import Server from 'treehouse';
 class MyServer extends Server {
 
   constructor() {
-    super(config, router);
+    super(config);
   }
 
   initialize() {
-    // Middleware can be attached here!
-    // But, make sure you call the original initialize before adding your own
-    // middleware our handlers that should be included in the error handling
-    // or behind the common request parsing/security/logging middleware.
-    super.initialize();
-    // More custom middleware here
+    // Override initialize to either override the default middleware or to have
+    // more flexibility in attaching middleware you want to use.
+    // If you wish to keep the default middleware in addition to the ones you
+    // add, don't forget to call `super.initialize();`!
+  }
+
+  mountRouters() {
+    // Override the default functionality mounting the router(s) to the app.
+    // When overriding this method, the default router will not be mounted
+    // unless you call `super.mountRouters();`!
   }
 }
 ```
 
-A basic example of a GraphQL Server:
-
-```
-import { GraphqQLServer } from 'treehouse';
-import { makeExecutableSchema } from 'apollo-server-koa';
-
-class MyServer extends Server {
-
-  constructor() {
-    const schema = makeExecutableSchema(typedefs, resolvers);
-
-    super(config, schema, router);
-  }
-
-  initialize() {
-    // Middleware can be attached here!
-    // But, make sure you call the original initialize before adding your own
-    // middleware our handlers that should be included in the error handling
-    // or behind the common request parsing/security/logging middleware.
-    super.initialize();
-    // More custom middleware here
-  }
-}
-```
-
-<b>Important!</b> You must call `super.initialize()` if you override `initialize`!
+The `GraphQL Server` can also be overridden this way. The only difference is that the constructor must be provided the `schema` object.
 
 It is highly recommended that you use [node-config](https://github.com/lorenwest/node-config/wiki) as your configuration library and to pass the resulting configuration object to Treehouse. Treehouse expects, at minimum, the following configuration structure when accessing configuration variables:
 

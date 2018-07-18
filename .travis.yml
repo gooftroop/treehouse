@@ -20,8 +20,8 @@ jobs:
       api_key:
         secure: ldFfEBvlzeO08Bgb2lESz7hlbuahmMWoBRdgg0Jo81VaOtwPuKL6WS1H3bwDO5Ojw8SJELQq/xCr3wIL1TY4qcaMwHeWHUA+kvGfnMHlvRh8orWJB4w4sJENbUc4rNApwneQahKR+MHzdmyF7WeoIsmNI2XyDjWZhr3UED9FDqPqdzzzfpQZ0SiWbOr0M0fETxuZQqydfAihSlB7SDhGfWbuYZoTa2KfEc3xgkcIs/pdGoks55Z61iLOTAb4cqXDwXJnhhdMXZWDrPOxRzT4/bMHE78yV0L6oKm5mpM/Cz2q6jlAeOnB+hSPpYwH/qY3gFphN7/ixDQHZqzxw05p5Stx4Uf1Ihb7MlGc/2Ti4FQIz/T4jgVF5GVlKFbyOpfpfXbd36x4apQgy4gCkJFQPrjqSWpMUwM9A5gJm0JgG/GBvOmt0d2So5cZb09BConwMv8CMjuHoXQs/HT03JuBew+pz6L7CtVckzOPtmXWqfRhkhlQ5Lhmfj1m7F+1h60xv3OGY8yvRlHzIDCA5jsM6Kueoikm5EvSjL+uJtACciUkOshgNqA3yoTCmE4h56WYylEeaacCvSp4kvZm99erzbjppUoO/bCOMGwiiYOvuG9V1JRG/ovoZR/KUR+vA3N/zhL6cSPxYRHuw0/TH5f3MzVPGbvM7CxNXd/mWXy8o9M=
 stages:
-- prepare cache
-- test
-- npm release
+  - prepare cache
+  - test
+  - npm release
 notifications:
   slack: harmonizly:FiQyIOat1SVdXTCcZAjaGwq4
