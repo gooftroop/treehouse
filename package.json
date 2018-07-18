@@ -22,9 +22,9 @@
   ],
   "scripts": {
     "report:coverage": "cat ./coverage/lcov.info | codacy-coverage && rm -rf ./coverage",
-    "test": "mocha",
+    "test": "NODE_ENV=test mocha",
     "test:coverage": "nyc --reporter=lcov npm test && npm run report:coverage",
-    "test:dev": "mocha --inspect-brk"
+    "test:debug": "npm test -- --inspect-brk"
   },
   "publishConfig": {
     "access": "public"

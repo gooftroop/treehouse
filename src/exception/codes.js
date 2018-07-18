@@ -1,5 +1,5 @@
 /**
- * @module error/codes
+ * @module exception
  * @exports DEFAULT_FATAL_ERROR
  * @exports FATAL_ERROR
  * @exports DEFAULT_GENERAL_ERROR

@@ -1,5 +1,5 @@
 /**
- * @module error/utils
+ * @module exception
  * @exports DEFAULT_CODE
  * @exports DEFAULT_MESSAGE
  * @exports DEFAULT_STATUS
@@ -19,9 +19,9 @@ export const DEFAULT_STATUS: number = 500;
  * @param  {number|Object} payload
  * @return {number}
  */
-export function resolveCode(payload: number|Object): number {
+export function resolveCode(payload: number | Object): number {
   if (typeof payload === 'object') {
-    return ('code' in payload) ? DEFAULT_CODE : payload.code;
+    return ('code' in payload) ? payload.code : DEFAULT_CODE;
   }
 
   return (payload != null) ? payload : DEFAULT_CODE;
@@ -35,9 +35,9 @@ export function resolveCode(payload: number|Object): number {
  * @param  {string|Object} payload
  * @return {string}
  */
-export function resolveMessage(payload: string|Object): string {
+export function resolveMessage(payload: string | Object): string {
   if (typeof payload === 'object') {
-    return ('message' in payload) ? DEFAULT_MESSAGE : payload.message;
+    return ('message' in payload) ? payload.message : DEFAULT_MESSAGE;
   }
 
   return (payload != null) ? payload : DEFAULT_MESSAGE;
@@ -51,9 +51,9 @@ export function resolveMessage(payload: string|Object): string {
  * @param  {number|Object} payload
  * @return {number}
  */
-export function resolveStatus(payload: number|Object): number {
+export function resolveStatus(payload: number | Object): number {
   if (typeof payload === 'object') {
-    return ('status' in payload) ? DEFAULT_STATUS : payload.status;
+    return ('status' in payload) ? payload.status : DEFAULT_STATUS;
   }
 
   return (payload != null) ? payload : DEFAULT_STATUS;

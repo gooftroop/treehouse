@@ -6,9 +6,11 @@ import https from 'https';
 import Koa from 'koa';
 import sinon from 'sinon';
 
+import Exception from 'treehouse/exception';
 import Logger from 'treehouse/utils/logger';
 import router from 'treehouse/router';
 import Server from 'treehouse/server';
+import { ILLEGAL_STATE_EXCEPTION } from 'treehouse/exception/codes';
 
 const FAKE_LOGGER = {
   info: sinon.fake(),
@@ -226,7 +228,27 @@ describe('server.js', () => {
 
   describe('start', () => {
     describe('when the app has not been initialized', () => {
-      it('should throw an Error', () => {});
+      beforeEach(() => {
+        server = new Server(config);
+
+        server.app = null;
+      });
+
+      it('should throw an ILLEGAL_STATE_EXCEPTION', () => {
+        chai.expect(() => {
+          server.start();
+        }).to.throw()
+          .with.property('code', ILLEGAL_STATE_EXCEPTION().code);
+      });
+
+      it('should throw an Exception with a `details` message', () => {
+        const details = 'Cannot start server: the koa instance is not defined';
+
+        chai.expect(() => {
+          server.start();
+        }).to.throw()
+          .with.property('details', details);
+      });
     });
 
     it('should call getListenCallback', () => {});

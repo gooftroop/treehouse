@@ -8,12 +8,14 @@ import Koa from 'koa';
 
 import accessLogger from 'treehouse/middleware/accessLogger';
 import errorMiddleware from 'treehouse/middleware/error';
+import Exception from 'treehouse/exception';
 import Logger from 'treehouse/utils/logger';
 import router from 'treehouse/router';
 import sigInitHandler from 'treehouse/utils/sigInitHandler';
 import transactionMiddleware from 'treehouse/middleware/transaction';
 import uncaughtExceptionHandler from 'treehouse/utils/uncaughtExceptionHandler';
 import unhandledRejectionHandler from 'treehouse/utils/unhandledRejectionHandler';
+import { ILLEGAL_STATE_EXCEPTION } from 'treehouse/exception/codes';
 
 // Catches ctrl+c event
 process.on('SIGINT', sigInitHandler);
@@ -261,7 +263,11 @@ export default class Server {
    */
   start(callback: Function | null = null): void {
     if (!this.app) {
-      throw new Error('Cannot start server: the express instance is not defined');
+      const message = ILLEGAL_STATE_EXCEPTION();
+
+      message.details = 'Cannot start server: the koa instance is not defined';
+
+      throw new Exception(message);
     }
 
     this.mountRouters();

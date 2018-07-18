@@ -2,8 +2,8 @@
  * @module middleware/error
  * @exports errorMiddleware
  */
-import ApiError, { InternalError } from 'treehouse/error';
 import Logger from 'treehouse/utils/logger';
+import { ApiError, InternalError } from 'treehouse/exception';
 
 const LOGGER: Object = Logger.getLogger('root');
 
