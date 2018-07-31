@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-      src/utils/unhandledRejectionHandler.js - Documentation
+      src/graphql.js - Documentation
   </title>
 
   <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
@@ -78,7 +78,7 @@
   <div id="main">
     
       <h1 class="page-title">
-        src/utils/unhandledRejectionHandler.js
+        src/graphql.js
       </h1>
     
 
@@ -87,24 +87,69 @@
 
 <section>
   <article>
-    <pre class="prettyprint source linenums"><code>/**
- * @module utils/unhandledRejectionHandler
- * @exports unhandledRejectionHandler
- */
-import Logger from 'treehouse/utils/logger';
+    <pre class="prettyprint source linenums"><code>import { ApolloServer } from 'apollo-server-koa';
 
-const LOGGER: Object = Logger.getLogger('error');
+import Server from 'treehouse/server';
 
 /**
- * Called when the process encounteres an unhandled Promise rejection.
- * The &lt;code>Error&lt;/code> from the rejected Promise is logged and the event
- * loop is allowed to continue.
- * @param  {Error} e
- * @return {void}
+ * Extends &lt;code>Server&lt;/code> and integrates an &lt;code>ApolloServer&lt;/code>
+ * (a GraphQL handler) into the server.
+ * Accepts the standard input that &lt;code>Server&lt;/code> does, as well as an
+ * additional &lt;code>schema&lt;/code> parameter, which is used to populate
+ * &lt;code>ApolloServer&lt;/code>.
+ *
+ * &lt;code>ApolloServer&lt;/code> integrates itself into the server by adding an
+ * additional &lt;code>router&lt;/code> to the &lt;code>Koa&lt;/code> app. This
+ * &lt;code>router&lt;/code> handles requests to &lt;code>config.graphql.url&lt;/code>.
+ *
+ * @class
+ * @extends Server
+ * @see {@link Server}
+ * @see {@link https://www.apollographql.com/docs/apollo-server/v2/whats-new.html|ApolloServer}
  */
-export default function unhandledRejectionHandler(e: Error): void {
-  if (LOGGER) {
-    LOGGER.error(`An unhandled promise rejection occurred: ${e}`);
+export default class GraphqQLServer extends Server {
+  graphql: Object;
+
+  /**
+   * Instantiates the base &lt;code>Server&lt;/code> and intializes the GraphQL
+   * Server capabilities.
+   *
+   * &lt;code>schema&lt;/code> should be the resulting object from combining your
+   * &lt;code>typedefs&lt;/code> and your &lt;code>resolvers&lt;/code> using something like
+   * &lt;code>makeExecutableSchema&lt;/code> from &lt;code>graphql-tools&lt;/code> or
+   * &lt;code>apollo-server-koa&lt;/code>.
+   *
+   * @constructor
+   * @param {Object} config     The application configuration object
+   * @param {Object} schema     The graphql schema object
+   */
+  constructor(config: Object, schema: Object) {
+    super(config);
+
+    this.initializeGraphQl(this.app, schema, config);
+  }
+
+  /**
+   * Initializes &lt;code>ApolloServer&lt;/code> with the provided
+   * &lt;code>schema&lt;/code>, then applies the
+   * &lt;code>ApolloServer&lt;/code> router and handlers to the server application.
+   *
+   * @param {Object} config     The application configuration object
+   * @param {Object} schema     The graphql schema object
+   * @return {void}
+   */
+  initializeGraphQl(app, schema, config) {
+    this.graphql = new ApolloServer({
+      schema,
+      introspection: config.graphql.introspection,
+    });
+
+    // Attach the graphql router to the app
+    this.graphql.applyMiddleware({
+      app,
+      gui: config.graphql.gui,
+      path: config.graphql.url,
+    });
   }
 }
 </code></pre>

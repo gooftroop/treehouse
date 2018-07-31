@@ -93,8 +93,8 @@ export default class Server {
    * @see {@link start}
    * @return {void}
    */
-  createServer(): Object {
-    return (this.config.server.secure) ? this.createHttpsServer() : this.app;
+  createServer(secure): Object {
+    return (secure) ? this.createHttpsServer() : this.app;
   }
 
   /**
@@ -259,9 +259,9 @@ export default class Server {
    * @see {@link getListenCallback}
    *
    * @param {Function|null} callback
-   * @return {Object}
+   * @return {Object | null}
    */
-  start(callback: Function | null = null): void {
+  start(callback: Function | null = null): Object | null {
     if (!this.app) {
       const message = ILLEGAL_STATE_EXCEPTION();
 
@@ -273,19 +273,21 @@ export default class Server {
     this.mountRouters();
 
     try {
-      this.app.server = this.createServer().listen(
-        this.config.get('port'),
-        this.config.get('hostname'),
-        this.config.get('backlog'),
+      this.app.tcp = this.createServer(this.config.server.secure);
+
+      this.app.tcp.listen(
+        this.config.server.port,
+        this.config.server.hostname,
+        this.config.server.backlog,
         this.getListenCallback(callback),
       );
 
-      return this.app.server;
+      return this.app.tcp;
     } catch (e) {
       this.logger.error(e);
-
-      return null;
     }
+
+    return null;
   }
 
   /**
@@ -297,12 +299,12 @@ export default class Server {
    * @return {void}
    */
   stop(callback: Function | null = null): void {
-    this.logger.info(`Server (${this.config.hostname}:${this.config.port}) stopping...`);
+    this.logger.info(`Server (${this.config.server.hostname}:${this.config.server.port}) stopping...`);
 
     if (callback) {
       callback();
     }
 
-    this.app.server.close();
+    this.app.tcp.close();
   }
 }

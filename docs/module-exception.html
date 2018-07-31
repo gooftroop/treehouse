@@ -1,0 +1,5580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+      exception - Documentation
+  </title>
+
+  <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+  <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+
+  
+
+  <!-- start Mixpanel -->
+  <script type="text/javascript">(function(e,a){if(!a.__SV){var b=window;try{var c,l,i,j=b.location,g=j.hash;c=function(a,b){return(l=a.match(RegExp(b+"=([^&]*)")))?l[1]:null};g&&c(g,"state")&&(i=JSON.parse(decodeURIComponent(c(g,"state"))),"mpeditor"===i.action&&(b.sessionStorage.setItem("_mpcehash",g),history.replaceState(i.desiredHash||"",e.title,j.pathname+j.search)))}catch(m){}var k,h;window.mixpanel=a;a._i=[];a.init=function(b,c,f){function e(b,a){var c=a.split(".");2==c.length&&(b=b[c[0]],a=c[1]);b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,
+  0)))}}var d=a;"undefined"!==typeof f?d=a[f]=[]:f="mixpanel";d.people=d.people||[];d.toString=function(b){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);b||(a+=" (stub)");return a};d.people.toString=function(){return d.toString(1)+".people (stub)"};k="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
+  for(h=0;h<k.length;h++)e(d,k[h]);a._i.push([b,c,f])};a.__SV=1.2;b=e.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";c=e.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c)}})(document,window.mixpanel||[]);
+  mixpanel.init("1919205b2da72e4da3b9b6639b444d59");</script>
+  <!-- end Mixpanel -->
+</head>
+
+<body>
+  <svg style="display: none;">
+    <defs>
+      <symbol id="linkIcon" fill="#706d77" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+  <label for="nav-trigger" class="navicon-button x">
+    <div class="navicon"></div>
+  </label>
+
+  <label for="nav-trigger" class="overlay"></label>
+
+  <div class="top-nav-wrapper">
+    <ul>
+      <li >
+        <a href="index.html">
+          
+            <svg fill="#6D6D6D" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+              <path d="M0 0h24v24H0z" fill="none"/>
+            </svg>
+          
+          
+        </a>
+      </li>
+
+      
+
+    </ul>
+  </div>
+
+  <nav>
+    <h3 class="reference-title">
+      Treehouse
+    </h3>
+
+    <h3>Classes</h3><ul><li id="GraphqQLServer-nav"><a href="GraphqQLServer.html">GraphqQLServer</a></li><li id="default-nav"><a href="module-exception.default.html">default</a></li><li id="AuthorizationException-nav"><a href="module-exception-AuthorizationException.html">AuthorizationException</a></li><li id="Exception-nav"><a href="module-exception-Exception.html">Exception</a></li><li id="InternalException-nav"><a href="module-exception-InternalException.html">InternalException</a></li><li id="InvalidRequestException-nav"><a href="module-exception-InvalidRequestException.html">InvalidRequestException</a></li><li id="ServiceUnavailableException-nav"><a href="module-exception-ServiceUnavailableException.html">ServiceUnavailableException</a></li><li id="Logger-nav"><a href="module-utils_logger-Logger.html">Logger</a><ul class='methods'><li data-type="method" id="Logger-getLogger-nav"><a href="module-utils_logger-Logger.html#.getLogger">getLogger</a></li><li data-type="method" id="Logger-_emit-nav"><a href="module-utils_logger-Logger.html#_emit">_emit</a></li><li data-type="method" id="Logger-serializeTransaction-nav"><a href="module-utils_logger-Logger.html#serializeTransaction">serializeTransaction</a></li></ul></li><li id="Server-nav"><a href="Server.html">Server</a></li></ul><h3>Modules</h3><ul><li id="api_v1/handlers/health-nav"><a href="module-api_v1_handlers_health.html">api/v1/handlers/health</a></li><li id="api_v1/routes-nav"><a href="module-api_v1_routes.html">api/v1/routes</a></li><li id="exception-nav"><a href="module-exception.html">exception</a><ul class='methods'><li data-type="method" id="exception-resolveCode-nav"><a href="module-exception.html#~resolveCode">resolveCode</a></li><li data-type="method" id="exception-resolveMessage-nav"><a href="module-exception.html#~resolveMessage">resolveMessage</a></li><li data-type="method" id="exception-resolveStatus-nav"><a href="module-exception.html#~resolveStatus">resolveStatus</a></li></ul></li><li id="main-nav"><a href="module-main.html">main</a></li><li id="middleware_accessLogger-nav"><a href="module-middleware_accessLogger.html">middleware/accessLogger</a></li><li id="middleware_error-nav"><a href="module-middleware_error.html">middleware/error</a></li><li id="middleware_transaction-nav"><a href="module-middleware_transaction.html">middleware/transaction</a><ul class='methods'><li data-type="method" id="middleware_transaction-default-nav"><a href="module-middleware_transaction.html#.default">default</a></li></ul></li><li id="router-nav"><a href="module-router.html">router</a></li><li id="utils_logger-nav"><a href="module-utils_logger.html">utils/logger</a></li><li id="utils_sigInitHandler-nav"><a href="module-utils_sigInitHandler.html">utils/sigInitHandler</a></li><li id="utils_uncaughtExceptionHandler-nav"><a href="module-utils_uncaughtExceptionHandler.html">utils/uncaughtExceptionHandler</a></li><li id="utils_unhandledRejectionHandler-nav"><a href="module-utils_unhandledRejectionHandler.html">utils/unhandledRejectionHandler</a></li></ul><h3 id="global-nav">Global</h3><ul><li><a href="global.html#Mock">Mock</a></li><li><a href="global.html#mocker">mocker</a></li></ul>
+  </nav>
+
+  <div id="main">
+    
+      <h1 class="page-title">
+        exception
+      </h1>
+    
+
+    
+
+<section>
+  <header>
+    
+      
+  </header>
+
+  <article>
+    <div class="container-overview">
+      
+        
+
+        
+      
+    </div>
+
+    
+
+    
+
+    
+      <h3 class="subsection-title">Classes</h3>
+
+      <dl>
+        
+          <dt>
+            <a href="module-exception.default.html">default</a>
+          </dt>
+          <dd>
+            
+              <p>Base <code>Exception</code> class for all Treehouse-specifc API
+<code>Exception</code>.</p>
+            
+          </dd>
+        
+          <dt>
+            <a href="module-exception-AuthorizationException.html">AuthorizationException</a>
+          </dt>
+          <dd>
+            
+              <p>Exception used when a request fails security or authorization checks to
+prompt the User or Client to refresh their session, or to indicate to other
+services to act similarly.</p>
+            
+          </dd>
+        
+          <dt>
+            <a href="module-exception-Exception.html">Exception</a>
+          </dt>
+          <dd>
+            
+              <p><code>ApiException</code> provides a <code>message</code> and
+<code>stack trace</code> as <code>Exception</code> does, but also provides a
+response <code>status</code> and an error </code>code</code> for use in
+production debugging/support.
+            
+          </dd>
+        
+          <dt>
+            <a href="module-exception-InternalException.html">InternalException</a>
+          </dt>
+          <dd>
+            
+              Thrown when an unhandled or unrecoverable exception is encountered.
+            
+          </dd>
+        
+          <dt>
+            <a href="module-exception-InvalidRequestException.html">InvalidRequestException</a>
+          </dt>
+          <dd>
+            
+              <p>Generic exception used to signal to a User/Client that their request was
+invalid.</p>
+            
+          </dd>
+        
+          <dt>
+            <a href="module-exception-ServiceUnavailableException.html">ServiceUnavailableException</a>
+          </dt>
+          <dd>
+            
+              <p>Exception indicating that an external or internal service is unreachable or
+unavailable.</p>
+            
+          </dd>
+        
+      </dl>
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+
+<h4 class="name" id="~DEFAULT_FORBIDDEN">
+  <span class="type-signature">(inner) </span>DEFAULT_FORBIDDEN<span class="type-signature"> :string</span>
+</h4>
+
+
+  <p class="summary">
+    <p>Default error to surface to requests that are forbidden to make that
+request.</p>
+  </p>
+
+
+
+  <div class="description">
+    <p>Default error to surface to requests that are forbidden to make that
+request.</p>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line188">line 188</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~DEFAULT_GENERAL_ERROR">
+  <span class="type-signature">(inner) </span>DEFAULT_GENERAL_ERROR<span class="type-signature"> :string</span>
+</h4>
+
+
+  <p class="summary">
+    <p>Whimsical default error message to surface to clients when no additional
+Error details are available or should be obfuscated when responding with a
+generalized 400 error.</p>
+  </p>
+
+
+
+  <div class="description">
+    <p>Whimsical default error message to surface to clients when no additional
+Error details are available or should be obfuscated when responding with a
+generalized 400 error.</p>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line51">line 51</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~DEFAULT_INVALID_REQUEST">
+  <span class="type-signature">(inner) </span>DEFAULT_INVALID_REQUEST<span class="type-signature"> :string</span>
+</h4>
+
+
+  <p class="summary">
+    <p>Whimsical default error message to surface to clients when no additional
+Error details are available or should be obfuscated when responding to an
+invalid request.</p>
+  </p>
+
+
+
+  <div class="description">
+    <p>Whimsical default error message to surface to clients when no additional
+Error details are available or should be obfuscated when responding to an
+invalid request.</p>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line125">line 125</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~DEFAULT_SERVICE_UNAVAILABLE">
+  <span class="type-signature">(inner) </span>DEFAULT_SERVICE_UNAVAILABLE<span class="type-signature"> :string</span>
+</h4>
+
+
+  <p class="summary">
+    <p>Whimsical default error message to surface to clients when no additional
+Error details are available or should be obfuscated when a service is not
+available.</p>
+  </p>
+
+
+
+  <div class="description">
+    <p>Whimsical default error message to surface to clients when no additional
+Error details are available or should be obfuscated when a service is not
+available.</p>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line241">line 241</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~DEFAULT_UNAUTHORIZED">
+  <span class="type-signature">(inner) </span>DEFAULT_UNAUTHORIZED<span class="type-signature"> :string</span>
+</h4>
+
+
+  <p class="summary">
+    <p>Default error message to surface to clients when they are no longer
+authorized to access a particular resource or service.</p>
+  </p>
+
+
+
+  <div class="description">
+    <p>Default error message to surface to clients when they are no longer
+authorized to access a particular resource or service.</p>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line157">line 157</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~DEFAULT_VALIDATION_ERROR">
+  <span class="type-signature">(inner) </span>DEFAULT_VALIDATION_ERROR<span class="type-signature"> :string</span>
+</h4>
+
+
+  <p class="summary">
+    <p>Whimsical default error message to surface to clients when no additional
+Error details are available or should be obfuscated when validating a
+request fails.</p>
+  </p>
+
+
+
+  <div class="description">
+    <p>Whimsical default error message to surface to clients when no additional
+Error details are available or should be obfuscated when validating a
+request fails.</p>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line273">line 273</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~FATAL_ERROR">
+  <span class="type-signature">(inner) </span>FATAL_ERROR<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Factory to generate a 500 Error Message payload from the provided message.
+  </p>
+
+
+
+  <div class="description">
+    <p>Factory to generate a 500 Error Message payload from the provided message.
+Message defaults to DEFAULT_FATAL_ERROR.</p>
+<pre class="prettyprint source"><code>{
+  status: 500,
+  code: -1,
+  category: 'IllegalStateException',
+  message,
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line29">line 29</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~FORBIDDEN">
+  <span class="type-signature">(inner) </span>FORBIDDEN<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Forbidden (403) Error Factory.
+  </p>
+
+
+
+  <div class="description">
+    <p>Forbidden (403) Error Factory.
+Generates an Error payload with the provided message, defaulting
+DEFAULT_FORBIDDEN if no message is provided.
+Returns the payload:</p>
+<pre class="prettyprint source"><code>{
+  status: 403,
+  code: 5,
+  category: 'SecurityException',
+  message,
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line195">line 195</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~GENERAL_ERROR">
+  <span class="type-signature">(inner) </span>GENERAL_ERROR<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Factory to generate a 400 Error Message payload from the provided message.
+  </p>
+
+
+
+  <div class="description">
+    <p>Factory to generate a 400 Error Message payload from the provided message.
+Message defaults to DEFAULT_GENERAL_ERROR.</p>
+<pre class="prettyprint source"><code>{
+  status: 400,
+  code: '0a',
+  category: 'GeneralException',
+  message,
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line59">line 59</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~ILLEGAL_STATE_EXCEPTION">
+  <span class="type-signature">(inner) </span>ILLEGAL_STATE_EXCEPTION<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Illegal State Exception (500) Error Factory.
+  </p>
+
+
+
+  <div class="description">
+    <p>Illegal State Exception (500) Error Factory.
+Returns the payload:</p>
+<pre class="prettyprint source"><code>{
+  status: 500,
+  code: 2,
+  category: 'IllegalStateException',
+  message: 'Application not configured correctly',
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line103">line 103</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~INVALID_REQUEST">
+  <span class="type-signature">(inner) </span>INVALID_REQUEST<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Invalid Request (400) Error Factory.
+  </p>
+
+
+
+  <div class="description">
+    <p>Invalid Request (400) Error Factory.
+Generates an Error payload with the provided message, defaulting
+DEFAULT_INVALID_REQUEST if no message is provided.
+Returns the payload:</p>
+<pre class="prettyprint source"><code>{
+  status: 400,
+  code: 3,
+  category: 'UserError',
+  message,
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line133">line 133</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~MISSING_REQUIRED_PARAMETER">
+  <span class="type-signature">(inner) </span>MISSING_REQUIRED_PARAMETER<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Missing Required Request Parameter (malformed request) (400) Error Factory.
+  </p>
+
+
+
+  <div class="description">
+    <p>Missing Required Request Parameter (malformed request) (400) Error Factory.
+Returns the payload:</p>
+<pre class="prettyprint source"><code>{
+  status: 400,
+  code: 6,
+  category: 'GeneralException',
+  message: 'A required parameter was missing',
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line219">line 219</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~NOT_YET_IMPLEMENTED">
+  <span class="type-signature">(inner) </span>NOT_YET_IMPLEMENTED<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Not Yet Implemented (501) Error Factory.
+  </p>
+
+
+
+  <div class="description">
+    <p>Not Yet Implemented (501) Error Factory.
+Returns the payload:</p>
+<pre class="prettyprint source"><code>{
+  status: 501,
+  code: 1,
+  category: 'NotYetImplemented',
+  message: 'This method must be implmented',
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line81">line 81</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~SERVICE_UNAVAILABLE">
+  <span class="type-signature">(inner) </span>SERVICE_UNAVAILABLE<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Service Unavailable (503) Error Factory.
+  </p>
+
+
+
+  <div class="description">
+    <p>Service Unavailable (503) Error Factory.
+Generates an Error payload with the provided message, defaulting
+DEFAULT_SERVICE_UNAVAILABLE if no message is provided.
+Returns the payload:</p>
+<pre class="prettyprint source"><code>{
+  status: 503,
+  code: 7,
+  category: 'NetworkException',
+  message,
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line249">line 249</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~UNAUTHORIZED">
+  <span class="type-signature">(inner) </span>UNAUTHORIZED<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Unauthorized (401) Error Factory.
+  </p>
+
+
+
+  <div class="description">
+    <p>Unauthorized (401) Error Factory.
+Generates an Error payload with the provided message, defaulting
+DEFAULT_UNAUTHORIZED if no message is provided.
+Returns the payload:</p>
+<pre class="prettyprint source"><code>{
+  status: 401,
+  code: 4,
+  category: 'SecurityException',
+  message,
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line164">line 164</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~VALIDATION_ERROR">
+  <span class="type-signature">(inner) </span>VALIDATION_ERROR<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Validation Failure (400) Error Factory.
+  </p>
+
+
+
+  <div class="description">
+    <p>Validation Failure (400) Error Factory.
+Generates an Error payload with the provided message, defaulting
+DEFAULT_VALIDATION_ERROR if no message is provided.
+Returns the payload:</p>
+<pre class="prettyprint source"><code>{
+  status: 400,
+  code: 8,
+  category: 'ValidationException',
+  message,
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line281">line 281</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+    
+
+    
+      <h3 class="subsection-title">Methods</h3>
+
+      
+        
+
+
+  
+
+  <span class='name-container'>
+    <a class="link-icon" href="#~resolveCode">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
+    <h4 class="name" id="~resolveCode">
+      <span class="type-signature">(inner) </span>resolveCode<span class="signature">(payload)</span><span class="type-signature"> &rarr; {number}</span>
+    </h4>
+  </span>
+
+  
+    <p class="summary">
+      <p>Attempts to find the code in the provided payload if the payload is an
+object.</p>
+    </p>
+  
+
+
+
+  <div class="description">
+    <p>Attempts to find the code in the provided payload if the payload is an
+object. If the payload is a number, then <code>payload</code> is returned. Otherwise,
+DEFAULT_CODE is returned.</p>
+  </div>
+
+
+
+
+
+
+
+  <h5>Parameters:</h5>
+  
+
+<table class="params">
+  <thead>
+    <tr>
+      
+        <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    
+      <tr>
+        
+          <td class="name"><code>payload</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      number
+    </span>
+
+    |
+
+    <span class="param-type">
+      Object
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_utils.js.html">src/exception/utils.js</a>, <a href="src_exception_utils.js.html#line14">line 14</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+        
+
+
+  
+
+  <span class='name-container'>
+    <a class="link-icon" href="#~resolveMessage">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
+    <h4 class="name" id="~resolveMessage">
+      <span class="type-signature">(inner) </span>resolveMessage<span class="signature">(payload)</span><span class="type-signature"> &rarr; {string}</span>
+    </h4>
+  </span>
+
+  
+    <p class="summary">
+      <p>Attempts to find the message in the provided payload if the payload is an
+object.</p>
+    </p>
+  
+
+
+
+  <div class="description">
+    <p>Attempts to find the message in the provided payload if the payload is an
+object. If the payload is a string, then <code>payload</code> is returned. Otherwise,
+DEFAULT_MESSAGE is returned.</p>
+  </div>
+
+
+
+
+
+
+
+  <h5>Parameters:</h5>
+  
+
+<table class="params">
+  <thead>
+    <tr>
+      
+        <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    
+      <tr>
+        
+          <td class="name"><code>payload</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      string
+    </span>
+
+    |
+
+    <span class="param-type">
+      Object
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_utils.js.html">src/exception/utils.js</a>, <a href="src_exception_utils.js.html#line30">line 30</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+        
+
+
+  
+
+  <span class='name-container'>
+    <a class="link-icon" href="#~resolveStatus">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
+    <h4 class="name" id="~resolveStatus">
+      <span class="type-signature">(inner) </span>resolveStatus<span class="signature">(payload)</span><span class="type-signature"> &rarr; {number}</span>
+    </h4>
+  </span>
+
+  
+    <p class="summary">
+      <p>Attempts to find the status in the provided payload if the payload is an
+object.</p>
+    </p>
+  
+
+
+
+  <div class="description">
+    <p>Attempts to find the status in the provided payload if the payload is an
+object. If the payload is a number, then <code>payload</code> is returned. Otherwise,
+DEFAULT_STATUS is returned.</p>
+  </div>
+
+
+
+
+
+
+
+  <h5>Parameters:</h5>
+  
+
+<table class="params">
+  <thead>
+    <tr>
+      
+        <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    
+      <tr>
+        
+          <td class="name"><code>payload</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      number
+    </span>
+
+    |
+
+    <span class="param-type">
+      Object
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_utils.js.html">src/exception/utils.js</a>, <a href="src_exception_utils.js.html#line46">line 46</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    
+
+    
+
+    
+  </article>
+</section>
+
+
+
+
+<section>
+  <header>
+    
+      
+  </header>
+
+  <article>
+    <div class="container-overview">
+      
+        
+
+        
+      
+    </div>
+
+    
+
+    
+
+    
+      <h3 class="subsection-title">Classes</h3>
+
+      <dl>
+        
+          <dt>
+            <a href="module-exception.default.html">default</a>
+          </dt>
+          <dd>
+            
+              <p>Base <code>Exception</code> class for all Treehouse-specifc API
+<code>Exception</code>.</p>
+            
+          </dd>
+        
+          <dt>
+            <a href="module-exception-AuthorizationException.html">AuthorizationException</a>
+          </dt>
+          <dd>
+            
+              <p>Exception used when a request fails security or authorization checks to
+prompt the User or Client to refresh their session, or to indicate to other
+services to act similarly.</p>
+            
+          </dd>
+        
+          <dt>
+            <a href="module-exception-Exception.html">Exception</a>
+          </dt>
+          <dd>
+            
+              <p><code>ApiException</code> provides a <code>message</code> and
+<code>stack trace</code> as <code>Exception</code> does, but also provides a
+response <code>status</code> and an error </code>code</code> for use in
+production debugging/support.
+            
+          </dd>
+        
+          <dt>
+            <a href="module-exception-InternalException.html">InternalException</a>
+          </dt>
+          <dd>
+            
+              Thrown when an unhandled or unrecoverable exception is encountered.
+            
+          </dd>
+        
+          <dt>
+            <a href="module-exception-InvalidRequestException.html">InvalidRequestException</a>
+          </dt>
+          <dd>
+            
+              <p>Generic exception used to signal to a User/Client that their request was
+invalid.</p>
+            
+          </dd>
+        
+          <dt>
+            <a href="module-exception-ServiceUnavailableException.html">ServiceUnavailableException</a>
+          </dt>
+          <dd>
+            
+              <p>Exception indicating that an external or internal service is unreachable or
+unavailable.</p>
+            
+          </dd>
+        
+      </dl>
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+
+<h4 class="name" id="~DEFAULT_FORBIDDEN">
+  <span class="type-signature">(inner) </span>DEFAULT_FORBIDDEN<span class="type-signature"> :string</span>
+</h4>
+
+
+  <p class="summary">
+    <p>Default error to surface to requests that are forbidden to make that
+request.</p>
+  </p>
+
+
+
+  <div class="description">
+    <p>Default error to surface to requests that are forbidden to make that
+request.</p>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line188">line 188</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~DEFAULT_GENERAL_ERROR">
+  <span class="type-signature">(inner) </span>DEFAULT_GENERAL_ERROR<span class="type-signature"> :string</span>
+</h4>
+
+
+  <p class="summary">
+    <p>Whimsical default error message to surface to clients when no additional
+Error details are available or should be obfuscated when responding with a
+generalized 400 error.</p>
+  </p>
+
+
+
+  <div class="description">
+    <p>Whimsical default error message to surface to clients when no additional
+Error details are available or should be obfuscated when responding with a
+generalized 400 error.</p>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line51">line 51</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~DEFAULT_INVALID_REQUEST">
+  <span class="type-signature">(inner) </span>DEFAULT_INVALID_REQUEST<span class="type-signature"> :string</span>
+</h4>
+
+
+  <p class="summary">
+    <p>Whimsical default error message to surface to clients when no additional
+Error details are available or should be obfuscated when responding to an
+invalid request.</p>
+  </p>
+
+
+
+  <div class="description">
+    <p>Whimsical default error message to surface to clients when no additional
+Error details are available or should be obfuscated when responding to an
+invalid request.</p>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line125">line 125</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~DEFAULT_SERVICE_UNAVAILABLE">
+  <span class="type-signature">(inner) </span>DEFAULT_SERVICE_UNAVAILABLE<span class="type-signature"> :string</span>
+</h4>
+
+
+  <p class="summary">
+    <p>Whimsical default error message to surface to clients when no additional
+Error details are available or should be obfuscated when a service is not
+available.</p>
+  </p>
+
+
+
+  <div class="description">
+    <p>Whimsical default error message to surface to clients when no additional
+Error details are available or should be obfuscated when a service is not
+available.</p>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line241">line 241</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~DEFAULT_UNAUTHORIZED">
+  <span class="type-signature">(inner) </span>DEFAULT_UNAUTHORIZED<span class="type-signature"> :string</span>
+</h4>
+
+
+  <p class="summary">
+    <p>Default error message to surface to clients when they are no longer
+authorized to access a particular resource or service.</p>
+  </p>
+
+
+
+  <div class="description">
+    <p>Default error message to surface to clients when they are no longer
+authorized to access a particular resource or service.</p>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line157">line 157</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~DEFAULT_VALIDATION_ERROR">
+  <span class="type-signature">(inner) </span>DEFAULT_VALIDATION_ERROR<span class="type-signature"> :string</span>
+</h4>
+
+
+  <p class="summary">
+    <p>Whimsical default error message to surface to clients when no additional
+Error details are available or should be obfuscated when validating a
+request fails.</p>
+  </p>
+
+
+
+  <div class="description">
+    <p>Whimsical default error message to surface to clients when no additional
+Error details are available or should be obfuscated when validating a
+request fails.</p>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line273">line 273</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~FATAL_ERROR">
+  <span class="type-signature">(inner) </span>FATAL_ERROR<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Factory to generate a 500 Error Message payload from the provided message.
+  </p>
+
+
+
+  <div class="description">
+    <p>Factory to generate a 500 Error Message payload from the provided message.
+Message defaults to DEFAULT_FATAL_ERROR.</p>
+<pre class="prettyprint source"><code>{
+  status: 500,
+  code: -1,
+  category: 'IllegalStateException',
+  message,
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line29">line 29</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~FORBIDDEN">
+  <span class="type-signature">(inner) </span>FORBIDDEN<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Forbidden (403) Error Factory.
+  </p>
+
+
+
+  <div class="description">
+    <p>Forbidden (403) Error Factory.
+Generates an Error payload with the provided message, defaulting
+DEFAULT_FORBIDDEN if no message is provided.
+Returns the payload:</p>
+<pre class="prettyprint source"><code>{
+  status: 403,
+  code: 5,
+  category: 'SecurityException',
+  message,
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line195">line 195</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~GENERAL_ERROR">
+  <span class="type-signature">(inner) </span>GENERAL_ERROR<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Factory to generate a 400 Error Message payload from the provided message.
+  </p>
+
+
+
+  <div class="description">
+    <p>Factory to generate a 400 Error Message payload from the provided message.
+Message defaults to DEFAULT_GENERAL_ERROR.</p>
+<pre class="prettyprint source"><code>{
+  status: 400,
+  code: '0a',
+  category: 'GeneralException',
+  message,
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line59">line 59</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~ILLEGAL_STATE_EXCEPTION">
+  <span class="type-signature">(inner) </span>ILLEGAL_STATE_EXCEPTION<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Illegal State Exception (500) Error Factory.
+  </p>
+
+
+
+  <div class="description">
+    <p>Illegal State Exception (500) Error Factory.
+Returns the payload:</p>
+<pre class="prettyprint source"><code>{
+  status: 500,
+  code: 2,
+  category: 'IllegalStateException',
+  message: 'Application not configured correctly',
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line103">line 103</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~INVALID_REQUEST">
+  <span class="type-signature">(inner) </span>INVALID_REQUEST<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Invalid Request (400) Error Factory.
+  </p>
+
+
+
+  <div class="description">
+    <p>Invalid Request (400) Error Factory.
+Generates an Error payload with the provided message, defaulting
+DEFAULT_INVALID_REQUEST if no message is provided.
+Returns the payload:</p>
+<pre class="prettyprint source"><code>{
+  status: 400,
+  code: 3,
+  category: 'UserError',
+  message,
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line133">line 133</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~MISSING_REQUIRED_PARAMETER">
+  <span class="type-signature">(inner) </span>MISSING_REQUIRED_PARAMETER<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Missing Required Request Parameter (malformed request) (400) Error Factory.
+  </p>
+
+
+
+  <div class="description">
+    <p>Missing Required Request Parameter (malformed request) (400) Error Factory.
+Returns the payload:</p>
+<pre class="prettyprint source"><code>{
+  status: 400,
+  code: 6,
+  category: 'GeneralException',
+  message: 'A required parameter was missing',
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line219">line 219</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~NOT_YET_IMPLEMENTED">
+  <span class="type-signature">(inner) </span>NOT_YET_IMPLEMENTED<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Not Yet Implemented (501) Error Factory.
+  </p>
+
+
+
+  <div class="description">
+    <p>Not Yet Implemented (501) Error Factory.
+Returns the payload:</p>
+<pre class="prettyprint source"><code>{
+  status: 501,
+  code: 1,
+  category: 'NotYetImplemented',
+  message: 'This method must be implmented',
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line81">line 81</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~SERVICE_UNAVAILABLE">
+  <span class="type-signature">(inner) </span>SERVICE_UNAVAILABLE<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Service Unavailable (503) Error Factory.
+  </p>
+
+
+
+  <div class="description">
+    <p>Service Unavailable (503) Error Factory.
+Generates an Error payload with the provided message, defaulting
+DEFAULT_SERVICE_UNAVAILABLE if no message is provided.
+Returns the payload:</p>
+<pre class="prettyprint source"><code>{
+  status: 503,
+  code: 7,
+  category: 'NetworkException',
+  message,
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line249">line 249</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~UNAUTHORIZED">
+  <span class="type-signature">(inner) </span>UNAUTHORIZED<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Unauthorized (401) Error Factory.
+  </p>
+
+
+
+  <div class="description">
+    <p>Unauthorized (401) Error Factory.
+Generates an Error payload with the provided message, defaulting
+DEFAULT_UNAUTHORIZED if no message is provided.
+Returns the payload:</p>
+<pre class="prettyprint source"><code>{
+  status: 401,
+  code: 4,
+  category: 'SecurityException',
+  message,
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line164">line 164</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~VALIDATION_ERROR">
+  <span class="type-signature">(inner) </span>VALIDATION_ERROR<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Validation Failure (400) Error Factory.
+  </p>
+
+
+
+  <div class="description">
+    <p>Validation Failure (400) Error Factory.
+Generates an Error payload with the provided message, defaulting
+DEFAULT_VALIDATION_ERROR if no message is provided.
+Returns the payload:</p>
+<pre class="prettyprint source"><code>{
+  status: 400,
+  code: 8,
+  category: 'ValidationException',
+  message,
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line281">line 281</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+    
+
+    
+      <h3 class="subsection-title">Methods</h3>
+
+      
+        
+
+
+  
+
+  <span class='name-container'>
+    <a class="link-icon" href="#~resolveCode">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
+    <h4 class="name" id="~resolveCode">
+      <span class="type-signature">(inner) </span>resolveCode<span class="signature">(payload)</span><span class="type-signature"> &rarr; {number}</span>
+    </h4>
+  </span>
+
+  
+    <p class="summary">
+      <p>Attempts to find the code in the provided payload if the payload is an
+object.</p>
+    </p>
+  
+
+
+
+  <div class="description">
+    <p>Attempts to find the code in the provided payload if the payload is an
+object. If the payload is a number, then <code>payload</code> is returned. Otherwise,
+DEFAULT_CODE is returned.</p>
+  </div>
+
+
+
+
+
+
+
+  <h5>Parameters:</h5>
+  
+
+<table class="params">
+  <thead>
+    <tr>
+      
+        <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    
+      <tr>
+        
+          <td class="name"><code>payload</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      number
+    </span>
+
+    |
+
+    <span class="param-type">
+      Object
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_utils.js.html">src/exception/utils.js</a>, <a href="src_exception_utils.js.html#line14">line 14</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+        
+
+
+  
+
+  <span class='name-container'>
+    <a class="link-icon" href="#~resolveMessage">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
+    <h4 class="name" id="~resolveMessage">
+      <span class="type-signature">(inner) </span>resolveMessage<span class="signature">(payload)</span><span class="type-signature"> &rarr; {string}</span>
+    </h4>
+  </span>
+
+  
+    <p class="summary">
+      <p>Attempts to find the message in the provided payload if the payload is an
+object.</p>
+    </p>
+  
+
+
+
+  <div class="description">
+    <p>Attempts to find the message in the provided payload if the payload is an
+object. If the payload is a string, then <code>payload</code> is returned. Otherwise,
+DEFAULT_MESSAGE is returned.</p>
+  </div>
+
+
+
+
+
+
+
+  <h5>Parameters:</h5>
+  
+
+<table class="params">
+  <thead>
+    <tr>
+      
+        <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    
+      <tr>
+        
+          <td class="name"><code>payload</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      string
+    </span>
+
+    |
+
+    <span class="param-type">
+      Object
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_utils.js.html">src/exception/utils.js</a>, <a href="src_exception_utils.js.html#line30">line 30</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+        
+
+
+  
+
+  <span class='name-container'>
+    <a class="link-icon" href="#~resolveStatus">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
+    <h4 class="name" id="~resolveStatus">
+      <span class="type-signature">(inner) </span>resolveStatus<span class="signature">(payload)</span><span class="type-signature"> &rarr; {number}</span>
+    </h4>
+  </span>
+
+  
+    <p class="summary">
+      <p>Attempts to find the status in the provided payload if the payload is an
+object.</p>
+    </p>
+  
+
+
+
+  <div class="description">
+    <p>Attempts to find the status in the provided payload if the payload is an
+object. If the payload is a number, then <code>payload</code> is returned. Otherwise,
+DEFAULT_STATUS is returned.</p>
+  </div>
+
+
+
+
+
+
+
+  <h5>Parameters:</h5>
+  
+
+<table class="params">
+  <thead>
+    <tr>
+      
+        <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    
+      <tr>
+        
+          <td class="name"><code>payload</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      number
+    </span>
+
+    |
+
+    <span class="param-type">
+      Object
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_utils.js.html">src/exception/utils.js</a>, <a href="src_exception_utils.js.html#line46">line 46</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    
+
+    
+
+    
+  </article>
+</section>
+
+
+
+
+<section>
+  <header>
+    
+      
+  </header>
+
+  <article>
+    <div class="container-overview">
+      
+        
+
+        
+      
+    </div>
+
+    
+
+    
+
+    
+      <h3 class="subsection-title">Classes</h3>
+
+      <dl>
+        
+          <dt>
+            <a href="module-exception.default.html">default</a>
+          </dt>
+          <dd>
+            
+              <p>Base <code>Exception</code> class for all Treehouse-specifc API
+<code>Exception</code>.</p>
+            
+          </dd>
+        
+          <dt>
+            <a href="module-exception-AuthorizationException.html">AuthorizationException</a>
+          </dt>
+          <dd>
+            
+              <p>Exception used when a request fails security or authorization checks to
+prompt the User or Client to refresh their session, or to indicate to other
+services to act similarly.</p>
+            
+          </dd>
+        
+          <dt>
+            <a href="module-exception-Exception.html">Exception</a>
+          </dt>
+          <dd>
+            
+              <p><code>ApiException</code> provides a <code>message</code> and
+<code>stack trace</code> as <code>Exception</code> does, but also provides a
+response <code>status</code> and an error </code>code</code> for use in
+production debugging/support.
+            
+          </dd>
+        
+          <dt>
+            <a href="module-exception-InternalException.html">InternalException</a>
+          </dt>
+          <dd>
+            
+              Thrown when an unhandled or unrecoverable exception is encountered.
+            
+          </dd>
+        
+          <dt>
+            <a href="module-exception-InvalidRequestException.html">InvalidRequestException</a>
+          </dt>
+          <dd>
+            
+              <p>Generic exception used to signal to a User/Client that their request was
+invalid.</p>
+            
+          </dd>
+        
+          <dt>
+            <a href="module-exception-ServiceUnavailableException.html">ServiceUnavailableException</a>
+          </dt>
+          <dd>
+            
+              <p>Exception indicating that an external or internal service is unreachable or
+unavailable.</p>
+            
+          </dd>
+        
+      </dl>
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+
+<h4 class="name" id="~DEFAULT_FORBIDDEN">
+  <span class="type-signature">(inner) </span>DEFAULT_FORBIDDEN<span class="type-signature"> :string</span>
+</h4>
+
+
+  <p class="summary">
+    <p>Default error to surface to requests that are forbidden to make that
+request.</p>
+  </p>
+
+
+
+  <div class="description">
+    <p>Default error to surface to requests that are forbidden to make that
+request.</p>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line188">line 188</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~DEFAULT_GENERAL_ERROR">
+  <span class="type-signature">(inner) </span>DEFAULT_GENERAL_ERROR<span class="type-signature"> :string</span>
+</h4>
+
+
+  <p class="summary">
+    <p>Whimsical default error message to surface to clients when no additional
+Error details are available or should be obfuscated when responding with a
+generalized 400 error.</p>
+  </p>
+
+
+
+  <div class="description">
+    <p>Whimsical default error message to surface to clients when no additional
+Error details are available or should be obfuscated when responding with a
+generalized 400 error.</p>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line51">line 51</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~DEFAULT_INVALID_REQUEST">
+  <span class="type-signature">(inner) </span>DEFAULT_INVALID_REQUEST<span class="type-signature"> :string</span>
+</h4>
+
+
+  <p class="summary">
+    <p>Whimsical default error message to surface to clients when no additional
+Error details are available or should be obfuscated when responding to an
+invalid request.</p>
+  </p>
+
+
+
+  <div class="description">
+    <p>Whimsical default error message to surface to clients when no additional
+Error details are available or should be obfuscated when responding to an
+invalid request.</p>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line125">line 125</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~DEFAULT_SERVICE_UNAVAILABLE">
+  <span class="type-signature">(inner) </span>DEFAULT_SERVICE_UNAVAILABLE<span class="type-signature"> :string</span>
+</h4>
+
+
+  <p class="summary">
+    <p>Whimsical default error message to surface to clients when no additional
+Error details are available or should be obfuscated when a service is not
+available.</p>
+  </p>
+
+
+
+  <div class="description">
+    <p>Whimsical default error message to surface to clients when no additional
+Error details are available or should be obfuscated when a service is not
+available.</p>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line241">line 241</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~DEFAULT_UNAUTHORIZED">
+  <span class="type-signature">(inner) </span>DEFAULT_UNAUTHORIZED<span class="type-signature"> :string</span>
+</h4>
+
+
+  <p class="summary">
+    <p>Default error message to surface to clients when they are no longer
+authorized to access a particular resource or service.</p>
+  </p>
+
+
+
+  <div class="description">
+    <p>Default error message to surface to clients when they are no longer
+authorized to access a particular resource or service.</p>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line157">line 157</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~DEFAULT_VALIDATION_ERROR">
+  <span class="type-signature">(inner) </span>DEFAULT_VALIDATION_ERROR<span class="type-signature"> :string</span>
+</h4>
+
+
+  <p class="summary">
+    <p>Whimsical default error message to surface to clients when no additional
+Error details are available or should be obfuscated when validating a
+request fails.</p>
+  </p>
+
+
+
+  <div class="description">
+    <p>Whimsical default error message to surface to clients when no additional
+Error details are available or should be obfuscated when validating a
+request fails.</p>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line273">line 273</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~FATAL_ERROR">
+  <span class="type-signature">(inner) </span>FATAL_ERROR<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Factory to generate a 500 Error Message payload from the provided message.
+  </p>
+
+
+
+  <div class="description">
+    <p>Factory to generate a 500 Error Message payload from the provided message.
+Message defaults to DEFAULT_FATAL_ERROR.</p>
+<pre class="prettyprint source"><code>{
+  status: 500,
+  code: -1,
+  category: 'IllegalStateException',
+  message,
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line29">line 29</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~FORBIDDEN">
+  <span class="type-signature">(inner) </span>FORBIDDEN<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Forbidden (403) Error Factory.
+  </p>
+
+
+
+  <div class="description">
+    <p>Forbidden (403) Error Factory.
+Generates an Error payload with the provided message, defaulting
+DEFAULT_FORBIDDEN if no message is provided.
+Returns the payload:</p>
+<pre class="prettyprint source"><code>{
+  status: 403,
+  code: 5,
+  category: 'SecurityException',
+  message,
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line195">line 195</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~GENERAL_ERROR">
+  <span class="type-signature">(inner) </span>GENERAL_ERROR<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Factory to generate a 400 Error Message payload from the provided message.
+  </p>
+
+
+
+  <div class="description">
+    <p>Factory to generate a 400 Error Message payload from the provided message.
+Message defaults to DEFAULT_GENERAL_ERROR.</p>
+<pre class="prettyprint source"><code>{
+  status: 400,
+  code: '0a',
+  category: 'GeneralException',
+  message,
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line59">line 59</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~ILLEGAL_STATE_EXCEPTION">
+  <span class="type-signature">(inner) </span>ILLEGAL_STATE_EXCEPTION<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Illegal State Exception (500) Error Factory.
+  </p>
+
+
+
+  <div class="description">
+    <p>Illegal State Exception (500) Error Factory.
+Returns the payload:</p>
+<pre class="prettyprint source"><code>{
+  status: 500,
+  code: 2,
+  category: 'IllegalStateException',
+  message: 'Application not configured correctly',
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line103">line 103</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~INVALID_REQUEST">
+  <span class="type-signature">(inner) </span>INVALID_REQUEST<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Invalid Request (400) Error Factory.
+  </p>
+
+
+
+  <div class="description">
+    <p>Invalid Request (400) Error Factory.
+Generates an Error payload with the provided message, defaulting
+DEFAULT_INVALID_REQUEST if no message is provided.
+Returns the payload:</p>
+<pre class="prettyprint source"><code>{
+  status: 400,
+  code: 3,
+  category: 'UserError',
+  message,
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line133">line 133</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~MISSING_REQUIRED_PARAMETER">
+  <span class="type-signature">(inner) </span>MISSING_REQUIRED_PARAMETER<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Missing Required Request Parameter (malformed request) (400) Error Factory.
+  </p>
+
+
+
+  <div class="description">
+    <p>Missing Required Request Parameter (malformed request) (400) Error Factory.
+Returns the payload:</p>
+<pre class="prettyprint source"><code>{
+  status: 400,
+  code: 6,
+  category: 'GeneralException',
+  message: 'A required parameter was missing',
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line219">line 219</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~NOT_YET_IMPLEMENTED">
+  <span class="type-signature">(inner) </span>NOT_YET_IMPLEMENTED<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Not Yet Implemented (501) Error Factory.
+  </p>
+
+
+
+  <div class="description">
+    <p>Not Yet Implemented (501) Error Factory.
+Returns the payload:</p>
+<pre class="prettyprint source"><code>{
+  status: 501,
+  code: 1,
+  category: 'NotYetImplemented',
+  message: 'This method must be implmented',
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line81">line 81</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~SERVICE_UNAVAILABLE">
+  <span class="type-signature">(inner) </span>SERVICE_UNAVAILABLE<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Service Unavailable (503) Error Factory.
+  </p>
+
+
+
+  <div class="description">
+    <p>Service Unavailable (503) Error Factory.
+Generates an Error payload with the provided message, defaulting
+DEFAULT_SERVICE_UNAVAILABLE if no message is provided.
+Returns the payload:</p>
+<pre class="prettyprint source"><code>{
+  status: 503,
+  code: 7,
+  category: 'NetworkException',
+  message,
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line249">line 249</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~UNAUTHORIZED">
+  <span class="type-signature">(inner) </span>UNAUTHORIZED<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Unauthorized (401) Error Factory.
+  </p>
+
+
+
+  <div class="description">
+    <p>Unauthorized (401) Error Factory.
+Generates an Error payload with the provided message, defaulting
+DEFAULT_UNAUTHORIZED if no message is provided.
+Returns the payload:</p>
+<pre class="prettyprint source"><code>{
+  status: 401,
+  code: 4,
+  category: 'SecurityException',
+  message,
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line164">line 164</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+            
+
+<h4 class="name" id="~VALIDATION_ERROR">
+  <span class="type-signature">(inner) </span>VALIDATION_ERROR<span class="type-signature"> :function</span>
+</h4>
+
+
+  <p class="summary">
+    Validation Failure (400) Error Factory.
+  </p>
+
+
+
+  <div class="description">
+    <p>Validation Failure (400) Error Factory.
+Generates an Error payload with the provided message, defaulting
+DEFAULT_VALIDATION_ERROR if no message is provided.
+Returns the payload:</p>
+<pre class="prettyprint source"><code>{
+  status: 400,
+  code: 8,
+  category: 'ValidationException',
+  message,
+}</code></pre>
+  </div>
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_codes.js.html">src/exception/codes.js</a>, <a href="src_exception_codes.js.html#line281">line 281</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+          
+        
+    
+
+    
+      <h3 class="subsection-title">Methods</h3>
+
+      
+        
+
+
+  
+
+  <span class='name-container'>
+    <a class="link-icon" href="#~resolveCode">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
+    <h4 class="name" id="~resolveCode">
+      <span class="type-signature">(inner) </span>resolveCode<span class="signature">(payload)</span><span class="type-signature"> &rarr; {number}</span>
+    </h4>
+  </span>
+
+  
+    <p class="summary">
+      <p>Attempts to find the code in the provided payload if the payload is an
+object.</p>
+    </p>
+  
+
+
+
+  <div class="description">
+    <p>Attempts to find the code in the provided payload if the payload is an
+object. If the payload is a number, then <code>payload</code> is returned. Otherwise,
+DEFAULT_CODE is returned.</p>
+  </div>
+
+
+
+
+
+
+
+  <h5>Parameters:</h5>
+  
+
+<table class="params">
+  <thead>
+    <tr>
+      
+        <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    
+      <tr>
+        
+          <td class="name"><code>payload</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      number
+    </span>
+
+    |
+
+    <span class="param-type">
+      Object
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_utils.js.html">src/exception/utils.js</a>, <a href="src_exception_utils.js.html#line14">line 14</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+        
+
+
+  
+
+  <span class='name-container'>
+    <a class="link-icon" href="#~resolveMessage">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
+    <h4 class="name" id="~resolveMessage">
+      <span class="type-signature">(inner) </span>resolveMessage<span class="signature">(payload)</span><span class="type-signature"> &rarr; {string}</span>
+    </h4>
+  </span>
+
+  
+    <p class="summary">
+      <p>Attempts to find the message in the provided payload if the payload is an
+object.</p>
+    </p>
+  
+
+
+
+  <div class="description">
+    <p>Attempts to find the message in the provided payload if the payload is an
+object. If the payload is a string, then <code>payload</code> is returned. Otherwise,
+DEFAULT_MESSAGE is returned.</p>
+  </div>
+
+
+
+
+
+
+
+  <h5>Parameters:</h5>
+  
+
+<table class="params">
+  <thead>
+    <tr>
+      
+        <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    
+      <tr>
+        
+          <td class="name"><code>payload</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      string
+    </span>
+
+    |
+
+    <span class="param-type">
+      Object
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_utils.js.html">src/exception/utils.js</a>, <a href="src_exception_utils.js.html#line30">line 30</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+        
+
+
+  
+
+  <span class='name-container'>
+    <a class="link-icon" href="#~resolveStatus">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
+    <h4 class="name" id="~resolveStatus">
+      <span class="type-signature">(inner) </span>resolveStatus<span class="signature">(payload)</span><span class="type-signature"> &rarr; {number}</span>
+    </h4>
+  </span>
+
+  
+    <p class="summary">
+      <p>Attempts to find the status in the provided payload if the payload is an
+object.</p>
+    </p>
+  
+
+
+
+  <div class="description">
+    <p>Attempts to find the status in the provided payload if the payload is an
+object. If the payload is a number, then <code>payload</code> is returned. Otherwise,
+DEFAULT_STATUS is returned.</p>
+  </div>
+
+
+
+
+
+
+
+  <h5>Parameters:</h5>
+  
+
+<table class="params">
+  <thead>
+    <tr>
+      
+        <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    
+      <tr>
+        
+          <td class="name"><code>payload</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      number
+    </span>
+
+    |
+
+    <span class="param-type">
+      Object
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="src_exception_utils.js.html">src/exception/utils.js</a>, <a href="src_exception_utils.js.html#line46">line 46</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    
+
+    
+
+    
+  </article>
+</section>
+
+
+
+
+  </div>
+
+  <br class="clear">
+
+  <footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
+  </footer>
+
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/pagelocation.js"></script>
+
+  
+  
+</body>
+</html>

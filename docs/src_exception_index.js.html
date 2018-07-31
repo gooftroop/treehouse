@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-      src/utils/unhandledRejectionHandler.js - Documentation
+      src/exception/index.js - Documentation
   </title>
 
   <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
@@ -78,7 +78,7 @@
   <div id="main">
     
       <h1 class="page-title">
-        src/utils/unhandledRejectionHandler.js
+        src/exception/index.js
       </h1>
     
 
@@ -88,23 +88,159 @@
 <section>
   <article>
     <pre class="prettyprint source linenums"><code>/**
- * @module utils/unhandledRejectionHandler
- * @exports unhandledRejectionHandler
+ * @module exception
+ * @exports ApiException
+ * @exports AuthorizationException
+ * @exports Exception
+ * @exports InternalException
+ * @exports InvalidRequestException
+ * @exports ServiceUnavailableException
  */
-import Logger from 'treehouse/utils/logger';
-
-const LOGGER: Object = Logger.getLogger('error');
+import {
+  resolveCode,
+  resolveMessage,
+  resolveStatus,
+} from 'treehouse/exception/utils';
+import * as codes from 'treehouse/exception/codes';
 
 /**
- * Called when the process encounteres an unhandled Promise rejection.
- * The &lt;code>Error&lt;/code> from the rejected Promise is logged and the event
- * loop is allowed to continue.
- * @param  {Error} e
- * @return {void}
+ * &lt;code>ApiException&lt;/code> provides a &lt;code>message&lt;/code> and
+ * &lt;code>stack trace&lt;/code> as &lt;code>Exception&lt;/code> does, but also provides a
+ * response &lt;code>status&lt;/code> and an error &lt;/code>code&lt;/code> for use in
+ * production debugging/support.
+ *
+ * @class
+ * @extends Error
  */
-export default function unhandledRejectionHandler(e: Error): void {
-  if (LOGGER) {
-    LOGGER.error(`An unhandled promise rejection occurred: ${e}`);
+export default class Exception extends Error {
+  code: number;
+
+  error: Object;
+
+  details: Any;
+
+  /**
+   * Supports both &lt;code>Error&lt;/code>-compliant and Treehouse-specific
+   * paradigms of instantating a new &lt;code>Exception&lt;/code>.
+   * &lt;code>Error&lt;/code>-compliant instantion of an Exception:
+   * ```
+   * new Exception("some message", 1);
+   * ```
+   *
+   * Non-standard (or Treehouse-specific) instantation expects a payload
+   * similar to those found in &lt;code>codes.js&lt;/code> and extracts the
+   * &lt;code>error code&lt;/code>, and the &lt;code>message&lt;/code>.
+   * Optionally accepts &lt;code>Error&lt;/code> for additional meta information as
+   * the second or third argument.
+   *
+   * @constructor
+   * @param  {string|Object}      payload  Either the error message or payload.
+   * @param  {number|Error|null}  code     Optional. The error status.
+   *                                       Error can be supplied instead.
+   * @param  {Error|null}         e        Optional. The originating Error.
+   * @return {void}
+   */
+  constructor(payload: String | Object, code: ?Number | ?Error, e: ?Error): void {
+    super(resolveMessage(payload));
+    this.code = (typeof code === 'number') ? code : resolveCode(payload);
+    this.error = e;
+    this.details = (typeof payload === 'object') &amp;&amp; payload.details;
+
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, this.constructor);
+    } else {
+      this.stack = (new Error(this.message)).stack;
+    }
+  }
+}
+
+/**
+ * Base &lt;code>Exception&lt;/code> class for all Treehouse-specifc API
+ * &lt;code>Exception&lt;/code>.
+ * It is recommended to either use this error to wrap generic
+ * &lt;code>Exception&lt;/code>s or to create application/context-specific Exception
+ * classes that extend &lt;code>ApiException&lt;/code> in order to better/more easily
+ * consume and  alter your application's behavior when &lt;code>Exception&lt;/code>
+ * are thrown.
+ *
+ * @class
+ * @extends Exception
+ */
+export class ApiException extends Exception {
+  status: number;
+
+  /**
+   * Follows the same pattern of instantation as &lt;code>Exception&lt;/code>, except
+   * constructor accepts the additional, optional parameter.
+   * &lt;code>status&lt;/code> after &lt;code>payload&lt;/code>. The remaining signature
+   * remains unaltered.
+   *
+   * @constructor
+   * @param  {string|Object}      payload Either the error message or payload.
+   * @param  {number|Error|null}  status  Optional. The error status.
+   *                                      Only Error can be supplied instead.
+   * @param  {number|Error|null}  code    Optional. The error status.
+   *                                      Error can be supplied instead.
+   * @param  {Error|null}         e       Optional. The originating Error.
+   * @return {void}
+   */
+  constructor(payload: String | Object, status: ?Number | ?Error, code: ?Number | ?Error, e: ?Error): void {
+    super(payload, code, ((status instanceof Error) ? status : e));
+
+    this.status = (typeof status === 'number') ? resolveStatus(status) : resolveStatus(payload);
+  }
+}
+
+/**
+ * Exception used when a request fails security or authorization checks to
+ * prompt the User or Client to refresh their session, or to indicate to other
+ * services to act similarly.
+ *
+ * @class
+ * @extends ApiException
+ */
+export class AuthorizationException extends ApiException {
+  constructor(e: ?Error) {
+    super(codes.NOT_ALLOWED, e);
+  }
+}
+
+/**
+ * Thrown when an unhandled or unrecoverable exception is encountered.
+ * Optionally accepts a custom message when instantating.
+ *
+ * @class
+ * @extends ApiException
+ */
+export class InternalException extends ApiException {
+  constructor(message: String, e: ?Error) {
+    super(codes.FATAL_ERROR(message), e);
+  }
+}
+
+/**
+ * Generic exception used to signal to a User/Client that their request was
+ * invalid. Optionally accepts a custom message when instantating.
+ *
+ * @class
+ * @extends ApiError
+ */
+export class InvalidRequestException extends ApiException {
+  constructor(message: String, e: ?Error) {
+    super(codes.INVALID_REQUEST(message), e);
+  }
+}
+
+/**
+ * Exception indicating that an external or internal service is unreachable or
+ * unavailable. Optionally accepts a custom message when instantating.
+ *
+ * @class
+ * @extends ApiError
+ */
+export class ServiceUnavailableException extends ApiException {
+  constructor(message: String, e: ?Error) {
+    super(codes.SERVICE_UNAVAILABLE(message), e);
   }
 }
 </code></pre>

@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-      src/utils/unhandledRejectionHandler.js - Documentation
+      src/exception/utils.js - Documentation
   </title>
 
   <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
@@ -78,7 +78,7 @@
   <div id="main">
     
       <h1 class="page-title">
-        src/utils/unhandledRejectionHandler.js
+        src/exception/utils.js
       </h1>
     
 
@@ -88,24 +88,64 @@
 <section>
   <article>
     <pre class="prettyprint source linenums"><code>/**
- * @module utils/unhandledRejectionHandler
- * @exports unhandledRejectionHandler
+ * @module exception
+ * @exports DEFAULT_CODE
+ * @exports DEFAULT_MESSAGE
+ * @exports DEFAULT_STATUS
+ * @exports resolveCode
+ * @exports resolveMessage
+ * @exports resolveStatus
  */
-import Logger from 'treehouse/utils/logger';
-
-const LOGGER: Object = Logger.getLogger('error');
+export const DEFAULT_CODE: number = 0;
+export const DEFAULT_MESSAGE: string = 'An Unknown error occurred';
+export const DEFAULT_STATUS: number = 500;
 
 /**
- * Called when the process encounteres an unhandled Promise rejection.
- * The &lt;code>Error&lt;/code> from the rejected Promise is logged and the event
- * loop is allowed to continue.
- * @param  {Error} e
- * @return {void}
+ * Attempts to find the code in the provided payload if the payload is an
+ * object. If the payload is a number, then `payload` is returned. Otherwise,
+ * DEFAULT_CODE is returned.
+ *
+ * @param  {number|Object} payload
+ * @return {number}
  */
-export default function unhandledRejectionHandler(e: Error): void {
-  if (LOGGER) {
-    LOGGER.error(`An unhandled promise rejection occurred: ${e}`);
+export function resolveCode(payload: number | Object): number {
+  if (typeof payload === 'object') {
+    return ('code' in payload) ? payload.code : DEFAULT_CODE;
   }
+
+  return (payload != null) ? payload : DEFAULT_CODE;
+}
+
+/**
+ * Attempts to find the message in the provided payload if the payload is an
+ * object. If the payload is a string, then `payload` is returned. Otherwise,
+ * DEFAULT_MESSAGE is returned.
+ *
+ * @param  {string|Object} payload
+ * @return {string}
+ */
+export function resolveMessage(payload: string | Object): string {
+  if (typeof payload === 'object') {
+    return ('message' in payload) ? payload.message : DEFAULT_MESSAGE;
+  }
+
+  return (payload != null) ? payload : DEFAULT_MESSAGE;
+}
+
+/**
+ * Attempts to find the status in the provided payload if the payload is an
+ * object. If the payload is a number, then `payload` is returned. Otherwise,
+ * DEFAULT_STATUS is returned.
+ *
+ * @param  {number|Object} payload
+ * @return {number}
+ */
+export function resolveStatus(payload: number | Object): number {
+  if (typeof payload === 'object') {
+    return ('status' in payload) ? payload.status : DEFAULT_STATUS;
+  }
+
+  return (payload != null) ? payload : DEFAULT_STATUS;
 }
 </code></pre>
   </article>

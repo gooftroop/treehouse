@@ -27,25 +27,13 @@ You can find the deployment versions [here](https://github.com/gooftroop/treehou
 ## Lifecycle
 
 The lifecycle of the server is:
-1. Instantiation / Initialization
-1. Ready
+1. Instantiation
+1. Initialized
 1. Start HTTP(S)
 1. Running
 1. Stop
 1. Destroying
 1. Destroyed
-
-The following events are emitted during the lifecycle, in order:
-
-1. `ready`
-1. `before:start`
-1. `start`
-1. `after:start`
-1. `before:stop`
-1. `destroy`
-1. `after:stop`
-
-Note: `after:stop` is emitted right before the process exists on a normal shut down (via calling `stop()`). This event should only be used for additional cleanup or monitoring and should not attempt to restart or respond to requests.
 
 Every request will run through the following middleware before being evaluated by the router ([koa-router](https://github.com/alexmingoia/koa-router)):
 
@@ -81,7 +69,7 @@ A couple notes of interest:
 - The `transactionId` is included with every logging output. The `transaction` context that's included in every logger statement includes information about the user and session, if that data exists. This assumes that an authorized user is attached to the request context as `user` and the session is attached to the request context as `session`.
 - A health check route is exposed by default at `GET /health`.
 
-## Deployment
+## Usage
 
 Treehouse requires only a configuration object, but provides flexibility in how you build you app.
 The most basic, quick way to get your server running with Treehouse with or without custom middleware and one or more application-specific routers is:
@@ -90,12 +78,12 @@ The most basic, quick way to get your server running with Treehouse with or with
 import Server from 'treehouse';
 
 const server = new Server(config)
-                  .middleware(app => {
-                    // Attach any middleware here
-                  })
-                  .routers((app, defaultRouter) => {
-                    // Attach any application-specific routers to either the app or the defaultRouter
-                  });
+  .middleware(app => {
+    // Attach any middleware here
+  })
+  .routers((app, defaultRouter) => {
+    // Attach any application-specific routers to either the app or the defaultRouter
+  });
 
 server.start();
 ```
@@ -109,12 +97,12 @@ import { makeExecutableSchema } from 'apollo-server-koa';
 const schema = makeExecutableSchema(typedefs, resolvers);
 
 const server = new GraphqQLServer(config, schema)
-                  .middleware(app => {
-                    // Attach any middleware here
-                  })
-                  .routers((app, defaultRouter) => {
-                    // Attach any application-specific routers to either the app or the defaultRouter
-                  });
+  .middleware(app => {
+    // Attach any middleware here
+  })
+  .routers((app, defaultRouter) => {
+    // Attach any application-specific routers to either the app or the defaultRouter
+  });
 
 server.start();
 ```

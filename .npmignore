@@ -33,19 +33,14 @@ node_modules
 .git
 
 # source files
-build
 docs
-src
 test
-.babelrc
 .eslintignore
 .eslintrc.json
-.flowconfig
 .gitignore
 .nycrc
 .travis.yml
 jsdoc.json
-Makefile
 
 # misc
 .env
