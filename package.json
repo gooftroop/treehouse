@@ -36,7 +36,7 @@
     "node": ">=10.0.0"
   },
   "dependencies": {
-    "apollo-server-koa": "^1.4.0",
+    "apollo-server-koa": "^2.0.0-rc.12",
     "bunyan": "^1.8.12",
     "config": "^1.30.0",
     "graphql": "^0.13.2",
