@@ -33,7 +33,9 @@ node_modules
 .git
 
 # source files
+build
 docs
+src
 test
 .eslintignore
 .eslintrc.json

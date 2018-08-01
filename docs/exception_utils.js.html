@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-      middleware/accessLogger.js - Documentation
+      exception/utils.js - Documentation
   </title>
 
   <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
@@ -78,7 +78,7 @@
   <div id="main">
     
       <h1 class="page-title">
-        middleware/accessLogger.js
+        exception/utils.js
       </h1>
     
 
@@ -88,68 +88,65 @@
 <section>
   <article>
     <pre class="prettyprint source linenums"><code>/**
- * @module middleware/accessLogger
- * @exports formatter
- * @exports morgan
+ * @module exception
+ * @exports DEFAULT_CODE
+ * @exports DEFAULT_MESSAGE
+ * @exports DEFAULT_STATUS
+ * @exports resolveCode
+ * @exports resolveMessage
+ * @exports resolveStatus
  */
-import morgan from 'koa-morgan';
-
-import Logger from 'treehouse/utils/logger';
-
-const LOGGER: Object = Logger.getLogger('access');
+export const DEFAULT_CODE: number = 0;
+export const DEFAULT_MESSAGE: string = 'An Unknown error occurred';
+export const DEFAULT_STATUS: number = 500;
 
 /**
- * Morgan log formatter.
- * Returns an object containing the desired request and response attributes.
- * The expected output should be a JSON string as &lt;code>bunyan&lt;/code> will
- * take the string and merge that JSON with the output (which is the desired
- * result). The expected format is:
- * ```
- * {
- *   remote-addr: &lt;string>,
- *   date: &lt;clf>,
- *   method: &lt;string>,
- *   url: &lt;fqd string>,
- *   HTTP: &lt;version string>,
- *   user-agent: &lt;string>,
- *   referrer: &lt;string>,
- *   status: &lt;number>,
- *   res[content-length]: &lt;number>,
- *   response-time: &lt;number> ms,
- * }
- * ```
+ * Attempts to find the code in the provided payload if the payload is an
+ * object. If the payload is a number, then `payload` is returned. Otherwise,
+ * DEFAULT_CODE is returned.
  *
- * @see {@link https://www.npmjs.com/package/koa-morgan}
- *
- * @param  {Object} tokens    The map of morgan tokens
- * @param  {Object} request   The request context
- * @param  {Object} response  The response context
- * @return {Object}           The format meta object
+ * @param  {number|Object} payload
+ * @return {number}
  */
-export const formatter = function (tokens, request, response) {
-  const responseTime = tokens['response-time'](request, response);
+export function resolveCode(payload: number | Object): number {
+  if (typeof payload === 'object') {
+    return ('code' in payload) ? payload.code : DEFAULT_CODE;
+  }
 
-  return JSON.stringify({
-    'remote-addr': tokens['remote-addr'](request),
-    date: tokens.date(request, response, 'clf'),
-    method: tokens.method(request),
-    url: tokens.url(request),
-    HTTP: tokens['http-version'](request),
-    'user-agent': tokens['user-agent'](request),
-    referrer: tokens.referrer(request),
-    status: tokens.status(request, response),
-    'res[content-length]': tokens.res(request, response, 'content-length'),
-    'response-time': `${responseTime} ms`,
-  });
-};
+  return (payload != null) ? payload : DEFAULT_CODE;
+}
 
-export default morgan(formatter, {
-  stream: {
-    write(message) {
-      LOGGER.info(JSON.parse(message));
-    },
-  },
-});
+/**
+ * Attempts to find the message in the provided payload if the payload is an
+ * object. If the payload is a string, then `payload` is returned. Otherwise,
+ * DEFAULT_MESSAGE is returned.
+ *
+ * @param  {string|Object} payload
+ * @return {string}
+ */
+export function resolveMessage(payload: string | Object): string {
+  if (typeof payload === 'object') {
+    return ('message' in payload) ? payload.message : DEFAULT_MESSAGE;
+  }
+
+  return (payload != null) ? payload : DEFAULT_MESSAGE;
+}
+
+/**
+ * Attempts to find the status in the provided payload if the payload is an
+ * object. If the payload is a number, then `payload` is returned. Otherwise,
+ * DEFAULT_STATUS is returned.
+ *
+ * @param  {number|Object} payload
+ * @return {number}
+ */
+export function resolveStatus(payload: number | Object): number {
+  if (typeof payload === 'object') {
+    return ('status' in payload) ? payload.status : DEFAULT_STATUS;
+  }
+
+  return (payload != null) ? payload : DEFAULT_STATUS;
+}
 </code></pre>
   </article>
 </section>

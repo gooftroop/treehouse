@@ -15,7 +15,7 @@
   "source": {
     "inlcude": ["./src", "package.json", "README.md"],
     "includePattern": ".js$",
-    "excludePattern": "(node_modules/|docs/|dist/|build/|tests/)"
+    "excludePattern": "(node_modules/|docs/|dist/|build/|test/)"
   },
   "sourceType": "module",
   "tags": {

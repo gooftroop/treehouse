@@ -1,0 +1,414 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+      exception/codes.js - Documentation
+  </title>
+
+  <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+  <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+
+  
+
+  <!-- start Mixpanel -->
+  <script type="text/javascript">(function(e,a){if(!a.__SV){var b=window;try{var c,l,i,j=b.location,g=j.hash;c=function(a,b){return(l=a.match(RegExp(b+"=([^&]*)")))?l[1]:null};g&&c(g,"state")&&(i=JSON.parse(decodeURIComponent(c(g,"state"))),"mpeditor"===i.action&&(b.sessionStorage.setItem("_mpcehash",g),history.replaceState(i.desiredHash||"",e.title,j.pathname+j.search)))}catch(m){}var k,h;window.mixpanel=a;a._i=[];a.init=function(b,c,f){function e(b,a){var c=a.split(".");2==c.length&&(b=b[c[0]],a=c[1]);b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,
+  0)))}}var d=a;"undefined"!==typeof f?d=a[f]=[]:f="mixpanel";d.people=d.people||[];d.toString=function(b){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);b||(a+=" (stub)");return a};d.people.toString=function(){return d.toString(1)+".people (stub)"};k="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
+  for(h=0;h<k.length;h++)e(d,k[h]);a._i.push([b,c,f])};a.__SV=1.2;b=e.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";c=e.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c)}})(document,window.mixpanel||[]);
+  mixpanel.init("1919205b2da72e4da3b9b6639b444d59");</script>
+  <!-- end Mixpanel -->
+</head>
+
+<body>
+  <svg style="display: none;">
+    <defs>
+      <symbol id="linkIcon" fill="#706d77" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+  <label for="nav-trigger" class="navicon-button x">
+    <div class="navicon"></div>
+  </label>
+
+  <label for="nav-trigger" class="overlay"></label>
+
+  <div class="top-nav-wrapper">
+    <ul>
+      <li >
+        <a href="index.html">
+          
+            <svg fill="#6D6D6D" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+              <path d="M0 0h24v24H0z" fill="none"/>
+            </svg>
+          
+          
+        </a>
+      </li>
+
+      
+
+    </ul>
+  </div>
+
+  <nav>
+    <h3 class="reference-title">
+      Treehouse
+    </h3>
+
+    <h3>Classes</h3><ul><li id="GraphqQLServer-nav"><a href="GraphqQLServer.html">GraphqQLServer</a></li><li id="default-nav"><a href="module-exception.default.html">default</a></li><li id="AuthorizationException-nav"><a href="module-exception-AuthorizationException.html">AuthorizationException</a></li><li id="Exception-nav"><a href="module-exception-Exception.html">Exception</a></li><li id="InternalException-nav"><a href="module-exception-InternalException.html">InternalException</a></li><li id="InvalidRequestException-nav"><a href="module-exception-InvalidRequestException.html">InvalidRequestException</a></li><li id="ServiceUnavailableException-nav"><a href="module-exception-ServiceUnavailableException.html">ServiceUnavailableException</a></li><li id="Logger-nav"><a href="module-utils_logger-Logger.html">Logger</a><ul class='methods'><li data-type="method" id="Logger-getLogger-nav"><a href="module-utils_logger-Logger.html#.getLogger">getLogger</a></li><li data-type="method" id="Logger-_emit-nav"><a href="module-utils_logger-Logger.html#_emit">_emit</a></li><li data-type="method" id="Logger-serializeTransaction-nav"><a href="module-utils_logger-Logger.html#serializeTransaction">serializeTransaction</a></li></ul></li><li id="Server-nav"><a href="Server.html">Server</a></li></ul><h3>Modules</h3><ul><li id="api_v1/handlers/health-nav"><a href="module-api_v1_handlers_health.html">api/v1/handlers/health</a></li><li id="api_v1/routes-nav"><a href="module-api_v1_routes.html">api/v1/routes</a></li><li id="exception-nav"><a href="module-exception.html">exception</a><ul class='methods'><li data-type="method" id="exception-resolveCode-nav"><a href="module-exception.html#~resolveCode">resolveCode</a></li><li data-type="method" id="exception-resolveMessage-nav"><a href="module-exception.html#~resolveMessage">resolveMessage</a></li><li data-type="method" id="exception-resolveStatus-nav"><a href="module-exception.html#~resolveStatus">resolveStatus</a></li></ul></li><li id="main-nav"><a href="module-main.html">main</a></li><li id="middleware_accessLogger-nav"><a href="module-middleware_accessLogger.html">middleware/accessLogger</a></li><li id="middleware_error-nav"><a href="module-middleware_error.html">middleware/error</a></li><li id="middleware_transaction-nav"><a href="module-middleware_transaction.html">middleware/transaction</a><ul class='methods'><li data-type="method" id="middleware_transaction-default-nav"><a href="module-middleware_transaction.html#.default">default</a></li></ul></li><li id="router-nav"><a href="module-router.html">router</a></li><li id="utils_logger-nav"><a href="module-utils_logger.html">utils/logger</a></li><li id="utils_sigInitHandler-nav"><a href="module-utils_sigInitHandler.html">utils/sigInitHandler</a></li><li id="utils_uncaughtExceptionHandler-nav"><a href="module-utils_uncaughtExceptionHandler.html">utils/uncaughtExceptionHandler</a></li><li id="utils_unhandledRejectionHandler-nav"><a href="module-utils_unhandledRejectionHandler.html">utils/unhandledRejectionHandler</a></li></ul>
+  </nav>
+
+  <div id="main">
+    
+      <h1 class="page-title">
+        exception/codes.js
+      </h1>
+    
+
+    
+      
+
+<section>
+  <article>
+    <pre class="prettyprint source linenums"><code>/**
+ * @module exception
+ * @exports DEFAULT_FATAL_ERROR
+ * @exports FATAL_ERROR
+ * @exports DEFAULT_GENERAL_ERROR
+ * @exports GENERAL_ERROR
+ * @exports NOT_YET_IMPLEMENTED
+ * @exports ILLEGAL_STATE_EXCEPTION
+ * @exports DEFAULT_INVALID_REQUEST
+ * @exports INVALID_REQUEST
+ * @exports DEFAULT_UNAUTHORIZED
+ * @exports UNAUTHORIZED
+ * @exports DEFAULT_FORBIDDEN
+ * @exports FORBIDDEN
+ * @exports MISSING_REQUIRED_PARAMETER
+ * @exports DEFAULT_SERVICE_UNAVAILABLE
+ * @exports SERVICE_UNAVAILABLE
+ * @exports DEFAULT_VALIDATION_ERROR
+ * @exports VALIDATION_ERROR
+ */
+
+/**
+ * Default error message to surface to clients for unrecoverable errors.
+ * @type {string}
+ */
+export const DEFAULT_FATAL_ERROR: string =
+  'An error occurred. If this error persists, please contact your System Administrator';
+
+/**
+ * Factory to generate a 500 Error Message payload from the provided message.
+ * Message defaults to DEFAULT_FATAL_ERROR.
+ * ```
+ * {
+ *   status: 500,
+ *   code: -1,
+ *   category: 'IllegalStateException',
+ *   message,
+ * }
+ * ```
+ * @type {Function}
+ */
+export const FATAL_ERROR: Function = (message: string = DEFAULT_FATAL_ERROR): Object => {
+  return {
+    status: 500,
+    code: -1,
+    category: 'IllegalStateException',
+    message,
+  };
+};
+
+/**
+ * Whimsical default error message to surface to clients when no additional
+ * Error details are available or should be obfuscated when responding with a
+ * generalized 400 error.
+ * @type {string}
+ */
+export const DEFAULT_GENERAL_ERROR: string = "Our hamsters don't know how to handle that request";
+
+/**
+ * Factory to generate a 400 Error Message payload from the provided message.
+ * Message defaults to DEFAULT_GENERAL_ERROR.
+ * ```
+ * {
+ *   status: 400,
+ *   code: '0a',
+ *   category: 'GeneralException',
+ *   message,
+ * }
+ * ```
+ * @type {Function}
+ */
+export const GENERAL_ERROR: Function = (message: string = DEFAULT_GENERAL_ERROR): Object => {
+  return {
+    status: 400,
+    code: '0a',
+    category: 'GeneralException',
+    message,
+  };
+};
+
+/**
+ * Not Yet Implemented (501) Error Factory.
+ * Returns the payload:
+ * ```
+ * {
+ *   status: 501,
+ *   code: 1,
+ *   category: 'NotYetImplemented',
+ *   message: 'This method must be implmented',
+ * }
+ * ```
+ * @type {Function}
+ */
+export const NOT_YET_IMPLEMENTED: Function = (): Object => {
+  return {
+    status: 501,
+    code: 1,
+    category: 'NotYetImplemented',
+    message: 'This method must be implmented',
+  };
+};
+
+/**
+ * Illegal State Exception (500) Error Factory.
+ * Returns the payload:
+ * ```
+ * {
+ *   status: 500,
+ *   code: 2,
+ *   category: 'IllegalStateException',
+ *   message: 'Application not configured correctly',
+ * }
+ * ```
+ * @type {Function}
+ */
+export const ILLEGAL_STATE_EXCEPTION: Function = (): Object => {
+  return {
+    status: 500,
+    code: 2,
+    category: 'IllegalStateException',
+    message: 'Application not configured correctly',
+  };
+};
+
+/**
+ * Whimsical default error message to surface to clients when no additional
+ * Error details are available or should be obfuscated when responding to an
+ * invalid request.
+ * @type {string}
+ */
+export const DEFAULT_INVALID_REQUEST: string = "Our hamsters don't know how to handle that request";
+
+/**
+ * Invalid Request (400) Error Factory.
+ * Generates an Error payload with the provided message, defaulting
+ * DEFAULT_INVALID_REQUEST if no message is provided.
+ * Returns the payload:
+ * ```
+ * {
+ *   status: 400,
+ *   code: 3,
+ *   category: 'UserError',
+ *   message,
+ * }
+ * ```
+ * @type {Function}
+ */
+export const INVALID_REQUEST: Function = (message: string = DEFAULT_INVALID_REQUEST): Object => {
+  return {
+    status: 400,
+    code: 3,
+    category: 'UserError',
+    message,
+  };
+};
+
+/**
+ * Default error message to surface to clients when they are no longer
+ * authorized to access a particular resource or service.
+ * @type {string}
+ */
+const DEFAULT_UNAUTHORIZED: string = 'Your session is no longer valid. Please login and rety';
+
+/**
+ * Unauthorized (401) Error Factory.
+ * Generates an Error payload with the provided message, defaulting
+ * DEFAULT_UNAUTHORIZED if no message is provided.
+ * Returns the payload:
+ * ```
+ * {
+ *   status: 401,
+ *   code: 4,
+ *   category: 'SecurityException',
+ *   message,
+ * }
+ * ```
+ * @type {Function}
+ */
+export const UNAUTHORIZED: Function = (message: string = DEFAULT_UNAUTHORIZED): Object => {
+  return {
+    status: 401,
+    code: 4,
+    category: 'SecurityException',
+    message,
+  };
+};
+
+/**
+ * Default error to surface to requests that are forbidden to make that
+ * request.
+ * @type {string}
+ */
+export const DEFAULT_FORBIDDEN: string = "Whoops! You aren't allowed to do that";
+
+/**
+ * Forbidden (403) Error Factory.
+ * Generates an Error payload with the provided message, defaulting
+ * DEFAULT_FORBIDDEN if no message is provided.
+ * Returns the payload:
+ * ```
+ * {
+ *   status: 403,
+ *   code: 5,
+ *   category: 'SecurityException',
+ *   message,
+ * }
+ * ```
+ * @type {Function}
+ */
+export const FORBIDDEN: Function = (message: string = DEFAULT_FORBIDDEN): Object => {
+  return {
+    status: 403,
+    code: 5,
+    category: 'SecurityException',
+    message,
+  };
+};
+
+/**
+ * Missing Required Request Parameter (malformed request) (400) Error Factory.
+ * Returns the payload:
+ * ```
+ * {
+ *   status: 400,
+ *   code: 6,
+ *   category: 'GeneralException',
+ *   message: 'A required parameter was missing',
+ * }
+ * ```
+ * @type {Function}
+ */
+export const MISSING_REQUIRED_PARAMETER: Function = (): Object => {
+  return {
+    status: 400,
+    code: 6,
+    category: 'GeneralException',
+    message: 'A required parameter was missing',
+  };
+};
+
+/**
+ * Whimsical default error message to surface to clients when no additional
+ * Error details are available or should be obfuscated when a service is not
+ * available.
+ * @type {string}
+ */
+export const DEFAULT_SERVICE_UNAVAILABLE: string = 'Hmmm...our hamsters appear to be taking a siesta';
+
+/**
+ * Service Unavailable (503) Error Factory.
+ * Generates an Error payload with the provided message, defaulting
+ * DEFAULT_SERVICE_UNAVAILABLE if no message is provided.
+ * Returns the payload:
+ * ```
+ * {
+ *   status: 503,
+ *   code: 7,
+ *   category: 'NetworkException',
+ *   message,
+ * }
+ * ```
+ * @type {Function}
+ */
+export const SERVICE_UNAVAILABLE: Function = (message: string = DEFAULT_SERVICE_UNAVAILABLE): Object => {
+  return {
+    status: 503,
+    code: 7,
+    category: 'NetworkException',
+    message,
+  };
+};
+
+/**
+ * Whimsical default error message to surface to clients when no additional
+ * Error details are available or should be obfuscated when validating a
+ * request fails.
+ * @type {string}
+ */
+export const DEFAULT_VALIDATION_ERROR: string = 'Hmmm...the hamsters found a problem with that data';
+
+/**
+ * Validation Failure (400) Error Factory.
+ * Generates an Error payload with the provided message, defaulting
+ * DEFAULT_VALIDATION_ERROR if no message is provided.
+ * Returns the payload:
+ * ```
+ * {
+ *   status: 400,
+ *   code: 8,
+ *   category: 'ValidationException',
+ *   message,
+ * }
+ * ```
+ * @type {Function}
+ */
+export const VALIDATION_ERROR: Function = (message: string = DEFAULT_VALIDATION_ERROR): Object => {
+  return {
+    status: 400,
+    code: 8,
+    category: 'ValidationException',
+    message,
+  };
+};
+</code></pre>
+  </article>
+</section>
+
+    
+
+
+  </div>
+
+  <br class="clear">
+
+  <footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
+  </footer>
+
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/pagelocation.js"></script>
+
+  
+  
+</body>
+</html>

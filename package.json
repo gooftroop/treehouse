@@ -2,7 +2,7 @@
   "name": "@harmonizly/treehouse",
   "version": "0.0.8",
   "description": "Light-weight Koa framework implementation to abstract away common boilerplate",
-  "main": "index.js",
+  "main": "dist/treehouse.js",
   "hpmepage": "https://gooftroop.github.io/treehouse/",
   "repository": "https://github.com/gooftroop/treehouse.git",
   "bugs": {
@@ -21,7 +21,6 @@
     "connect"
   ],
   "scripts": {
-    "postinstall": "NODE_ENV=production make bundle",
     "report:coverage": "cat ./coverage/lcov.info | codacy-coverage && rm -rf ./coverage",
     "test": "NODE_ENV=test mocha",
     "test:coverage": "nyc --reporter=lcov npm test && npm run report:coverage",

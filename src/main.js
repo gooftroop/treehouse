@@ -11,7 +11,7 @@ import Exception, {
   InvalidRequestException,
   ServiceUnavailableException,
 } from 'treehouse/exception';
-import GraphqQLServer from 'treehouse/graphql';
+import GraphQLServer from 'treehouse/graphql';
 import Logger from 'treehouse/utils/logger';
 import Server from 'treehouse/server';
 
@@ -23,7 +23,7 @@ export {
   AuthorizationException,
   codes,
   Exception,
-  GraphqQLServer,
+  GraphQLServer,
   InternalException,
   InvalidRequestException,
   Logger,
