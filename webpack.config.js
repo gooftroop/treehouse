@@ -1,7 +1,6 @@
 // TODO use webpack merge
 const nodeExternals = require('webpack-node-externals');
 const path = require('path');
-const webpack = require('webpack');
 
 const cwd = process.cwd();
 
@@ -14,7 +13,7 @@ module.exports = {
   cache: false,
   devtool: 'source-map',
   entry: {
-    server: [
+    treehouse: [
       path.join(cwd, 'src/main.js'),
     ],
   },
@@ -33,7 +32,7 @@ module.exports = {
     noParse: /\.min\.js/,
   },
   externals: [
-    nodeExternals()
+    nodeExternals(),
   ],
   optimization: {
     namedModules: true,
@@ -41,10 +40,9 @@ module.exports = {
     concatenateModules: true,
   },
   output: {
-    chunkFilename: 'treehouse.[id].js',
-    filename:      'treehouse.js',
-    library:       'treehouse',
+    chunkFilename: '[name].[id].js',
+    filename: '[name].js',
     libraryTarget: 'commonjs2',
-    path:           path.join(cwd, 'dist')
+    path: path.join(cwd, 'dist'),
   },
 };

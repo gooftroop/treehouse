@@ -21,4 +21,4 @@ jsdoc:
 	sed -i .bak -e 's/docs\/assets/assets/g' docs/index.html
 
 bundle:
-	$(CCX) webpack --config ./build/webpack.config.js
+	$(CCX) webpack --config ./webpack.config.js
