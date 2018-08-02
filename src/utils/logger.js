@@ -4,10 +4,13 @@
  * @exports Logger
  */
 import Bunyan from 'bunyan';
-import config from 'config';
 import process from 'process';
 
-export const DEFAULT_LOGGER_NAME: string = 'root';
+export const DEFAULT_LOGGER: Object = {
+  info: console.log,
+  warn: console.warn,
+  error: console.error,
+};
 
 /*
  * BEGIN NOTE: example of stream config
@@ -33,6 +36,9 @@ export const DEFAULT_LOGGER_NAME: string = 'root';
  * @extends Bunyan
  */
 class Logger extends Bunyan {
+  // static logger config
+  static config: Object = {};
+
   // loggers cache
   static loggers: Object = {};
 
@@ -104,15 +110,22 @@ class Logger extends Bunyan {
    * @return {Object}
    */
   static getLogger(name: string = null): Object {
-    const handlersConfig: Object = config.loggers.handlers;
-    const loggerName: string = (name == null) ? DEFAULT_LOGGER_NAME : name.toLowerCase();
+    const handlersConfig: Object = Logger.config.handlers;
+    const loggerName: string = (name == null) ? Logger.config.default_name : name.toLowerCase();
 
     if (!(loggerName in Logger.loggers)) {
       if (!(loggerName in handlersConfig)) {
-        throw new Error(`Unable to create logger: no logger for "${loggerName}" found in configuration`);
-      }
+        const defaultLogger = Logger.getLogger();
 
-      Logger.loggers[loggerName] = new Logger(handlersConfig[loggerName]);
+        if (defaultLogger) {
+          return defaultLogger;
+        }
+
+        Logger.loggers[loggerName] = DEFAULT_LOGGER;
+        DEFAULT_LOGGER.warn(`Using fallback logger: no logger for "${loggerName}" or default logger found in configuration`);
+      } else {
+        Logger.loggers[loggerName] = new Logger(handlersConfig[loggerName]);
+      }
     }
 
     return Logger.loggers[loggerName];

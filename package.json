@@ -1,6 +1,6 @@
 {
   "name": "@harmonizly/treehouse",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Light-weight Koa framework implementation to abstract away common boilerplate",
   "main": "dist/treehouse.js",
   "hpmepage": "https://gooftroop.github.io/treehouse/",
@@ -61,6 +61,7 @@
     "babel-plugin-syntax-flow": "^6.18.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-flow": "^6.23.0",

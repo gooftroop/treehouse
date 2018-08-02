@@ -3,21 +3,19 @@
  * @exports errorMiddleware
  */
 import Logger from 'treehouse/utils/logger';
-import { ApiError, InternalError } from 'treehouse/exception';
-
-const LOGGER: Object = Logger.getLogger('root');
+import { ApiException, InternalException } from 'treehouse/exception';
 
 /**
  * Wraps all subsequent async calls to middleware or handlers in a
  * <code>try/catch</code> block to properly handle and format errors
- * prior to sending an error reponse.
+ * prior to sending an error response.
  * If the caught <code>Error</code> is not a subclass of the
- * <code>ApiError</code>, it is converted into either an
- * <code>InternalError</code> if no <code>status</code> is attached to the
- * error or the <code>status</code> is 500, or a generic <code>ApiError</code>.
- * The error is logged, the response status is set to the error
- * <code>status</code>, and the response body is set to the error. Finally the
- * `error` event is emitted on the <code>app</code>.
+ * <code> ApiException </code>, it is converted into either an
+ * <code> InternalException </code> if no <code>status</code > is attached
+ * to the error or the < code > status < /code> is 500, or a generic
+ * <code>ApiException</code>. The error is logged, the response status is set
+ * to the error <code>status</code>, and the response body is set to the error.
+ * Finally the <code>error</code> event is emitted on the <code>app</code>.
  *
  * @see {@link ApiError}
  * @see {@link InternalError}
@@ -33,11 +31,11 @@ export default async (ctx: Object, next: Function): void => {
   } catch (e) {
     let err = e;
 
-    if (!(e instanceof ApiError)) {
-      err = (!err.status || err.status === 500) ? new InternalError(e.message, e) : new ApiError(e.message, e);
+    if (!(e instanceof ApiException)) {
+      err = (!err.status || err.status === 500) ? new InternalException(e.message, e) : new ApiException(e.message, e);
     }
 
-    LOGGER.error(err, ctx);
+    Logger.getLogger().error(err, ctx);
     ctx.status = err.status;
     ctx.body = err;
 

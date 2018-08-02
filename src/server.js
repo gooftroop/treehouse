@@ -8,6 +8,7 @@ import Koa from 'koa';
 
 import accessLogger from 'treehouse/middleware/accessLogger';
 import errorMiddleware from 'treehouse/middleware/error';
+import defaultConfig from 'treehouse/utils/defaultConfig';
 import Exception from 'treehouse/exception';
 import Logger from 'treehouse/utils/logger';
 import router from 'treehouse/router';
@@ -55,14 +56,15 @@ export default class Server {
    * - <code>SIGINT</code>
    *
    * @constructor
-   * @param {Object} config The application configuration object
+   * @param {Object}      config The application configuration object
+   * @param {Object|null} logger (optional) The logger to use for all logging in treehouse
    * @return {void}
    *
    * @see {@link https://nodejs.org/api/process.html|process}
    * @see {@link https://koajs.com/|Koa}
    * @see {@link Logger}
    */
-  constructor(config: Object): void {
+  constructor(config: Object, logger: ?Object = null): void {
     // atexit handler
     process.on('exit', this.stop);
 
@@ -72,15 +74,39 @@ export default class Server {
       process.kill(process.pid, 'SIGINT');
     });
 
-    this.config = config;
+    // Apply the provided config over the default config
+    this.config = {
+      defaultConfig,
+      ...config,
+    };
+
+    this.configureLogger(this.config, logger);
 
     // Initialize the express server
     this.app = new Koa();
 
     // Create the logger
-    this.logger = Logger.getLogger('app');
+    this.logger = Logger.getLogger();
 
     this.initialize(this.app);
+  }
+
+  /**
+   * Set the logger configuration from the Server config.
+   * If a <code>logger</code> is provided, configure the Logger to use the
+   * provided <code>logger</code> as the single, default logger.
+   * @param {Object}      config The application configuration object
+   * @param {Object|null} logger (optional) The logger to use for all logging in treehouse
+   * @returns void
+   */
+  configureLogger(config: Object, logger: ?Object = null) {
+    Logger.config = config.loggers;
+    if (logger) {
+      const { name } = logger.fields;
+
+      Logger.loggers[name] = logger;
+      Logger.config.default_name = name;
+    }
   }
 
   /**
@@ -179,7 +205,7 @@ export default class Server {
     app.use(transactionMiddleware);
 
     // Configure Request logging
-    app.use(accessLogger);
+    app.use(accessLogger());
 
     // Configure the request error handling
     app.use(errorMiddleware);

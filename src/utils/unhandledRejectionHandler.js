@@ -4,8 +4,6 @@
  */
 import Logger from 'treehouse/utils/logger';
 
-const LOGGER: Object = Logger.getLogger('error');
-
 /**
  * Called when the process encounteres an unhandled Promise rejection.
  * The <code>Error</code> from the rejected Promise is logged and the event
@@ -14,7 +12,5 @@ const LOGGER: Object = Logger.getLogger('error');
  * @return {void}
  */
 export default function unhandledRejectionHandler(e: Error): void {
-  if (LOGGER) {
-    LOGGER.error(`An unhandled promise rejection occurred: ${e}`);
-  }
+  Logger.getLogger().error(`An unhandled promise rejection occurred: ${e}`);
 }
