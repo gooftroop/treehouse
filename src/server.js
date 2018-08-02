@@ -8,7 +8,6 @@ import Koa from 'koa';
 
 import accessLogger from 'treehouse/middleware/accessLogger';
 import errorMiddleware from 'treehouse/middleware/error';
-import defaultConfig from 'treehouse/utils/defaultConfig';
 import Exception from 'treehouse/exception';
 import Logger from 'treehouse/utils/logger';
 import router from 'treehouse/router';
@@ -18,16 +17,9 @@ import uncaughtExceptionHandler from 'treehouse/utils/uncaughtExceptionHandler';
 import unhandledRejectionHandler from 'treehouse/utils/unhandledRejectionHandler';
 import { ILLEGAL_STATE_EXCEPTION } from 'treehouse/exception/codes';
 
-// Catches ctrl+c event
-process.on('SIGINT', sigInitHandler);
-
-// Catches uncaught exceptions and rejections
-process.on('uncaughtException', uncaughtExceptionHandler);
-process.on('unhandledRejection', unhandledRejectionHandler);
-
 /**
  * This class encapsulates a <code>Koa</code> application and provides an API
- * for controlling the configuration and lifecycle of application server.
+ * for controlling the configuration and life-cycle of application server.
  *
  * <code>Server</code> contains the following public variables:
  * - `app`     The instantiated Koa application
@@ -65,47 +57,59 @@ export default class Server {
    * @see {@link Logger}
    */
   constructor(config: Object, logger: ?Object = null): void {
+    this.app = new Koa();
+    this.config = config;
+
+    this.configureLogger(this.config, logger);
+
+    // Create the logger
+    this.logger = Logger.getLogger();
+
+    this.configureHooks(this.logger);
+
+    this.initialize(this.app, this.config);
+  }
+
+  /**
+   * Sets up all appropriate hooks for graceful life-cycle handling.
+   *
+   * @param {Object} logger The logger instance to use in the hooks
+   * @returns {void}
+   */
+  configureHooks(logger: Object): void {
     // atexit handler
     process.on('exit', this.stop);
+
+    // Catches ctrl+c event
+    process.on('SIGINT', sigInitHandler(logger));
+
+    // Catches uncaught exceptions and rejections
+    process.on('uncaughtException', uncaughtExceptionHandler(logger));
+    process.on('unhandledRejection', unhandledRejectionHandler(logger));
 
     // pm2 graceful shutdown compatibility
     process.once('SIGINT', () => {
       this.stop();
       process.kill(process.pid, 'SIGINT');
     });
-
-    // Apply the provided config over the default config
-    this.config = {
-      defaultConfig,
-      ...config,
-    };
-
-    this.configureLogger(this.config, logger);
-
-    // Initialize the express server
-    this.app = new Koa();
-
-    // Create the logger
-    this.logger = Logger.getLogger();
-
-    this.initialize(this.app);
   }
 
   /**
    * Set the logger configuration from the Server config.
    * If a <code>logger</code> is provided, configure the Logger to use the
    * provided <code>logger</code> as the single, default logger.
+   *
    * @param {Object}      config The application configuration object
    * @param {Object|null} logger (optional) The logger to use for all logging in treehouse
-   * @returns void
+   * @returns {void}
    */
-  configureLogger(config: Object, logger: ?Object = null) {
-    Logger.config = config.loggers;
-    if (logger) {
-      const { name } = logger.fields;
+  configureLogger(config: Object, logger: ?Object = null): void {
+    if (config.loggers) {
+      Logger.configure(config.loggers);
+    }
 
-      Logger.loggers[name] = logger;
-      Logger.config.default_name = name;
+    if (logger) {
+      Logger.setDefaultLogger(logger);
     }
   }
 
@@ -150,7 +154,7 @@ export default class Server {
   /**
    * Returns a Function to be used as a callback to the server start.
    * The custom callback is invoked first, if provided. The callback function
-   * will tnotify any watching proceeses via
+   * will notify any watching processes via
    * <code>process.send('ready')</code>, if <code>send</code> is available on
    * <code>process</code>, and finally log a start message.
    *
@@ -185,21 +189,22 @@ export default class Server {
    * <code>Server</code>, override this method, and call
    * <code>super.initialize();</code> after adding the custom middleware.
    *
-   * @param  {Koa}  app
-   * @return {void}
+   * @param   {Koa}     app
+   * @param   {Object}  config
+   * @return  {void}
    */
-  initialize(app): void {
+  initialize(app: Object, config: Object): void {
     // Add common request security measures
     app.use(helmet());
 
-    // Enabled CORS (corss-origin resource sharing)
-    app.use(cors(this.config.cors));
+    // Enabled CORS (cors-origin resource sharing)
+    app.use(cors(config.cors));
 
     // response compression
-    app.use(compress(this.config.compress));
+    app.use(compress(config.compress));
 
     // Initialize body parser before routes or body will be undefined
-    app.use(body(this.config.body));
+    app.use(body(config.body));
 
     // Trace a single request process (including over async)
     app.use(transactionMiddleware);
@@ -289,9 +294,10 @@ export default class Server {
    */
   start(callback: Function | null = null): Object | null {
     if (!this.app) {
-      const message = ILLEGAL_STATE_EXCEPTION();
-
-      message.details = 'Cannot start server: the koa instance is not defined';
+      const message = {
+        ...ILLEGAL_STATE_EXCEPTION(),
+        details: 'Cannot start server: the koa instance is not defined',
+      };
 
       throw new Exception(message);
     }

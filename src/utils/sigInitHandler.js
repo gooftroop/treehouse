@@ -2,15 +2,18 @@
  * @module utils/sigInitHandler
  * @exports sigInitHandler
  */
-import Logger from 'treehouse/utils/logger';
 
 /**
  * Handler for capturing a the <code>siginit</code> event and stopping the
  * current process.
+ *
+ * @param  {Object} logger The logger instance to record the exit request
  * @return {void}
  */
-export default function sigInitHandler(): void {
-  Logger.getLogger().info('Captured ctrl-c');
+export default function (logger: Object): Function {
+  return function sigInitHandler(): void {
+    logger.info('Captured ctrl-c');
 
-  process.exit(0);
+    process.exit(0);
+  };
 }
