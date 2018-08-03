@@ -27,7 +27,7 @@ class Mock {
    * @return {[type]} [description]
    */
   mockRestore() {
-    cache[this.id] = null;
+    cache[this.id] = this.og;
   }
 }
 
@@ -37,7 +37,7 @@ class Mock {
  */
 const mocker = {
   mock(id, implementation = null) {
-    if (!(id in cache)) {
+    if (!(id in cache) || !(cache[id].meta instanceof Mock)) {
       const og = module.require(id);
       const meta = new Mock(id, og);
       const impl = (implementation != null) ? implementation : sinon.stub();

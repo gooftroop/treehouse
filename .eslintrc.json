@@ -12,6 +12,8 @@
     "describe": true,
     "document": true,
     "it": true,
+    "mocker": true,
+    "sinon": true,
     "window": true
   },
   "parser": "babel-eslint",

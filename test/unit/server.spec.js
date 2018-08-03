@@ -4,7 +4,6 @@ import fs from 'fs';
 import helmet from 'koa-helmet';
 import https from 'https';
 import Koa from 'koa';
-import sinon from 'sinon';
 
 import Logger from 'treehouse/utils/logger';
 import router from 'treehouse/router';
@@ -16,7 +15,7 @@ const FAKE_LOGGER = {
   error: sinon.fake(),
 };
 
-global.mocker.mock('koa-helmet', global.sinon.stub().returns(() => {}));
+mocker.mock('koa-helmet', sinon.stub().returns(() => {}));
 
 describe('server.js', () => {
   let server;

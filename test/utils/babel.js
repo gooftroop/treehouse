@@ -90,7 +90,9 @@ const FUNCTIONS = Object.create(null);
 FUNCTIONS.mock = (args) => {
   if (args.length === 1) {
     return args[0].isStringLiteral() || args[0].isLiteral();
-  } if (args.length === 2 || args.length === 3) {
+  }
+
+  if (args.length === 2 || args.length === 3) {
     const moduleFactory = args[1];
 
     // invariant(
