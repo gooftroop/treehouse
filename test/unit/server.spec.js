@@ -16,6 +16,8 @@ const FAKE_LOGGER = {
   error: sinon.fake(),
 };
 
+global.mocker.mock('koa-helmet', global.sinon.stub().returns(() => {}));
+
 describe('server.js', () => {
   let server;
 

@@ -6,7 +6,8 @@
     "transform-object-rest-spread",
     ["module-resolver", {
       "alias": {
-        "treehouse": "./src"
+        "treehouse": "./src",
+        "test": "./test"
       }
     }]
   ],
@@ -23,7 +24,10 @@
   "sourceMaps": true,
   "env": {
     "test": {
-      "plugins": ["istanbul"]
+      "plugins": [
+        "./test/utils/babel",
+        "istanbul"
+      ]
     }
   }
 }

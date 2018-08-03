@@ -1,4 +1,6 @@
 import sinon from 'sinon';
-import mocker from './utils/mock';
 
-mocker.mock('koa-helmet', sinon.stub().returns(() => {}));
+import mocker from 'test/utils/mocker';
+
+global.sinon = sinon;
+global.mocker = mocker;

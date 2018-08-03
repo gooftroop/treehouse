@@ -37,7 +37,6 @@ class Mock {
  */
 const mocker = {
   mock(id, implementation = null) {
-    debugger;
     if (!(id in cache)) {
       const og = module.require(id);
       const meta = new Mock(id, og);

@@ -198,13 +198,13 @@ export default class Server {
     app.use(helmet());
 
     // Enabled CORS (cors-origin resource sharing)
-    app.use(cors(config.cors));
+    app.use(cors(config && config.cors));
 
     // response compression
-    app.use(compress(config.compress));
+    app.use(compress(config && config.compress));
 
     // Initialize body parser before routes or body will be undefined
-    app.use(body(config.body));
+    app.use(body(config && config.body));
 
     // Trace a single request process (including over async)
     app.use(transactionMiddleware);

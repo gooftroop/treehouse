@@ -1,103 +1,189 @@
-const templateOptions = {
-  placeholderPattern: /^([A-Z0-9]+)([A-Z0-9_]+)$/,
-};
+/**
+ * Copyright (c) 2014-present, Facebook, Inc. All rights reserved.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
+ */
 
-const MOCKER_VALUE = 'mocker';
-const MOCKER_GLOBAL = { name: MOCKER_VALUE };
-
-const isMocker = (expr) => {
-  const callee = expr.get('callee');
-
-  if (!callee.node) {
-    return false;
+function invariant(condition, message) {
+  if (!condition) {
+    throw new Error(`babel-plugin-mocker-hoist: ${message}`);
   }
-  const object = callee.get('object');
+}
 
-  return (
-    (callee.isIdentifier(MOCKER_GLOBAL) || (callee.isMemberExpression() && isMocker(object)))
-  );
+// We allow `mocker`, `expect`, `require`, all default Node.js globals and all
+// ES2015 built-ins to be used inside of a `mocker.mock` factory.
+// We also allow variables prefixed with `mock` as an escape-hatch.
+const WHITELISTED_IDENTIFIERS = {
+  Array: true,
+  ArrayBuffer: true,
+  Boolean: true,
+  DataView: true,
+  Date: true,
+  Error: true,
+  EvalError: true,
+  Float32Array: true,
+  Float64Array: true,
+  Function: true,
+  Generator: true,
+  GeneratorFunction: true,
+  Infinity: true,
+  Int16Array: true,
+  Int32Array: true,
+  Int8Array: true,
+  InternalError: true,
+  Intl: true,
+  JSON: true,
+  Map: true,
+  Math: true,
+  NaN: true,
+  Number: true,
+  Object: true,
+  Promise: true,
+  Proxy: true,
+  RangeError: true,
+  ReferenceError: true,
+  Reflect: true,
+  RegExp: true,
+  Set: true,
+  String: true,
+  Symbol: true,
+  SyntaxError: true,
+  TypeError: true,
+  URIError: true,
+  Uint16Array: true,
+  Uint32Array: true,
+  Uint8Array: true,
+  Uint8ClampedArray: true,
+  WeakMap: true,
+  WeakSet: true,
+  arguments: true,
+  console: true,
+  expect: true,
+  isNaN: true,
+  mocker: true,
+  parseFloat: true,
+  parseInt: true,
+  require: true,
+  undefined: true,
 };
 
+Object.keys(global).forEach((name) => {
+  WHITELISTED_IDENTIFIERS[name] = true;
+  return WHITELISTED_IDENTIFIERS[name];
+});
 
-module.exports = (args) => {
-  debugger;
-  const { template } = args;
+const MOCKER_GLOBAL = {
+  name: 'mocker',
+};
+const IDVisitor = {
+  ReferencedIdentifier(path) {
+    this.ids.add(path);
+  },
+  blacklist: ['TypeAnnotation'],
+};
 
-  // const enable = template('rewiremock.enable();\n', templateOptions);
-  // const disable = template('rewiremock.disable();\n', templateOptions);
+const FUNCTIONS = Object.create(null);
 
-  const registrations = template(
-    `(function() {
-      global["MOCKER_HOISTED"] = global["MOCKER_HOISTED"] || [];
-      global["MOCKER_HOISTED"].push(function(mocker) {
-        MOCKS
-       });
-    })();`,
-    templateOptions,
-  );
+FUNCTIONS.mock = (args) => {
+  if (args.length === 1) {
+    return args[0].isStringLiteral() || args[0].isLiteral();
+  } if (args.length === 2 || args.length === 3) {
+    const moduleFactory = args[1];
 
-  const REGISTRATIONS = Symbol('registrations');
+    // invariant(
+    //   moduleFactory.isFunction(),
+    //   'The second argument of `mocker.mock` must be an inline function.',
+    // );
+
+    const ids = new Set();
+    const parentScope = moduleFactory.parentPath.scope;
+
+    moduleFactory.traverse(IDVisitor, {
+      ids,
+    });
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const id of ids) {
+      const { name } = id.node;
+
+      let found = false;
+      let { scope } = id;
+
+      while (scope !== parentScope) {
+        if (scope.bindings[name]) {
+          found = true;
+          break;
+        }
+
+        scope = scope.parent;
+      }
+
+      if (!found) {
+        invariant(
+          (scope.hasGlobal(name) && WHITELISTED_IDENTIFIERS[name])
+          || /^mock/i.test(name)
+          // Allow sinon usage to pass
+          || /^sinon/i.test(name)
+          // Allow istanbul's coverage variable to pass.
+          || /^(?:__)?cov/.test(name),
+          `${'The module factory of `mocker.mock()` is not allowed to '
+          + 'reference any out-of-scope variables.\n'
+          + 'Invalid variable access: '}${
+            name
+          }\n`
+          + `Whitelisted objects: ${
+            Object.keys(WHITELISTED_IDENTIFIERS).join(', ')
+          }.\n`
+          + 'Note: This is a precaution to guard against uninitialized mock '
+          + 'variables. If it is ensured that the mock is required lazily, '
+          + 'variable names prefixed with `mock` (case insensitive) are permitted.',
+        );
+      }
+    }
+
+    return true;
+  }
+
+  return false;
+};
+
+FUNCTIONS.unmock = (args) => { return args.length === 1 && args[0].isStringLiteral(); };
+FUNCTIONS.deepUnmock = (args) => { return args.length === 1 && args[0].isStringLiteral(); };
+
+FUNCTIONS.disableAutomock = FUNCTIONS.enableAutomock = (args) => { return args.length === 0; };
+
+module.exports = () => {
+  // const isMocker = (callee) => {
+  //   return callee.get('object').isIdentifier(MOCKER_GLOBAL)
+  //   || (callee.isMemberExpression() && isMocker(callee.get('object')));
+  // };
+  const shouldHoistExpression = (expr) => {
+    if (!expr.isCallExpression()) {
+      return false;
+    }
+
+    const callee = expr.get('callee');
+    const object = callee.get('object');
+    const property = callee.get('property');
+
+    return (
+      property.isIdentifier()
+      && FUNCTIONS[property.node.name]
+      && (object.isIdentifier(MOCKER_GLOBAL)
+        || (callee.isMemberExpression() && shouldHoistExpression(object)))
+      && FUNCTIONS[property.node.name](expr.get('arguments'))
+    );
+  };
 
   return {
     visitor: {
-      Program: {
-        enter({ node }) {
-          debugger;
-          // eslint-disable-next-line no-param-reassign
-          node[REGISTRATIONS] = {
-            imports: [],
-            mocks: [],
-          };
-        },
-        exit({ node }) {
-          debugger;
-          const { imports, mocks } = node[REGISTRATIONS];
-
-          if (mocks.length) {
-            const found = imports.find(({ inode }) => {
-              return inode.source.value.indexOf(MOCKER_VALUE) >= 0;
-            });
-
-            if (!found) {
-              /* eslint-disable no-console */
-              console.warn(`${MOCKER_VALUE} not found in imports`);
-            }
-
-            const mocker = registrations({
-              MOCKS: [...mocks],
-            });
-
-            node.body.push(mocker);
-
-            // eslint-disable-next-line no-underscore-dangle
-            mocker._blockHoist = Infinity;
-          }
-        },
-      },
-
-      ImportDeclaration(path) {
-        debugger;
-        path.parent[REGISTRATIONS].imports.push(path);
-      },
-
-      ExpressionStatement(path) {
-        debugger;
-        if (!path.parent[REGISTRATIONS]) {
-          return false;
+      ExpressionStatement(path: any) {
+        if (shouldHoistExpression(path.get('expression'))) {
+          path.node._blockHoist = Infinity;
         }
-
-        const expr = path.get('expression');
-
-        if (!expr.isCallExpression()) {
-          return false;
-        }
-
-        if (isMocker(expr)) {
-          path.parent[REGISTRATIONS].mocks.push(path.node);
-          path.remove();
-        }
-
-        return true;
       },
     },
   };
