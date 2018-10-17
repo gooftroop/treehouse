@@ -98,7 +98,9 @@
 <li>GraphQL Server provided by <a href="https://www.apollographql.com/docs/apollo-server/v2/whats-new.html">Apollo Server 2.0</a></li>
 </ul>
 <p>Additional documentation and API: <a href="https://gooftroop.github.io/treehouse/">here</a>.</p>
-<h2>Why Treehouse</h2><p>We get it...building your own server from scratch is fun. So if you like taking various libraries and stitching them together, then this library is probably not for you. However, maybe you like the way this library is setup and is exactly the way you'd do it. Or maybe you're tired of seeing &quot;boilerplates&quot; that set everything up for you, tell you how to code your server, etc. etc. which take all the fun out of coding your server, but still don't want to set all the middleware and writing common utilities. If you find yourself nodding along or saying &quot;that's me!&quot;, then this library is for you. Treehouse aims to keep a balance between not taking the fun out of building your services while doing all the tedious work for you - all without telling you how to build, structure, or organize your app.</p>
+<h2>Why Treehouse</h2><p>We get it...building your own server from scratch is fun. So if you like taking various libraries and stitching them together, then this library is probably not for you. However, maybe you like the way this library is setup and is exactly the way you'd do it. Or maybe you're tired of seeing &quot;boilerplates&quot; that set everything up for you, tell you how to code your server, etc. etc., but still don't want to set all the middleware and writing common utilities. If you find yourself saying &quot;that's me!&quot;, then this library is for you. Treehouse aims to find the correct abstraction and empower you to quickly standup a server so you can focus on the application-specific code.</p>
+<h2>NOTE</h2><p>This project is currently under development and is subject to change. Please refer to the <a href="">TODOS Section</a> for
+the work remaining before version 1.0 is tagged and this enters a table release cycle.</p>
 <h2>Installing</h2><pre class="prettyprint source"><code>npm i @harmonizly/treehouse</code></pre><p>You can find the deployment versions <a href="https://github.com/gooftroop/treehouse/releases">here</a>.</p>
 <h2>Lifecycle</h2><p>The lifecycle of the server is:</p>
 <ol>
@@ -115,9 +117,8 @@
   <img src="https://gooftroop.github.io/treehouse/assets/svg/request_processing.svg" />
 </p><br /></p>
 <p>The middleware <code>transaction</code> is used to tag each request with a unique &quot;transaction&quot; ID using NodeJS <a href="">domain</a>'s to track a request through it's entire time spent in the app.</p>
-<p>The <code>access logger</code> middleware uses the <code>bunyan</code> logger to record details about each request prior to entering any custom middleware or handlers.</p>
+<p>The <code>access logger</code> middleware uses the <code>bunyan</code> logger to record details about each request prior to entering any custom middleware or handlers. Please refer to the <a href="">Logging Section</a> for more details.</p>
 <p>The <code>error</code> middleware wraps all custom middleware and handlers in a <code>try/catch</code> to provide a uniform way to log the error and send the appropriate response. The <code>error</code> middleware ensures that the caught <code>Error</code> is some form of <code>ApiError</code>, so it is recommended that, if you throw a custom <code>Error</code> from any middleware or handlers, you extend <code>ApiError</code>.</p>
-<p>Treehouse also provides one common request handler for responding to health check requests at <code>/health</code>. The handler is located under <code>src/api/v1/handlers</code>.</p>
 <p>Third-party middleware references:</p>
 <ul>
 <li><a href="https://www.npmjs.com/package/koa-helmet">helmet</a></li>
