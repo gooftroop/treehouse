@@ -1,4 +1,4 @@
-import body from 'koa-body';
+import bodyparser from 'koa-bodyparser';
 import compress from 'koa-compress';
 import cors from 'koa-cors';
 import fs from 'fs';
@@ -10,7 +10,6 @@ import accessLogger from 'treehouse/middleware/accessLogger';
 import errorMiddleware from 'treehouse/middleware/error';
 import Exception from 'treehouse/exception';
 import Logger from 'treehouse/utils/logger';
-import router from 'treehouse/router';
 import sigInitHandler from 'treehouse/utils/sigInitHandler';
 import transactionMiddleware from 'treehouse/middleware/transaction';
 import uncaughtExceptionHandler from 'treehouse/utils/uncaughtExceptionHandler';
@@ -34,6 +33,10 @@ export default class Server {
   config: Object;
 
   logger: Object;
+
+  stopProcedures = [];
+
+  startProcedures = [];
 
   /**
    * Configures and initializes the <code>Server</code> instance.
@@ -60,10 +63,7 @@ export default class Server {
     this.app = new Koa();
     this.config = config;
 
-    this.configureLogger(this.config, logger);
-
-    // Create the logger
-    this.logger = Logger.getLogger();
+    this.logger = this.configureLogger(this.config, logger);
 
     this.configureHooks(this.logger);
 
@@ -111,6 +111,9 @@ export default class Server {
     if (logger) {
       Logger.setDefaultLogger(logger);
     }
+
+    // Create the logger
+    return Logger.getLogger();
   }
 
   /**
@@ -153,21 +156,15 @@ export default class Server {
 
   /**
    * Returns a Function to be used as a callback to the server start.
-   * The custom callback is invoked first, if provided. The callback function
-   * will notify any watching processes via
+   * The callback function will notify any watching processes via
    * <code>process.send('ready')</code>, if <code>send</code> is available on
    * <code>process</code>, and finally log a start message.
    *
    * @see {@link start}
-   * @param {Function} callback
    * @return {Function}
    */
-  getListenCallback(callback: Function): Function {
+  getListenCallback(): Function {
     return () => {
-      if (callback != null) {
-        callback();
-      }
-
       if (process.send) {
         process.send('ready');
       }
@@ -204,7 +201,7 @@ export default class Server {
     app.use(compress(config && config.compress));
 
     // Initialize body parser before routes or body will be undefined
-    app.use(body(config && config.body));
+    app.use(bodyparser(config && config.bodyparser));
 
     // Trace a single request process (including over async)
     app.use(transactionMiddleware);
@@ -217,59 +214,29 @@ export default class Server {
   }
 
   /**
-   * Provides a functional means to attach custom middleware to the
+   * Provides a functional means to attach custom middleware or routers to the
    * <code>Koa</code> app instance by executing the provided callback function.
    * The callback is provided the <code>Koa</code> app instance.
    *
-   * <b>NOTE:</b> This method should be called <em>before</em>
-   * <code>routers</code> if you are providing custom router(s).
-   *
-   * @param  {Function|null}  customMiddlewareCb
+   * @param  {Function|null}  fn
    * @return {Server}         The server instance
    */
-  middleware(customMiddlewareCb: Function | null = null): Server {
-    if (customMiddlewareCb) {
-      customMiddlewareCb(this.app);
-    }
+  use(fn: Function): Server {
+    fn(this.app);
 
     return this;
   }
 
   /**
-   * By default this method mounts the default router to the <code>Koa</code>
-   * app instance. This method should be overridden when extending
-   * <code>Server</code> and custom routers need to be attached. If this method
-   * is overridden, then the default router will not be attached unless
-   * <code>super.mountRouters();</code> is called;
+   * Adds the provided function to the list of startup procedures to be
+   * executed when `start` is called.
+   * Each procedure is provided the server instance when executed.
    *
-   * This method is called prior to starting the server.
-   *
-   * @return {void}
+   * @param {Function} callback
+   * @returns {void}
    */
-  mountRouters() {
-    this.app.use(router.routes());
-    this.app.use(router.allowedMethods());
-  }
-
-  /**
-   * Provides a functional means to attach custom routers to the
-   * <code>Koa</code> app instance by executing the provided callback function.
-   * The callback is provided the <code>Koa</code> app instance and the
-   * default/core router, should you wish to attach your custom routers to a
-   * single router instead of mounting directly to the app.
-   *
-   * <b>NOTE:</b> This method should be called <em>after</em>
-   * <code>middleware</code> if you are providing custom middleware.
-   *
-   * @param  {Function|null}  customRouterCb
-   * @return {Server}         The server instance
-   */
-  routers(customRouterCb: Function | null = null): Server {
-    if (customRouterCb) {
-      customRouterCb(this.app, router);
-    }
-
-    return this;
+  onStart(callback: Function): void {
+    this.stopProcedures.push(callback);
   }
 
   /**
@@ -289,10 +256,9 @@ export default class Server {
    * @see {@link createServer}
    * @see {@link getListenCallback}
    *
-   * @param {Function|null} callback
    * @return {Object | null}
    */
-  start(callback: Function | null = null): Object | null {
+  start(): Object | null {
     if (!this.app) {
       const message = {
         ...ILLEGAL_STATE_EXCEPTION(),
@@ -302,16 +268,18 @@ export default class Server {
       throw new Exception(message);
     }
 
-    this.mountRouters();
-
     try {
       this.app.tcp = this.createServer(this.config.server.secure);
+
+      this.startProcedures.forEach((procedure) => {
+        procedure(this.app);
+      });
 
       this.app.tcp.listen(
         this.config.server.port,
         this.config.server.hostname,
         this.config.server.backlog,
-        this.getListenCallback(callback),
+        this.getListenCallback(),
       );
 
       return this.app.tcp;
@@ -323,19 +291,30 @@ export default class Server {
   }
 
   /**
-   * Invoking the provided callback, if one is provided, and then stops the
+   * Adds the provided function to the list of shutdown procedures to be
+   * executed when `stop` is called.
+   * Each procedure is provided the server instance when executed.
+   *
+   * @param {Function} callback
+   * @returns {void}
+   */
+  onStop(callback: Function): void {
+    this.stopProcedures.push(callback);
+  }
+
+  /**
+   * Invokes the provided callback, if one is provided, and then stops the
    * server from accepting any new connections.
    *
    * @see {@link https://nodejs.org/api/net.html#net_server_close_callback}
-   * @param  {Function|null} callback
    * @return {void}
    */
-  stop(callback: Function | null = null): void {
+  stop(): void {
     this.logger.info(`Server (${this.config.server.hostname}:${this.config.server.port}) stopping...`);
 
-    if (callback) {
-      callback();
-    }
+    this.stopProcedures.forEach((procedure) => {
+      procedure(this.app);
+    });
 
     this.app.tcp.close();
   }

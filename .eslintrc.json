@@ -3,17 +3,12 @@
     "airbnb-base",
     "plugin:flowtype/recommended"
   ],
+  "env": {
+    "jest/globals": true
+  },
   "globals": {
-    "after": true,
-    "afterEach": true,
     "assert": true,
-    "before": true,
-    "beforeEach": true,
-    "describe": true,
     "document": true,
-    "it": true,
-    "mocker": true,
-    "sinon": true,
     "window": true
   },
   "parser": "babel-eslint",
@@ -22,7 +17,7 @@
   },
   "plugins": [
     "flowtype",
-    "mocha"
+    "jest"
   ],
   "rules": {
     "arrow-body-style": [ "error", "always" ],

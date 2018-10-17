@@ -51,7 +51,7 @@ Treehouse also provides one common request handler for responding to health chec
 Third-party middleware references:
 - [helmet](https://www.npmjs.com/package/koa-helmet)
 - [cors](https://www.npmjs.com/package/koa-cors)
-- [body](https://www.npmjs.com/package/koa-body)
+- [bodyparser](https://www.npmjs.com/package/koa-bodyparser)
 - [compress](https://www.npmjs.com/package/koa-compress)
 
 <b>Note!</b> When adding your app-specific `handlers` and `middleware`, please take some time to understand `koa-router` and the difference between global middleware and route-specific middleware.
@@ -62,11 +62,10 @@ The `GraphqQLServer` is an added layer on top of the Treehouse `Server` and sets
 
 A couple notes of interest:
 
-- The server instance listens to `process::exit`, which calls `destroy` to handle process termination.
+- The server instance listens to `process:exit`, which calls `destroy` to handle process termination.
 - If `process.send` exists (i.e. when the process is managed by `pm2`), the instance sends `ready` across `process.send` to notify anyone waiting that the server has beed started.
 - When the server is destroying, the instance will `emit` `destroy` on `process` to notify anyone watching that the server is going down.
 - The `transactionId` is included with every logging output. The `transaction` context that's included in every logger statement includes information about the user and session, if that data exists. This assumes that an authorized user is attached to the request context as `user` and the session is attached to the request context as `session`.
-- A health check route is exposed by default at `GET /health`.
 
 ## Usage
 
@@ -79,10 +78,14 @@ import Server from 'treehouse';
 const server = new Server(config)
   .middleware(app => {
     // Attach any middleware here
+    // OR
+    // Attach any application-specific routers to the app
+    // Remember! Order matters when using a connect-based server
   })
-  .routers((app, defaultRouter) => {
-    // Attach any application-specific routers to either the app or the defaultRouter
-  });
+  // Provide a callback function to have custom code executed when the server starts
+  .onStart(...)
+  // Provide a callback function to have custom code executed when the server stops
+  .onStop(...);
 
 server.start();
 ```
@@ -98,10 +101,14 @@ const schema = makeExecutableSchema(typedefs, resolvers);
 const server = new GraphqQLServer(config, schema)
   .middleware(app => {
     // Attach any middleware here
+    // OR
+    // Attach any application-specific routers to the app
+    // Remember! Order matters when using a connect-based server
   })
-  .routers((app, defaultRouter) => {
-    // Attach any application-specific routers to either the app or the defaultRouter
-  });
+  // Provide a callback function to have custom code executed when the server starts
+  .onStart(...)
+  // Provide a callback function to have custom code executed when the server stops
+  .onStop(...);
 
 server.start();
 ```
@@ -124,39 +131,51 @@ class MyServer extends Server {
     // add, don't forget to call `super.initialize();`!
   }
 
-  mountRouters() {
-    // Override the default functionality mounting the router(s) to the app.
-    // When overriding this method, the default router will not be mounted
-    // unless you call `super.mountRouters();`!
+  start() {
+    // Override start to change the startup behavior.
+    // Use `super.start();` if you want to augment start before or after the
+    // server starts up
+  }
+
+  stop() {
+    // Override stop to change the startup behavior.
+    // Use `super.stop();` if you want to augment stop before or after the
+    // server stops accepting connections
   }
 }
 ```
 
 The `GraphQL Server` can also be overridden this way. The only difference is that the constructor must be provided the `schema` object.
 
-It is highly recommended that you use [node-config](https://github.com/lorenwest/node-config/wiki) as your configuration library and to pass the resulting configuration object to Treehouse. Treehouse expects, at minimum, the following configuration structure when accessing configuration variables:
+### Logging
+
+### Configuration
+
+It is highly recommended that you use [node-config](https://github.com/lorenwest/node-config/wiki) as your configuration library and to pass the resulting configuration object to Treehouse.
+The following an example configuration showing all the available options:
 
 ```
 {
-  body: { ... }, // configuration for koa-body
+  bodyparser: { ... }, // configuration for koa-bodyparser
   cors: { ... }, // configuration for koa-cors
   compress: {},  // configuration for koa-compress
-  // only needed if you're using the GraphQL Server
+  // The following configuration option is only needed if you're using the GraphQL Server
   graphql: {
     gui: process.env.NODE_ENV === 'development',
     introspection: true,
     url: "/graphql",
   },
-  loggers: {     // Treehouse logger configuration
+  // Treehouse logger configuration
+  // Optional
+  loggers: {
     handlers: {
       access: {
         name: 'access',
         level: 'info',
       },
-      ...etc.
     },
     streams: {
-      // Currently not used
+      // Under construction
     },
   },
   server: {
@@ -164,9 +183,10 @@ It is highly recommended that you use [node-config](https://github.com/lorenwest
     port: 3000,
     secure: false,
     ssl: {
-      // ssl configuration for nodejs HTTPS server
-    },  
-  },    
+      key: '<file path>',
+      cert: '<file path>'
+    },
+  },
 }
 ```
 
@@ -189,14 +209,19 @@ Distribution is currently hosted through Github, so the binary is currently trac
 To build and "deploy", run `make` at the root project directory and commit the resulting `dist` bundle.
 
 ### TODOs
+
 * [ ] Complete tests (tested manually, but need full suite)
+* [ ] Finish setting up travis for complete testing, build, and deploy
 * [ ] Support custom streams for bunyan in log configuration
-* [ ] Apollo Server V2 GraphQL server
+* [x] Apollo Server V2
+* [ ] Migrate to Typescript
+* [x] Improve Server interface around stop, start, middleware, & routers
+* [ ] Update documentation with updates interfaces
 
 ## Testing
 
 Under construction.
 
-Both unit and integration tests are located under the `tests` directory (`tests/unit` and `tests/integration`) and mirror the `src` directory structure. Tests are written using [Mocha](https://mochajs.org/) and [chai](http://www.chaijs.com/). Coverage reports are automatically collected on test runs using [istanbul](https://github.com/gotwarlost/istanbul).
+All testing is done using [jest]().
 
 To run tests, use `npm test`. You can provide additional arguments to `Mocha` by running `npm test -- <opts>`.
