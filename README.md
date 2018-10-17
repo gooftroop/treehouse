@@ -13,7 +13,7 @@ Additional documentation and API: [here](https://gooftroop.github.io/treehouse/)
 
 ## Why Treehouse
 
-We get it...building your own server from scratch is fun. So if you like taking various libraries and stitching them together, then this library is probably not for you. However, maybe you like the way this library is setup and is exactly the way you'd do it. Or maybe you're tired of seeing "boilerplates" that set everything up for you, tell you how to code your server, etc. etc. which take all the fun out of coding your server, but still don't want to set all the middleware and writing common utilities. If you find yourself nodding along or saying "that's me!", then this library is for you. Treehouse aims to keep a balance between not taking the fun out of building your services while doing all the tedious work for you - all without telling you how to build, structure, or organize your app.
+We get it...building your own server from scratch is fun. So if you like taking various libraries and stitching them together, then this library is probably not for you. However, maybe you like the way this library is setup and is exactly the way you'd do it. Or maybe you're tired of seeing "boilerplates" that set everything up for you, tell you how to code your server, etc. etc., but still don't want to set all the middleware and writing common utilities. If you find yourself saying "that's me!", then this library is for you. Treehouse aims to find the correct abstraction and empower you to quickly standup a server so you can focus on the application-specific code.
 
 ## NOTE
 
