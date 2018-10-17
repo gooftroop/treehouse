@@ -15,6 +15,11 @@ Additional documentation and API: [here](https://gooftroop.github.io/treehouse/)
 
 We get it...building your own server from scratch is fun. So if you like taking various libraries and stitching them together, then this library is probably not for you. However, maybe you like the way this library is setup and is exactly the way you'd do it. Or maybe you're tired of seeing "boilerplates" that set everything up for you, tell you how to code your server, etc. etc. which take all the fun out of coding your server, but still don't want to set all the middleware and writing common utilities. If you find yourself nodding along or saying "that's me!", then this library is for you. Treehouse aims to keep a balance between not taking the fun out of building your services while doing all the tedious work for you - all without telling you how to build, structure, or organize your app.
 
+## NOTE
+
+This project is currently under development and is subject to change. Please refer to the [TODOS Section]() for
+the work remaining before version 1.0 is tagged and this enters a table release cycle.
+
 ## Installing
 
 ```
@@ -42,11 +47,9 @@ Every request will run through the following middleware before being evaluated b
 
 The middleware `transaction` is used to tag each request with a unique "transaction" ID using NodeJS [domain]()'s to track a request through it's entire time spent in the app.
 
-The `access logger` middleware uses the `bunyan` logger to record details about each request prior to entering any custom middleware or handlers.
+The `access logger` middleware uses the `bunyan` logger to record details about each request prior to entering any custom middleware or handlers. Please refer to the [Logging Section]() for more details.
 
 The `error` middleware wraps all custom middleware and handlers in a `try/catch` to provide a uniform way to log the error and send the appropriate response. The `error` middleware ensures that the caught `Error` is some form of `ApiError`, so it is recommended that, if you throw a custom `Error` from any middleware or handlers, you extend `ApiError`.
-
-Treehouse also provides one common request handler for responding to health check requests at `/health`. The handler is located under `src/api/v1/handlers`.
 
 Third-party middleware references:
 - [helmet](https://www.npmjs.com/package/koa-helmet)
