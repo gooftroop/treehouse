@@ -20,7 +20,6 @@
     "jest"
   ],
   "rules": {
-    "arrow-body-style": [ "error", "always" ],
     "class-methods-use-this": "off",
     "flowtype/no-types-missing-file-annotation": "off",
     "func-names": [ "error", "as-needed" ],

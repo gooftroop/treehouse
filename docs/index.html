@@ -140,7 +140,7 @@ The most basic, quick way to get your server running with Treehouse with or with
 <pre class="prettyprint source"><code>import Server from 'treehouse';
 
 const server = new Server(config)
-  .middleware(app => {
+  .use(app => {
     // Attach any middleware here
     // OR
     // Attach any application-specific routers to the app
@@ -158,7 +158,7 @@ import { makeExecutableSchema } from 'apollo-server-koa';
 const schema = makeExecutableSchema(typedefs, resolvers);
 
 const server = new GraphqQLServer(config, schema)
-  .middleware(app => {
+  .use(app => {
     // Attach any middleware here
     // OR
     // Attach any application-specific routers to the app

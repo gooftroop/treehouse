@@ -79,7 +79,7 @@ The most basic, quick way to get your server running with Treehouse with or with
 import Server from 'treehouse';
 
 const server = new Server(config)
-  .middleware(app => {
+  .use(app => {
     // Attach any middleware here
     // OR
     // Attach any application-specific routers to the app
@@ -102,7 +102,7 @@ import { makeExecutableSchema } from 'apollo-server-koa';
 const schema = makeExecutableSchema(typedefs, resolvers);
 
 const server = new GraphqQLServer(config, schema)
-  .middleware(app => {
+  .use(app => {
     // Attach any middleware here
     // OR
     // Attach any application-specific routers to the app
@@ -195,11 +195,11 @@ The following an example configuration showing all the available options:
 
 ## Building
 
-We use `Make` to run various build tasks. See `Makefile` for details on the build process.
+To build a deployment (production) `dist`, run `npm run compile`.
 
-To build a deployment (production) `dist`, run `make`.
+To build the jsdocs, run `npm run docs`.
 
-To build development `dist`, run `make dev`.
+To build a development `dist`, run `npm run compile:dev`.
 
 ## Contributing
 
@@ -214,12 +214,12 @@ To build and "deploy", run `make` at the root project directory and commit the r
 ### TODOs
 
 * [ ] Complete tests (tested manually, but need full suite)
-* [ ] Finish setting up travis for complete testing, build, and deploy
+* [x] Finish setting up travis for complete testing, build, and deploy
 * [ ] Support custom streams for bunyan in log configuration
 * [x] Apollo Server V2
 * [ ] Migrate to Typescript
 * [x] Improve Server interface around stop, start, middleware, & routers
-* [ ] Update documentation with updates interfaces
+* [x] Update documentation with updates interfaces
 
 ## Testing
 

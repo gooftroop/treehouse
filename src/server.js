@@ -137,7 +137,7 @@ export default class Server {
    * @return {void}
    */
   createHttpsServer(): void {
-    this.app.use(function cb(ctx: Object, next: Function) {
+    this.app.use((ctx: Object, next: Function) => {
       if (ctx.secure) {
         return next();
       }
@@ -164,13 +164,15 @@ export default class Server {
    * @return {Function}
    */
   getListenCallback(): Function {
-    return () => {
+    const listenCallback = () => {
       if (process.send) {
         process.send('ready');
       }
 
       this.logger.info(`Server listening at ${this.config.server.hostname}:${this.config.server.port}...`);
     };
+
+    return listenCallback;
   }
 
   /**
@@ -217,12 +219,14 @@ export default class Server {
    * Provides a functional means to attach custom middleware or routers to the
    * <code>Koa</code> app instance by executing the provided callback function.
    * The callback is provided the <code>Koa</code> app instance.
+   * The output of the call to the provided callback MUST be a koa middleware
+   * function as the return value is passed to <code>koa.use</code>.
    *
    * @param  {Function|null}  fn
    * @return {Server}         The server instance
    */
   use(fn: Function): Server {
-    fn(this.app);
+    this.app.use(fn(this.app));
 
     return this;
   }

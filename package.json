@@ -21,10 +21,15 @@
     "connect"
   ],
   "scripts": {
+    "compile": "webpack -p --config ./webpack.config.js",
+    "compile:dev": "webpack --config ./webpack.config.js",
+    "docs": "jsdoc . --configure ./jsdoc.json",
+    "lint": "eslint ./src",
+    "lint:fix": "eslint ./src --fix",
     "report:coverage": "cat ./coverage/lcov.info | codacy-coverage && rm -rf ./coverage",
     "test": "jest",
     "test:coverage": "nyc --reporter=lcov npm test && npm run report:coverage",
-    "test:debug": "npm test -- --inspect-brk"
+    "test:debug": "node --inspect-brk ./node_modules/.bin/jest --runInBand"
   },
   "publishConfig": {
     "access": "public"

@@ -7,26 +7,19 @@ import helmet from 'koa-helmet';
 import https from 'https';
 import Koa from 'koa';
 
-// import accessLogger from 'treehouse/middleware/accessLogger';
+import accessLogger from 'treehouse/middleware/accessLogger';
 import errorMiddleware from 'treehouse/middleware/error';
 import Logger from 'treehouse/utils/logger';
-import router from 'treehouse/router';
 import Server from 'treehouse/server';
 import transactionMiddleware from 'treehouse/middleware/transaction';
 import { ILLEGAL_STATE_EXCEPTION } from 'treehouse/exception/codes';
 
-// const MOCK_ACCESS_LOGGER_MIDDLEWARE = jest.fn();
-const MOCK_BODYPARSER_MIDDLEWARE = jest.fn();
-const MOCK_COMPRESS_MIDDLEWARE = jest.fn();
-const MOCK_CORS_MIDDLEWARE = jest.fn();
-const MOCK_HELMET_MIDDLEWARE = jest.fn();
-
+jest.mock('treehouse/middleware/accessLogger');
 jest.mock('treehouse/utils/logger');
-// jest.mock('treehouse/middleware/accessLogger', () => { return MOCK_ACCESS_LOGGER_MIDDLEWARE; });
-jest.mock('koa-bodyparser', () => { return MOCK_BODYPARSER_MIDDLEWARE; });
-jest.mock('koa-compress', () => { return MOCK_COMPRESS_MIDDLEWARE; });
-jest.mock('koa-cors', () => { return MOCK_CORS_MIDDLEWARE; });
-jest.mock('koa-helmet', () => { return MOCK_HELMET_MIDDLEWARE; });
+jest.mock('koa-bodyparser');
+jest.mock('koa-compress');
+jest.mock('koa-cors');
+jest.mock('koa-helmet');
 
 jest.spyOn(process, 'on').mockImplementation(jest.fn());
 jest.spyOn(process, 'once').mockImplementation(jest.fn());
@@ -36,28 +29,29 @@ describe('server.js', () => {
 
   describe('constructor', () => {
     beforeEach(() => {
+      jest.spyOn(Server.prototype, 'configureHooks').mockImplementation(jest.fn());
+      jest.spyOn(Server.prototype, 'configureLogger').mockImplementation(jest.fn(() => Logger.getLogger()));
       jest.spyOn(Server.prototype, 'initialize').mockImplementation(jest.fn());
+
+      // Instantiate server
       server = new Server(config);
     });
 
     afterEach(() => {
       Server.prototype.initialize.mockRestore();
-    });
-
-    it('should attach to the exit event on the process', () => {
-      expect(process.on).toHaveBeenCalledWith('exit', server.stop);
-    });
-
-    it('should attach to the SIGINT event on the process', () => {
-      expect(process.once).toHaveBeenCalledWith('SIGINT', expect.any('function'));
+      Server.prototype.configureHooks.mockRestore();
     });
 
     it('should create a Koa app', () => {
       expect(server.app).toBeInstanceOf(Koa);
     });
 
-    it('should provide the app to initialize', () => {
-      expect(server.initialize).toHaveBeenCalledWith(server.app);
+    it('should call configureHooks with the logger', () => {
+      expect(server.configureHooks).toHaveBeenLastCalledWith(Logger.getLogger());
+    });
+
+    it('should provide the app and config to initialize', () => {
+      expect(server.initialize).toHaveBeenCalledWith(server.app, server.config);
     });
   });
 
@@ -66,18 +60,32 @@ describe('server.js', () => {
       server = new Server(config);
     });
 
+    describe('configureHooks', () => {
+      it('should attach to the exit event on the process', () => {
+        server.configureHooks(server.logger);
+
+        expect(process.on).toHaveBeenCalledWith('exit', server.stop);
+      });
+
+      it('should attach to the SIGINT event on the process', () => {
+        server.configureHooks(server.logger);
+
+        expect(process.once).toHaveBeenCalledWith('SIGINT', expect.any(Function));
+      });
+    });
+
     describe('createServer', () => {
       describe('when secure is false', () => {
         it('should return the Koa app', () => {
           const result = server.createServer(false);
 
-          expect(result).to.equal(server.app);
+          expect(result).toEqual(server.app);
         });
       });
 
       describe('when secure is true', () => {
         beforeEach(() => {
-          jest.mock(server.createHttpsServer);
+          server.createHttpsServer = jest.fn();
         });
 
         it('should call createHttpsServer', () => {
@@ -98,41 +106,35 @@ describe('server.js', () => {
           },
         };
 
-        jest.mock(server.app.use);
-        jest.mock(fs.readFileSync, () => { return 'fakevalue'; });
-        jest.mock(https.createServer);
+        jest.spyOn(fs, 'readFileSync').mockImplementation(() => 'fakevalue');
+
+        server.app.use = jest.fn();
+        https.createServer = jest.fn();
       });
 
       afterEach(() => {
         fs.readFileSync.mockRestore();
-        https.createServer.mockRestore();
       });
 
       it('should setup a HTTP redirect handler', () => {
         server.createHttpsServer();
 
-        expect(server.app.use).toHavBeenCalledWith(expect.any('function'));
+        expect(server.app.use).toHaveBeenCalledWith(expect.any(Function));
       });
 
       it('should call https createServer', () => {
-        const httpsConfig = {
-          key: 'fakevalue',
-          cert: 'fakevalue',
-        };
-
         server.createHttpsServer();
 
-        expect(https.createServer).toHaveBeenCalledWith(httpsConfig, expect.any('function'));
+        const expectedConfig = {
+          cert: 'fakevalue',
+          key: 'fakevalue',
+        };
+
+        expect(https.createServer).toHaveBeenCalledWith(expectedConfig, expect.any(Function));
       });
     });
 
     describe('getListenCallback', () => {
-      it('should return the callback function', () => {
-        const result = server.getListenCallback();
-
-        expect(result).toBe(expect.any('function'));
-      });
-
       describe('when invoking the callback', () => {
         let fn = null;
 
@@ -144,21 +146,6 @@ describe('server.js', () => {
           fn();
 
           expect(server.logger.info).toHaveBeenCalledWith(expectedMessage);
-        });
-
-        describe('when a custom callback is provided', () => {
-          let fakeCallback = null;
-
-          beforeEach(() => {
-            fakeCallback = jest.fn();
-            fn = server.getListenCallback(fakeCallback);
-          });
-
-          it('should invoke the custom callback', () => {
-            fn();
-
-            expect(fakeCallback).toHaveBeenCalled();
-          });
         });
 
         describe('when send is available on process', () => {
@@ -184,7 +171,7 @@ describe('server.js', () => {
 
         expect(helmet).toHaveBeenCalled();
 
-        expect(app.use).toHaveBeenCalledWith(MOCK_HELMET_MIDDLEWARE);
+        expect(app.use).toHaveBeenCalledWith(helmet());
       });
 
       it('should attach the transaction middleware to the provided app', () => {
@@ -193,13 +180,13 @@ describe('server.js', () => {
         expect(app.use).toHaveBeenCalledWith(transactionMiddleware);
       });
 
-      // it('should attach the accessLogger middleware to the provided app', () => {
-      //   server.initialize(app);
+      it('should attach the accessLogger middleware to the provided app', () => {
+        server.initialize(app);
 
-      //   expect(accessLogger).toHaveBeenCalled();
+        expect(accessLogger).toHaveBeenCalled();
 
-      //   expect(app.use).toHaveBeenCalledWithMOCK_ACCESS_LOGGER_MIDDLEWARE);
-      // });
+        expect(app.use).toHaveBeenCalledWith(accessLogger());
+      });
 
       it('should attach the error middleware to the provided app', () => {
         server.initialize(app);
@@ -214,7 +201,7 @@ describe('server.js', () => {
 
             expect(cors).toHaveBeenCalled();
 
-            expect(app.use).toHaveBeenCalledWith(MOCK_CORS_MIDDLEWARE);
+            expect(app.use).toHaveBeenCalledWith(cors());
           });
         });
 
@@ -233,9 +220,9 @@ describe('server.js', () => {
           it('should attach the cors middleware to the provided app', () => {
             server.initialize(app);
 
-            expect(cors).toHaveBeenCalled();
+            expect(cors).toHaveBeenCalledWith(server.config.cors);
 
-            expect(app.use).toHaveBeenCalledWith(MOCK_CORS_MIDDLEWARE);
+            expect(app.use).toHaveBeenCalledWith(cors());
           });
         });
       });
@@ -247,7 +234,7 @@ describe('server.js', () => {
 
             expect(compress).toHaveBeenCalled();
 
-            expect(app.use).toHaveBeenCalledWith(MOCK_COMPRESS_MIDDLEWARE);
+            expect(app.use).toHaveBeenCalledWith(compress());
           });
         });
 
@@ -268,7 +255,7 @@ describe('server.js', () => {
 
             expect(compress).toHaveBeenCalled();
 
-            expect(app.use).toHaveBeenCalledWith(MOCK_COMPRESS_MIDDLEWARE);
+            expect(app.use).toHaveBeenCalledWith(compress());
           });
         });
       });
@@ -291,7 +278,7 @@ describe('server.js', () => {
 
             expect(bodyparser).toHaveBeenCalled();
 
-            expect(app.use).toHaveBeenCalledWith(MOCK_BODYPARSER_MIDDLEWARE);
+            expect(app.use).toHaveBeenCalledWith(bodyparser());
           });
         });
 
@@ -301,62 +288,40 @@ describe('server.js', () => {
 
             expect(bodyparser).toHaveBeenCalled();
 
-            expect(app.use).toHaveBeenCalledWith(MOCK_BODYPARSER_MIDDLEWARE);
+            expect(app.use).toHaveBeenCalledWith(bodyparser());
           });
         });
       });
     });
 
-    describe('middleware', () => {
-      describe('when a callback is provided', () => {
-        it('should provide the app to the callback', () => {
-          const callback = jest.fn();
+    describe('use', () => {
+      let returnedMiddleware;
+      let callback;
 
-          server.middleware(callback);
-
-          expect(callback).toHaveBeenCalledWith(server.app);
-        });
-      });
-    });
-
-    describe('mountRouters', () => {
       beforeEach(() => {
-        jest.mock(Koa.prototype.use);
-        jest.mock(router.routes, () => { return []; });
-        jest.mock(router.allowedMethods, () => { return []; });
+        returnedMiddleware = jest.fn();
+        callback = jest.fn(() => returnedMiddleware);
       });
 
-      afterEach(() => {
-        Koa.prototype.use.mockRestore();
-        router.routes.mockRestore();
-        router.allowedMethods.mockRestore();
-      });
-
-      it('should attach the router', () => {
-        server.mountRouters();
-
-        expect(router.routes).toHaveBeenCalled();
-        expect(router.allowedMethods).toHaveBeenCalled();
-        expect(server.app.use).toHaveBeenCalled();
-      });
-    });
-
-    describe('routers', () => {
       describe('when a callback is provided', () => {
-        it('should provide the app to the callback', () => {
-          const callback = jest.fn();
+        beforeEach(() => {
+          jest.spyOn(server.app, 'use').mockImplementation(() => jest.fn());
+        });
 
-          server.routers(callback);
+        afterEach(() => {
+          server.app.use.mockRestore();
+        });
+
+        it('should provide the app to the callback', () => {
+          server.use(callback);
 
           expect(callback).toHaveBeenCalledWith(server.app);
         });
 
-        it('should provide the router to the callback', () => {
-          const callback = jest.fn();
+        it('should call app.use with the return value of the callback', () => {
+          server.use(callback);
 
-          server.routers(callback);
-
-          expect(callback).toHaveBeenCalledWith(server.app, router);
+          expect(server.app.use).toHaveBeenCalledWith(returnedMiddleware);
         });
       });
     });
@@ -367,19 +332,9 @@ describe('server.js', () => {
       const mockHttpServer = { listen };
 
       beforeEach(() => {
-        jest.mock(server.mountRouters);
-        jest.mock(server.getListenCallback, () => {
-          return mockListenCallback;
-        });
-        jest.mock(server.createServer, () => {
-          return mockHttpServer;
-        });
-      });
+        server.getListenCallback = jest.fn(() => mockListenCallback);
 
-      it('should call mountRouters', () => {
-        server.start();
-
-        expect(server.mountRouters).toHaveBeenCalled();
+        server.createServer = jest.fn(() => mockHttpServer);
       });
 
       it('should call getListenCallback', () => {
@@ -397,7 +352,7 @@ describe('server.js', () => {
       it('should return the http(s) server', () => {
         const result = server.start();
 
-        expect(result).toEqual(httpServer);
+        expect(result).toEqual(mockHttpServer);
       });
 
       describe('after calling createServer', () => {
@@ -409,7 +364,7 @@ describe('server.js', () => {
               config.server.port,
               config.server.hostname,
               config.server.backlog,
-              listenCallback,
+              mockListenCallback,
             );
           });
         });
@@ -419,7 +374,9 @@ describe('server.js', () => {
         const error = new Error("The name's Bond. James Bond.");
 
         beforeEach(() => {
-          server.createServer.mockRejectedValue(error);
+          server.createServer = jest.fn(() => {
+            throw error;
+          });
         });
 
         it('should log the error', () => {
@@ -464,16 +421,6 @@ describe('server.js', () => {
         server.stop();
 
         expect(server.logger.info).toHaveBeenCalledWith(message);
-      });
-
-      describe('when a custom callback is provided', () => {
-        it('should invoke the callback', () => {
-          const callback = jest.fn();
-
-          server.stop(callback);
-
-          expect(callback).toHaveBeenCalled();
-        });
       });
 
       it('should close the HTTP(s) connection', () => {
