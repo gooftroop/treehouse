@@ -31,7 +31,7 @@ jobs:
       - npm run test:coverage
 
   - name: Compile
-    state: Build Master
+    stage: Build Master
     install: skip
     script: npm run compile
 
@@ -69,7 +69,7 @@ stages:
   - Setup
   - Validate
   - name: Build Master
-    if: type = push AND tags = false
+    if: type = push AND tag = false
   - name: Release
     if: type = push
 
