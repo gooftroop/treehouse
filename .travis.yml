@@ -8,6 +8,8 @@ cache:
     # Cache node_modules
     - $HOME/.npm
     - node_modules
+    # TODO use S3 to store artifacts instead of cache
+    - dist
 
 branches:
   only:
@@ -25,39 +27,39 @@ jobs:
     script: skip
 
   - name: Unit tests with coverage
-    stage: Validate
+    stage: CI
     install: skip
-    script:
-      - npm run test:coverage
+    script: npm run test:coverage
 
   - name: Compile
-    stage: Build Master
+    stage: CI
     install: skip
+    # TODO use S3 to store artifacts instead of cache
     script: npm run compile
 
-  - name: Release Minor Version
-    stage: Build Master
-    install: skip
-    script: npm run docs && sed -i .bak -e 's/docs\/assets/assets/g' ./docs/index.html
-    after_success:
-      - git config --global user.email "travis@travis-ci.org"
-      - git config --global user.name "Travis CI"
-      - git remote set-url origin "https://$GITHUB_API_TOKEN@github.com/$TRAVIS_REPO_SLUG.git"
-    deploy:
-      - provider: script
-        script: npm version minor -m "Release version %s [ci skip]" && git push origin HEAD:$TRAVIS_BRANCH && git push --tags
-        skip_cleanup: true
+  # - name: Release Minor Version
+  #   stage: Release Minor
+  #   install: skip
+  #   script: npm run docs && sed -i .bak -e 's/docs\/assets/assets/g' ./docs/index.html
+  #   after_success:
+  #     - git config --global user.email "travis@travis-ci.org"
+  #     - git config --global user.name "Travis CI"
+  #     - git remote set-url origin "https://$GITHUB_API_TOKEN@github.com/$TRAVIS_REPO_SLUG.git"
+  #   deploy:
+  #     - provider: script
+  #       script: npm version minor -m "Release version %s [ci skip]" && git push origin HEAD:$TRAVIS_BRANCH && git push --tags
+  #       skip_cleanup: true
 
-      - provider: releases
-        api_key:
-          secure: VmZW/5MrGEpS02mRC6VrHZ7cAtRo97aTcKNWP3Ng944r90eJyfIR6daj9IFXQ+9FCNEB2ERKLIdEQjOktSzIENaw1wSZjR0Dqgw41+fOuWpInvSszN8ou/Dzkz5gs8U4qIxBIb3NioTCGHqa2u+vELa7aMhSA6yh55TejNpOWfGVVESwASSbJwFJTnrIuOUvh9VqVmY06hN/o2ng8GNA4//2fsuKZtJJxxvRupRAJ4xXogp1CJfqbwfYyrD3e43wVbJlOz1TX1CyMYGGbs4wRhjPt423Di1zU/YqbqxSzVyJHIvedSkZGYrRGX3yvvAdqX573A4Tu8XI8sBfGUivIq9CcyMC4ihgnPfc1Us2/mHQB94/cBeuMQj1H4EIxKidg/MN4eOHJHbGQKc9KiF8Hvyn8wPqzKG8lQFrUx/YWBGuhHjy/uUglxoWVphwBKCmJIt4gu9JoT7/RMzd/DuCPbi/NW2lJOoL7CTnPkBGYlyZlkxYyGo2VjrtZfM8dGptwRQq17Nlszhley7uhBJT2iwMQBThN7FKaJK41lFQuk9ePxMRTTXH7li+e5oCu+FrEBPIhBX8aXpAUUpQfK6Zg1YkVuWM61Qy4TfWp5z0rcya/BTpuhM2a3gyQTCiMGweunB2XN0HBeG8W5NzJCp+l99Cr3uY5T9M1X88sJkev4Q=
-        skip_cleanup: true
+  #     - provider: releases
+  #       api_key:
+  #         secure: VmZW/5MrGEpS02mRC6VrHZ7cAtRo97aTcKNWP3Ng944r90eJyfIR6daj9IFXQ+9FCNEB2ERKLIdEQjOktSzIENaw1wSZjR0Dqgw41+fOuWpInvSszN8ou/Dzkz5gs8U4qIxBIb3NioTCGHqa2u+vELa7aMhSA6yh55TejNpOWfGVVESwASSbJwFJTnrIuOUvh9VqVmY06hN/o2ng8GNA4//2fsuKZtJJxxvRupRAJ4xXogp1CJfqbwfYyrD3e43wVbJlOz1TX1CyMYGGbs4wRhjPt423Di1zU/YqbqxSzVyJHIvedSkZGYrRGX3yvvAdqX573A4Tu8XI8sBfGUivIq9CcyMC4ihgnPfc1Us2/mHQB94/cBeuMQj1H4EIxKidg/MN4eOHJHbGQKc9KiF8Hvyn8wPqzKG8lQFrUx/YWBGuhHjy/uUglxoWVphwBKCmJIt4gu9JoT7/RMzd/DuCPbi/NW2lJOoL7CTnPkBGYlyZlkxYyGo2VjrtZfM8dGptwRQq17Nlszhley7uhBJT2iwMQBThN7FKaJK41lFQuk9ePxMRTTXH7li+e5oCu+FrEBPIhBX8aXpAUUpQfK6Zg1YkVuWM61Qy4TfWp5z0rcya/BTpuhM2a3gyQTCiMGweunB2XN0HBeG8W5NzJCp+l99Cr3uY5T9M1X88sJkev4Q=
+  #       skip_cleanup: true
 
   - name: Publish to NPM
-    stage: Release
+    stage: Deploy
     install: skip
-    # TODO use S3 to store artifacts
-    script: npm run compile
+    # TODO use S3 to store artifacts instead of cache
+    script: skip
     deploy:
       provider: npm
       email: webb.c.brandon@gmail.com
@@ -67,11 +69,11 @@ jobs:
 
 stages:
   - Setup
-  - Validate
-  - name: Build Master
-    if: ( type = push ) AND ( tag IS blank )
-  - name: Release
-    if: type = push
+  - CI
+  # - name: Release Minor
+  #   if: ( type = push ) AND ( NOT commit_message =~ ^\[(Major)|(Minor)\].* )
+  - name: Deploy
+    if: tag =~ /^v\d+\.\d+\.\d+(-\S*)?$/
 
 notifications:
   slack: harmonizly:FiQyIOat1SVdXTCcZAjaGwq4
