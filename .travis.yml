@@ -69,7 +69,7 @@ stages:
   - Setup
   - Validate
   - name: Build Master
-    if: type = push AND tag = false
+    if: ( type = push ) AND ( tag IS blank )
   - name: Release
     if: type = push
 
