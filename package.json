@@ -3,7 +3,7 @@
   "version": "0.0.14",
   "description": "Light-weight Koa framework implementation to abstract away common boilerplate",
   "main": "dist/treehouse.js",
-  "hpmepage": "https://gooftroop.github.io/treehouse/",
+  "homepage": "https://gooftroop.github.io/treehouse/",
   "repository": "https://github.com/gooftroop/treehouse.git",
   "bugs": {
     "url": "https://github.com/gooftroop/treehouse/issues",
@@ -28,7 +28,7 @@
     "lint:fix": "eslint ./src --fix",
     "report:coverage": "cat ./coverage/lcov.info | codacy-coverage && rm -rf ./coverage",
     "test": "jest",
-    "test:coverage": "nyc --reporter=lcov npm test && npm run report:coverage",
+    "test:coverage": "jest --coverage && npm run report:coverage",
     "test:debug": "node --inspect-brk ./node_modules/.bin/jest --runInBand"
   },
   "publishConfig": {
@@ -41,11 +41,11 @@
     "node": ">=10.0.0"
   },
   "dependencies": {
-    "apollo-server-koa": "^2.0.0-rc.12",
+    "apollo-server-koa": "^2.1.0",
     "bunyan": "^1.8.12",
-    "config": "^1.30.0",
+    "config": "^1.31.0",
     "graphql": "^0.13.2",
-    "koa": "^2.5.1",
+    "koa": "^2.6.1",
     "koa-bodyparser": "^4.2.1",
     "koa-compress": "^3.0.0",
     "koa-cors": "^0.0.16",
@@ -69,21 +69,20 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react": "^6.24.1",
-    "codacy-coverage": "^3.0.0",
-    "eslint": "^5.0.0",
-    "eslint-config-airbnb-base": "^13.0.0",
+    "codacy-coverage": "^3.2.0",
+    "eslint": "^5.7.0",
+    "eslint-config-airbnb-base": "^13.1.0",
     "eslint-import-resolver-babel-module": "^4.0.0",
-    "eslint-plugin-flowtype": "^2.46.3",
-    "eslint-plugin-import": "^2.13.0",
-    "eslint-plugin-jest": "^21.20.2",
+    "eslint-plugin-flowtype": "^2.50.3",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jest": "^21.26.1",
     "greenkeeper-lockfile": "^1.14.0",
-    "jest": "^23.4.2",
+    "jest": "^23.6.0",
     "jsdoc": "^3.5.5",
     "jsdoc-babel": "^0.4.0",
     "jsdoc-template": "git+https://github.com/braintree/jsdoc-template.git#3.2.0",
-    "nyc": "^13.1.0",
-    "webpack": "^4.16.0",
-    "webpack-cli": "^3.0.0",
+    "webpack": "^4.23.1",
+    "webpack-cli": "^3.1.2",
     "webpack-node-externals": "^1.7.2"
   }
 }
