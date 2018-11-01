@@ -314,7 +314,9 @@ export default class Server {
    * @return {void}
    */
   stop(): void {
-    this.logger.info(`Server (${this.config.server.hostname}:${this.config.server.port}) stopping...`);
+    if (this.logger) {
+      this.logger.info(`Server (${this.config.server.hostname}:${this.config.server.port}) stopping...`);
+    }
 
     this.stopProcedures.forEach((procedure) => {
       procedure(this.app);
