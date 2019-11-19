@@ -1,8 +1,0 @@
---require babel-register
---require babel-polyfill
---ui bdd
---colors
---check-leaks
---full-trace
---inline-diffs
---recursive

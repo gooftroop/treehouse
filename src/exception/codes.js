@@ -1,5 +1,5 @@
 /**
- * @module error/codes
+ * @module exception
  * @exports DEFAULT_FATAL_ERROR
  * @exports FATAL_ERROR
  * @exports DEFAULT_GENERAL_ERROR
@@ -23,8 +23,9 @@
  * Default error message to surface to clients for unrecoverable errors.
  * @type {string}
  */
-export const DEFAULT_FATAL_ERROR: string =
-  'An error occurred. If this error persists, please contact your System Administrator';
+const DEFAULT_FATAL_ERROR = 'An error occurred. If this error persists, please contact your System Administrator';
+
+export { DEFAULT_FATAL_ERROR };
 
 /**
  * Factory to generate a 500 Error Message payload from the provided message.
@@ -39,14 +40,12 @@ export const DEFAULT_FATAL_ERROR: string =
  * ```
  * @type {Function}
  */
-export const FATAL_ERROR: Function = (message: string = DEFAULT_FATAL_ERROR): Object => {
-  return {
-    status: 500,
-    code: -1,
-    category: 'IllegalStateException',
-    message,
-  };
-};
+export const FATAL_ERROR: Function = (message: string = DEFAULT_FATAL_ERROR): Object => ({
+  status: 500,
+  code: -1,
+  category: 'IllegalStateException',
+  message,
+});
 
 /**
  * Whimsical default error message to surface to clients when no additional
@@ -69,14 +68,12 @@ export const DEFAULT_GENERAL_ERROR: string = "Our hamsters don't know how to han
  * ```
  * @type {Function}
  */
-export const GENERAL_ERROR: Function = (message: string = DEFAULT_GENERAL_ERROR): Object => {
-  return {
-    status: 400,
-    code: '0a',
-    category: 'GeneralException',
-    message,
-  };
-};
+export const GENERAL_ERROR: Function = (message: string = DEFAULT_GENERAL_ERROR): Object => ({
+  status: 400,
+  code: '0a',
+  category: 'GeneralException',
+  message,
+});
 
 /**
  * Not Yet Implemented (501) Error Factory.
@@ -91,14 +88,12 @@ export const GENERAL_ERROR: Function = (message: string = DEFAULT_GENERAL_ERROR)
  * ```
  * @type {Function}
  */
-export const NOT_YET_IMPLEMENTED: Function = (): Object => {
-  return {
-    status: 501,
-    code: 1,
-    category: 'NotYetImplemented',
-    message: 'This method must be implmented',
-  };
-};
+export const NOT_YET_IMPLEMENTED: Function = (): Object => ({
+  status: 501,
+  code: 1,
+  category: 'NotYetImplemented',
+  message: 'This method must be implmented',
+});
 
 /**
  * Illegal State Exception (500) Error Factory.
@@ -113,14 +108,12 @@ export const NOT_YET_IMPLEMENTED: Function = (): Object => {
  * ```
  * @type {Function}
  */
-export const ILLEGAL_STATE_EXCEPTION: Function = (): Object => {
-  return {
-    status: 500,
-    code: 2,
-    category: 'IllegalStateException',
-    message: 'Application not configured correctly',
-  };
-};
+export const ILLEGAL_STATE_EXCEPTION: Function = (): Object => ({
+  status: 500,
+  code: 2,
+  category: 'IllegalStateException',
+  message: 'Application not configured correctly',
+});
 
 /**
  * Whimsical default error message to surface to clients when no additional
@@ -145,14 +138,12 @@ export const DEFAULT_INVALID_REQUEST: string = "Our hamsters don't know how to h
  * ```
  * @type {Function}
  */
-export const INVALID_REQUEST: Function = (message: string = DEFAULT_INVALID_REQUEST): Object => {
-  return {
-    status: 400,
-    code: 3,
-    category: 'UserError',
-    message,
-  };
-};
+export const INVALID_REQUEST: Function = (message: string = DEFAULT_INVALID_REQUEST): Object => ({
+  status: 400,
+  code: 3,
+  category: 'UserError',
+  message,
+});
 
 /**
  * Default error message to surface to clients when they are no longer
@@ -176,14 +167,12 @@ const DEFAULT_UNAUTHORIZED: string = 'Your session is no longer valid. Please lo
  * ```
  * @type {Function}
  */
-export const UNAUTHORIZED: Function = (message: string = DEFAULT_UNAUTHORIZED): Object => {
-  return {
-    status: 401,
-    code: 4,
-    category: 'SecurityException',
-    message,
-  };
-};
+export const UNAUTHORIZED: Function = (message: string = DEFAULT_UNAUTHORIZED): Object => ({
+  status: 401,
+  code: 4,
+  category: 'SecurityException',
+  message,
+});
 
 /**
  * Default error to surface to requests that are forbidden to make that
@@ -207,14 +196,12 @@ export const DEFAULT_FORBIDDEN: string = "Whoops! You aren't allowed to do that"
  * ```
  * @type {Function}
  */
-export const FORBIDDEN: Function = (message: string = DEFAULT_FORBIDDEN): Object => {
-  return {
-    status: 403,
-    code: 5,
-    category: 'SecurityException',
-    message,
-  };
-};
+export const FORBIDDEN: Function = (message: string = DEFAULT_FORBIDDEN): Object => ({
+  status: 403,
+  code: 5,
+  category: 'SecurityException',
+  message,
+});
 
 /**
  * Missing Required Request Parameter (malformed request) (400) Error Factory.
@@ -229,14 +216,12 @@ export const FORBIDDEN: Function = (message: string = DEFAULT_FORBIDDEN): Object
  * ```
  * @type {Function}
  */
-export const MISSING_REQUIRED_PARAMETER: Function = (): Object => {
-  return {
-    status: 400,
-    code: 6,
-    category: 'GeneralException',
-    message: 'A required parameter was missing',
-  };
-};
+export const MISSING_REQUIRED_PARAMETER: Function = (): Object => ({
+  status: 400,
+  code: 6,
+  category: 'GeneralException',
+  message: 'A required parameter was missing',
+});
 
 /**
  * Whimsical default error message to surface to clients when no additional
@@ -261,14 +246,12 @@ export const DEFAULT_SERVICE_UNAVAILABLE: string = 'Hmmm...our hamsters appear t
  * ```
  * @type {Function}
  */
-export const SERVICE_UNAVAILABLE: Function = (message: string = DEFAULT_SERVICE_UNAVAILABLE): Object => {
-  return {
-    status: 503,
-    code: 7,
-    category: 'NetworkException',
-    message,
-  };
-};
+export const SERVICE_UNAVAILABLE: Function = (message: string = DEFAULT_SERVICE_UNAVAILABLE): Object => ({
+  status: 503,
+  code: 7,
+  category: 'NetworkException',
+  message,
+});
 
 /**
  * Whimsical default error message to surface to clients when no additional
@@ -293,11 +276,9 @@ export const DEFAULT_VALIDATION_ERROR: string = 'Hmmm...the hamsters found a pro
  * ```
  * @type {Function}
  */
-export const VALIDATION_ERROR: Function = (message: string = DEFAULT_VALIDATION_ERROR): Object => {
-  return {
-    status: 400,
-    code: 8,
-    category: 'ValidationException',
-    message,
-  };
-};
+export const VALIDATION_ERROR: Function = (message: string = DEFAULT_VALIDATION_ERROR): Object => ({
+  status: 400,
+  code: 8,
+  category: 'ValidationException',
+  message,
+});

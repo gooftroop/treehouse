@@ -34,18 +34,16 @@ node_modules
 
 # source files
 build
+config
 docs
 src
 test
-.babelrc
 .eslintignore
 .eslintrc.json
-.flowconfig
 .gitignore
 .nycrc
 .travis.yml
 jsdoc.json
-Makefile
 
 # misc
 .env

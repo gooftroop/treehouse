@@ -3,10 +3,11 @@
     "syntax-flow",
     "transform-decorators-legacy",
     "transform-class-properties",
+    "transform-object-rest-spread",
     ["module-resolver", {
       "alias": {
         "treehouse": "./src",
-        "configuration": "./config"
+        "test": "./test"
       }
     }]
   ],
@@ -20,10 +21,5 @@
     ],
     "flow"
   ],
-  "sourceMaps": true,
-  "env": {
-    "test": {
-      "plugins": ["istanbul"]
-    }
-  }
+  "sourceMaps": true
 }

@@ -4,10 +4,28 @@
  * @exports Logger
  */
 import Bunyan from 'bunyan';
-import config from 'config';
 import process from 'process';
 
-export const DEFAULT_LOGGER_NAME: string = 'root';
+export const DEFAULT_CONFIG: Object = {
+  default: 'app',
+  handlers: {
+    access: {
+      name: 'access',
+      level: 'info',
+    },
+    app: {
+      name: 'access',
+      level: 'info',
+    },
+  },
+  streams: {},
+};
+
+export const DEFAULT_LOGGER: Object = {
+  info: console.log,
+  warn: console.warn,
+  error: console.error,
+};
 
 /*
  * BEGIN NOTE: example of stream config
@@ -24,8 +42,22 @@ export const DEFAULT_LOGGER_NAME: string = 'root';
 /**
  * Implementation of the <code>Bunyan</code> logger that provides a static
  * access method to retrieve configuration logger instances and to extend the
- * logging output behavior to include our request <code>trasnaction</code>
+ * logging output behavior to include our request <code>transaction</code>
  * data as additional log metadata.
+ *
+ * The configuration object must be of the following shape:
+ *  {
+ *    default_name: [name],
+ *    handlers: {
+ *      [name]: {
+ *        name: [name],
+ *        level: [valid level],
+ *      }
+ *    },
+ *    streams: {
+ *      // TBD
+ *    },
+ *  }
  *
  * @see {@link https://github.com/trentm/node-bunyan}
  *
@@ -33,6 +65,9 @@ export const DEFAULT_LOGGER_NAME: string = 'root';
  * @extends Bunyan
  */
 class Logger extends Bunyan {
+  // static logger config
+  static config: Object = DEFAULT_CONFIG;
+
   // loggers cache
   static loggers: Object = {};
 
@@ -94,28 +129,102 @@ class Logger extends Bunyan {
   }
 
   /**
-   * Retrieve a logger instance by name by looking up the looger in the logger
+   * Applies the provided config as the static configuration for all loggers.
+   * @param   {Object} config
+   * @return  {void}
+   */
+  static configure(config: Object): void {
+    Logger.config = { ...config };
+  }
+
+  /**
+   * Creates and returns a new logger of the name <code>loggerName</code> using
+   * the <code>DEFAULT_LOGGER</code>.
+   *
+   * @param   {string}  The requested logger name
+   * @return {Object}   The new fallback logger
+   */
+  static createFallbackLogger(loggerName: string): Object {
+    const logger = DEFAULT_LOGGER;
+
+    Logger.addLogger(loggerName, logger);
+    logger.warn(`Using fallback logger: no logger for "${loggerName}" found in configuration`);
+
+    return logger;
+  }
+
+  /**
+   * Creates a new logger for the given logger name.
+   * If the requested name does not exist in the config, then a fallback logger
+   * is provided.
+   *
+   * @param   {string}  The requested logger name
+   * @return  {Object}  The new logger
+   */
+  static createLogger(loggerName: string): Object {
+    const handlersConfig: Object = Logger.config.handlers;
+
+    return (!handlersConfig || !(loggerName in handlersConfig))
+      ? Logger.createFallbackLogger(loggerName)
+      : Logger.addLogger(loggerName, new Logger(handlersConfig[loggerName]));
+  }
+
+  /**
+   * Retrieve a logger instance by name by looking up the logger in the logger
    * cache. If no logger name is provide, the default logger
    * (<code>root</code>) is returned. If no logger by the provided name exists
    * and the logger name is found in the configuration, then a new logger is
    * created and returned; otherwise an <code>Error</code> is thrown.
    *
-   * @param  {string} name
+   * @param  {string} name  The requested logger name
    * @return {Object}
    */
   static getLogger(name: string = null): Object {
-    const handlersConfig: Object = config.loggers.handlers;
-    const loggerName: string = (name == null) ? DEFAULT_LOGGER_NAME : name.toLowerCase();
+    const loggerName: string = (name == null) ? Logger.config.default : name.toLowerCase();
 
-    if (!(loggerName in Logger.loggers)) {
-      if (!(loggerName in handlersConfig)) {
-        throw new Error(`Unable to create logger: no logger for "${loggerName}" found in configuration`);
-      }
+    return (!(loggerName in Logger.loggers))
+      ? Logger.createLogger(loggerName)
+      : Logger.loggers[loggerName];
+  }
 
-      Logger.loggers[loggerName] = new Logger(handlersConfig[loggerName]);
+  /**
+   * Adds the provided logger instance to the cache.
+   *
+   * @param {string|Object} loggerName
+   * @param {Object|null}   loggerInstance  (optional) Provide the logger
+   *                                        object if also providing the
+   *                                        logger name
+   * @return {Object}       The added logger
+   */
+  static addLogger(loggerName: string | Object, loggerInstance: Object = null): void {
+    let logger = loggerInstance;
+    let name = loggerName;
+
+    if (!logger) {
+      logger = loggerName;
+      name = logger.fields && logger.fields.name;
     }
 
-    return Logger.loggers[loggerName];
+    assert(typeof logger === 'object', 'logger must be an object');
+    assert(typeof name === 'string', 'logger name must be a string');
+
+    Logger.loggers[name] = logger;
+
+    return logger;
+  }
+
+  /**
+   * Adds the provided logger instance to the cache and sets the default logger
+   * name to config.
+   *
+   * @param   {Object} loggerInstance The default logger instance
+   * @return  {void}
+   */
+  static setDefaultLogger(logger: Object): void {
+    const { name } = logger.fields;
+
+    Logger.config.default = name;
+    Logger.addLogger(name, logger);
   }
 }
 

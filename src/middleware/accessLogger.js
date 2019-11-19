@@ -7,8 +7,6 @@ import morgan from 'koa-morgan';
 
 import Logger from 'treehouse/utils/logger';
 
-const LOGGER: Object = Logger.getLogger('access');
-
 /**
  * Morgan log formatter.
  * Returns an object containing the desired request and response attributes.
@@ -54,10 +52,14 @@ export const formatter = function (tokens, request, response) {
   });
 };
 
-export default morgan(formatter, {
-  stream: {
-    write(message) {
-      LOGGER.info(JSON.parse(message));
+export default () => {
+  const logger: Object = Logger.getLogger('access');
+
+  return morgan(formatter, {
+    stream: {
+      write(message) {
+        logger.info(JSON.parse(message));
+      },
     },
-  },
-});
+  });
+};

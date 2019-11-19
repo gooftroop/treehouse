@@ -1,0 +1,267 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+      src/exception/index.js - Documentation
+  </title>
+
+  <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+  <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+
+  
+
+  <!-- start Mixpanel -->
+  <script type="text/javascript">(function(e,a){if(!a.__SV){var b=window;try{var c,l,i,j=b.location,g=j.hash;c=function(a,b){return(l=a.match(RegExp(b+"=([^&]*)")))?l[1]:null};g&&c(g,"state")&&(i=JSON.parse(decodeURIComponent(c(g,"state"))),"mpeditor"===i.action&&(b.sessionStorage.setItem("_mpcehash",g),history.replaceState(i.desiredHash||"",e.title,j.pathname+j.search)))}catch(m){}var k,h;window.mixpanel=a;a._i=[];a.init=function(b,c,f){function e(b,a){var c=a.split(".");2==c.length&&(b=b[c[0]],a=c[1]);b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,
+  0)))}}var d=a;"undefined"!==typeof f?d=a[f]=[]:f="mixpanel";d.people=d.people||[];d.toString=function(b){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);b||(a+=" (stub)");return a};d.people.toString=function(){return d.toString(1)+".people (stub)"};k="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
+  for(h=0;h<k.length;h++)e(d,k[h]);a._i.push([b,c,f])};a.__SV=1.2;b=e.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";c=e.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c)}})(document,window.mixpanel||[]);
+  mixpanel.init("1919205b2da72e4da3b9b6639b444d59");</script>
+  <!-- end Mixpanel -->
+</head>
+
+<body>
+  <svg style="display: none;">
+    <defs>
+      <symbol id="linkIcon" fill="#706d77" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+  <label for="nav-trigger" class="navicon-button x">
+    <div class="navicon"></div>
+  </label>
+
+  <label for="nav-trigger" class="overlay"></label>
+
+  <div class="top-nav-wrapper">
+    <ul>
+      <li >
+        <a href="index.html">
+          
+            <svg fill="#6D6D6D" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+              <path d="M0 0h24v24H0z" fill="none"/>
+            </svg>
+          
+          
+        </a>
+      </li>
+
+      
+
+    </ul>
+  </div>
+
+  <nav>
+    <h3 class="reference-title">
+      Treehouse
+    </h3>
+
+    <h3>Classes</h3><ul><li id="GraphqQLServer-nav"><a href="GraphqQLServer.html">GraphqQLServer</a></li><li id="default-nav"><a href="module-exception.default.html">default</a></li><li id="AuthorizationException-nav"><a href="module-exception-AuthorizationException.html">AuthorizationException</a></li><li id="Exception-nav"><a href="module-exception-Exception.html">Exception</a></li><li id="InternalException-nav"><a href="module-exception-InternalException.html">InternalException</a></li><li id="InvalidRequestException-nav"><a href="module-exception-InvalidRequestException.html">InvalidRequestException</a></li><li id="ServiceUnavailableException-nav"><a href="module-exception-ServiceUnavailableException.html">ServiceUnavailableException</a></li><li id="Logger-nav"><a href="module-utils_logger-Logger.html">Logger</a><ul class='methods'><li data-type="method" id="Logger-getLogger-nav"><a href="module-utils_logger-Logger.html#.getLogger">getLogger</a></li><li data-type="method" id="Logger-_emit-nav"><a href="module-utils_logger-Logger.html#_emit">_emit</a></li><li data-type="method" id="Logger-serializeTransaction-nav"><a href="module-utils_logger-Logger.html#serializeTransaction">serializeTransaction</a></li></ul></li><li id="Server-nav"><a href="Server.html">Server</a></li></ul><h3>Modules</h3><ul><li id="api_v1/handlers/health-nav"><a href="module-api_v1_handlers_health.html">api/v1/handlers/health</a></li><li id="api_v1/routes-nav"><a href="module-api_v1_routes.html">api/v1/routes</a></li><li id="exception-nav"><a href="module-exception.html">exception</a><ul class='methods'><li data-type="method" id="exception-resolveCode-nav"><a href="module-exception.html#~resolveCode">resolveCode</a></li><li data-type="method" id="exception-resolveMessage-nav"><a href="module-exception.html#~resolveMessage">resolveMessage</a></li><li data-type="method" id="exception-resolveStatus-nav"><a href="module-exception.html#~resolveStatus">resolveStatus</a></li></ul></li><li id="main-nav"><a href="module-main.html">main</a></li><li id="middleware_accessLogger-nav"><a href="module-middleware_accessLogger.html">middleware/accessLogger</a></li><li id="middleware_error-nav"><a href="module-middleware_error.html">middleware/error</a></li><li id="middleware_transaction-nav"><a href="module-middleware_transaction.html">middleware/transaction</a><ul class='methods'><li data-type="method" id="middleware_transaction-default-nav"><a href="module-middleware_transaction.html#.default">default</a></li></ul></li><li id="router-nav"><a href="module-router.html">router</a></li><li id="utils_logger-nav"><a href="module-utils_logger.html">utils/logger</a></li><li id="utils_sigInitHandler-nav"><a href="module-utils_sigInitHandler.html">utils/sigInitHandler</a></li><li id="utils_uncaughtExceptionHandler-nav"><a href="module-utils_uncaughtExceptionHandler.html">utils/uncaughtExceptionHandler</a></li><li id="utils_unhandledRejectionHandler-nav"><a href="module-utils_unhandledRejectionHandler.html">utils/unhandledRejectionHandler</a></li></ul><h3 id="global-nav">Global</h3><ul><li><a href="global.html#Mock">Mock</a></li><li><a href="global.html#mocker">mocker</a></li></ul>
+  </nav>
+
+  <div id="main">
+    
+      <h1 class="page-title">
+        src/exception/index.js
+      </h1>
+    
+
+    
+      
+
+<section>
+  <article>
+    <pre class="prettyprint source linenums"><code>/**
+ * @module exception
+ * @exports ApiException
+ * @exports AuthorizationException
+ * @exports Exception
+ * @exports InternalException
+ * @exports InvalidRequestException
+ * @exports ServiceUnavailableException
+ */
+import {
+  resolveCode,
+  resolveMessage,
+  resolveStatus,
+} from 'treehouse/exception/utils';
+import * as codes from 'treehouse/exception/codes';
+
+/**
+ * &lt;code>ApiException&lt;/code> provides a &lt;code>message&lt;/code> and
+ * &lt;code>stack trace&lt;/code> as &lt;code>Exception&lt;/code> does, but also provides a
+ * response &lt;code>status&lt;/code> and an error &lt;/code>code&lt;/code> for use in
+ * production debugging/support.
+ *
+ * @class
+ * @extends Error
+ */
+export default class Exception extends Error {
+  code: number;
+
+  error: Object;
+
+  details: Any;
+
+  /**
+   * Supports both &lt;code>Error&lt;/code>-compliant and Treehouse-specific
+   * paradigms of instantating a new &lt;code>Exception&lt;/code>.
+   * &lt;code>Error&lt;/code>-compliant instantion of an Exception:
+   * ```
+   * new Exception("some message", 1);
+   * ```
+   *
+   * Non-standard (or Treehouse-specific) instantation expects a payload
+   * similar to those found in &lt;code>codes.js&lt;/code> and extracts the
+   * &lt;code>error code&lt;/code>, and the &lt;code>message&lt;/code>.
+   * Optionally accepts &lt;code>Error&lt;/code> for additional meta information as
+   * the second or third argument.
+   *
+   * @constructor
+   * @param  {string|Object}      payload  Either the error message or payload.
+   * @param  {number|Error|null}  code     Optional. The error status.
+   *                                       Error can be supplied instead.
+   * @param  {Error|null}         e        Optional. The originating Error.
+   * @return {void}
+   */
+  constructor(payload: String | Object, code: ?Number | ?Error, e: ?Error): void {
+    super(resolveMessage(payload));
+    this.code = (typeof code === 'number') ? code : resolveCode(payload);
+    this.error = e;
+    this.details = (typeof payload === 'object') &amp;&amp; payload.details;
+
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, this.constructor);
+    } else {
+      this.stack = (new Error(this.message)).stack;
+    }
+  }
+}
+
+/**
+ * Base &lt;code>Exception&lt;/code> class for all Treehouse-specifc API
+ * &lt;code>Exception&lt;/code>.
+ * It is recommended to either use this error to wrap generic
+ * &lt;code>Exception&lt;/code>s or to create application/context-specific Exception
+ * classes that extend &lt;code>ApiException&lt;/code> in order to better/more easily
+ * consume and  alter your application's behavior when &lt;code>Exception&lt;/code>
+ * are thrown.
+ *
+ * @class
+ * @extends Exception
+ */
+export class ApiException extends Exception {
+  status: number;
+
+  /**
+   * Follows the same pattern of instantation as &lt;code>Exception&lt;/code>, except
+   * constructor accepts the additional, optional parameter.
+   * &lt;code>status&lt;/code> after &lt;code>payload&lt;/code>. The remaining signature
+   * remains unaltered.
+   *
+   * @constructor
+   * @param  {string|Object}      payload Either the error message or payload.
+   * @param  {number|Error|null}  status  Optional. The error status.
+   *                                      Only Error can be supplied instead.
+   * @param  {number|Error|null}  code    Optional. The error status.
+   *                                      Error can be supplied instead.
+   * @param  {Error|null}         e       Optional. The originating Error.
+   * @return {void}
+   */
+  constructor(payload: String | Object, status: ?Number | ?Error, code: ?Number | ?Error, e: ?Error): void {
+    super(payload, code, ((status instanceof Error) ? status : e));
+
+    this.status = (typeof status === 'number') ? resolveStatus(status) : resolveStatus(payload);
+  }
+}
+
+/**
+ * Exception used when a request fails security or authorization checks to
+ * prompt the User or Client to refresh their session, or to indicate to other
+ * services to act similarly.
+ *
+ * @class
+ * @extends ApiException
+ */
+export class AuthorizationException extends ApiException {
+  constructor(e: ?Error) {
+    super(codes.NOT_ALLOWED, e);
+  }
+}
+
+/**
+ * Thrown when an unhandled or unrecoverable exception is encountered.
+ * Optionally accepts a custom message when instantating.
+ *
+ * @class
+ * @extends ApiException
+ */
+export class InternalException extends ApiException {
+  constructor(message: String, e: ?Error) {
+    super(codes.FATAL_ERROR(message), e);
+  }
+}
+
+/**
+ * Generic exception used to signal to a User/Client that their request was
+ * invalid. Optionally accepts a custom message when instantating.
+ *
+ * @class
+ * @extends ApiError
+ */
+export class InvalidRequestException extends ApiException {
+  constructor(message: String, e: ?Error) {
+    super(codes.INVALID_REQUEST(message), e);
+  }
+}
+
+/**
+ * Exception indicating that an external or internal service is unreachable or
+ * unavailable. Optionally accepts a custom message when instantating.
+ *
+ * @class
+ * @extends ApiError
+ */
+export class ServiceUnavailableException extends ApiException {
+  constructor(message: String, e: ?Error) {
+    super(codes.SERVICE_UNAVAILABLE(message), e);
+  }
+}
+</code></pre>
+  </article>
+</section>
+
+    
+
+
+  </div>
+
+  <br class="clear">
+
+  <footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
+  </footer>
+
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/pagelocation.js"></script>
+
+  
+  
+</body>
+</html>

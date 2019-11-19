@@ -4,26 +4,28 @@
  * @exports Allthethings
  */
 
-import ApiError, {
-  AuthorizationError,
-  InternalError,
-  InvalidRequestError,
-  ServiceUnavailableError,
-} from 'treehouse/error';
-import GraphqQLServer from 'treehouse/graphql';
+import Exception, {
+  ApiException,
+  AuthorizationException,
+  InternalException,
+  InvalidRequestException,
+  ServiceUnavailableException,
+} from 'treehouse/exception';
+import GraphQLServer from 'treehouse/graphql';
 import Logger from 'treehouse/utils/logger';
 import Server from 'treehouse/server';
 
-import * as codes from 'treehouse/error/codes';
+import * as codes from 'treehouse/exception/codes';
 
 export default Server;
 export {
-  ApiError,
-  AuthorizationError,
+  ApiException,
+  AuthorizationException,
   codes,
-  GraphqQLServer,
-  InternalError,
-  InvalidRequestError,
+  Exception,
+  GraphQLServer,
+  InternalException,
+  InvalidRequestException,
   Logger,
-  ServiceUnavailableError,
+  ServiceUnavailableException,
 };

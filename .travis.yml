@@ -3,25 +3,73 @@ sudo: false
 language: node_js
 node_js: 10
 cache:
-  yarn: true
+  name: shared
+  directories:
+    # Cache node_modules
+    - $HOME/.npm
+    - node_modules
+    # TODO use S3 to store artifacts instead of cache
+    - dist
+
+branches:
+  only:
+    - master
+    # Semantic Versioning regex
+    - /^v\d+\.\d+\.\d+(-\S*)?$/
+
 before_script: greenkeeper-lockfile-update
 after_script: greenkeeper-lockfile-upload
+
 jobs:
   include:
-  - stage: prepare cache
-    script: true
-  - stage: test
+  - name: Add node_modules to cache
+    stage: Setup
+    script: skip
+
+  - name: Unit tests with coverage
+    stage: CI
+    install: skip
     script: npm run test:coverage
-  - stage: npm release
-    script: NODE_ENV=development make bundle
+
+  - name: Compile
+    stage: CI
+    install: skip
+    # TODO use S3 to store artifacts instead of cache
+    script: npm run compile
+
+  - name: Release Minor Version to Github
+    stage: Deploy
+    install: skip
+    script: npm run docs && sed -e 's/docs\/assets/assets/g' ./docs/index.html
     deploy:
-      provider: npm
-      email: webb.c.brandon@gmail.com
-      api_key:
-        secure: ldFfEBvlzeO08Bgb2lESz7hlbuahmMWoBRdgg0Jo81VaOtwPuKL6WS1H3bwDO5Ojw8SJELQq/xCr3wIL1TY4qcaMwHeWHUA+kvGfnMHlvRh8orWJB4w4sJENbUc4rNApwneQahKR+MHzdmyF7WeoIsmNI2XyDjWZhr3UED9FDqPqdzzzfpQZ0SiWbOr0M0fETxuZQqydfAihSlB7SDhGfWbuYZoTa2KfEc3xgkcIs/pdGoks55Z61iLOTAb4cqXDwXJnhhdMXZWDrPOxRzT4/bMHE78yV0L6oKm5mpM/Cz2q6jlAeOnB+hSPpYwH/qY3gFphN7/ixDQHZqzxw05p5Stx4Uf1Ihb7MlGc/2Ti4FQIz/T4jgVF5GVlKFbyOpfpfXbd36x4apQgy4gCkJFQPrjqSWpMUwM9A5gJm0JgG/GBvOmt0d2So5cZb09BConwMv8CMjuHoXQs/HT03JuBew+pz6L7CtVckzOPtmXWqfRhkhlQ5Lhmfj1m7F+1h60xv3OGY8yvRlHzIDCA5jsM6Kueoikm5EvSjL+uJtACciUkOshgNqA3yoTCmE4h56WYylEeaacCvSp4kvZm99erzbjppUoO/bCOMGwiiYOvuG9V1JRG/ovoZR/KUR+vA3N/zhL6cSPxYRHuw0/TH5f3MzVPGbvM7CxNXd/mWXy8o9M=
+      - provider: releases
+        api_key:
+          secure: VmZW/5MrGEpS02mRC6VrHZ7cAtRo97aTcKNWP3Ng944r90eJyfIR6daj9IFXQ+9FCNEB2ERKLIdEQjOktSzIENaw1wSZjR0Dqgw41+fOuWpInvSszN8ou/Dzkz5gs8U4qIxBIb3NioTCGHqa2u+vELa7aMhSA6yh55TejNpOWfGVVESwASSbJwFJTnrIuOUvh9VqVmY06hN/o2ng8GNA4//2fsuKZtJJxxvRupRAJ4xXogp1CJfqbwfYyrD3e43wVbJlOz1TX1CyMYGGbs4wRhjPt423Di1zU/YqbqxSzVyJHIvedSkZGYrRGX3yvvAdqX573A4Tu8XI8sBfGUivIq9CcyMC4ihgnPfc1Us2/mHQB94/cBeuMQj1H4EIxKidg/MN4eOHJHbGQKc9KiF8Hvyn8wPqzKG8lQFrUx/YWBGuhHjy/uUglxoWVphwBKCmJIt4gu9JoT7/RMzd/DuCPbi/NW2lJOoL7CTnPkBGYlyZlkxYyGo2VjrtZfM8dGptwRQq17Nlszhley7uhBJT2iwMQBThN7FKaJK41lFQuk9ePxMRTTXH7li+e5oCu+FrEBPIhBX8aXpAUUpQfK6Zg1YkVuWM61Qy4TfWp5z0rcya/BTpuhM2a3gyQTCiMGweunB2XN0HBeG8W5NzJCp+l99Cr3uY5T9M1X88sJkev4Q=
+        skip_cleanup: true
+        on:
+          tags: true
+
+  - name: Publish to NPM
+    stage: Deploy
+    install: skip
+    # TODO use S3 to store artifacts instead of cache
+    script: skip
+    deploy:
+      - provider: npm
+        email: webb.c.brandon@gmail.com
+        api_key:
+          secure: ldFfEBvlzeO08Bgb2lESz7hlbuahmMWoBRdgg0Jo81VaOtwPuKL6WS1H3bwDO5Ojw8SJELQq/xCr3wIL1TY4qcaMwHeWHUA+kvGfnMHlvRh8orWJB4w4sJENbUc4rNApwneQahKR+MHzdmyF7WeoIsmNI2XyDjWZhr3UED9FDqPqdzzzfpQZ0SiWbOr0M0fETxuZQqydfAihSlB7SDhGfWbuYZoTa2KfEc3xgkcIs/pdGoks55Z61iLOTAb4cqXDwXJnhhdMXZWDrPOxRzT4/bMHE78yV0L6oKm5mpM/Cz2q6jlAeOnB+hSPpYwH/qY3gFphN7/ixDQHZqzxw05p5Stx4Uf1Ihb7MlGc/2Ti4FQIz/T4jgVF5GVlKFbyOpfpfXbd36x4apQgy4gCkJFQPrjqSWpMUwM9A5gJm0JgG/GBvOmt0d2So5cZb09BConwMv8CMjuHoXQs/HT03JuBew+pz6L7CtVckzOPtmXWqfRhkhlQ5Lhmfj1m7F+1h60xv3OGY8yvRlHzIDCA5jsM6Kueoikm5EvSjL+uJtACciUkOshgNqA3yoTCmE4h56WYylEeaacCvSp4kvZm99erzbjppUoO/bCOMGwiiYOvuG9V1JRG/ovoZR/KUR+vA3N/zhL6cSPxYRHuw0/TH5f3MzVPGbvM7CxNXd/mWXy8o9M=
+        skip_cleanup: true
+        on:
+          tags: true
+
 stages:
-- prepare cache
-- test
-- npm release
+  - Setup
+  - CI
+  # - name: Release Minor
+  #   if: ( type = push ) AND ( NOT commit_message =~ ^\[(Major)|(Minor)\].* )
+  - name: Deploy
+    if: tag =~ /^v\d+\.\d+\.\d+(-\S*)?$/
+
 notifications:
   slack: harmonizly:FiQyIOat1SVdXTCcZAjaGwq4
