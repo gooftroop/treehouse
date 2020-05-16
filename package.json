@@ -75,7 +75,7 @@
     "eslint-import-resolver-babel-module": "^4.0.0",
     "eslint-plugin-flowtype": "^2.50.3",
     "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jest": "^21.26.1",
+    "eslint-plugin-jest": "^23.13.0",
     "greenkeeper-lockfile": "^1.14.0",
     "jest": "^23.6.0",
     "jsdoc": "^3.5.5",
